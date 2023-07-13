@@ -1,0 +1,138 @@
+:root {
+    --primary: #00B98E;
+    --secondary: #FF6922;
+    --light: #EFFDF5;
+    --dark: #0E2E50;
+}
+
+.drag-image{
+    position: relative;
+    border: 1px dashed var(--dark);
+    height: 300px;
+    width:80%;
+    border-radius: 5px;
+    font-weight:400;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    margin: auto;
+}
+.drop_button{
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    color: var(--dark);
+}
+.drag-image.active{
+  border: 2px solid var(--dark);
+}
+.drag-image .icon{
+  font-size: 30px;
+  color: var(--dark);
+}
+.drag-image h6{
+  font-size: 20px;
+  font-weight: 300;
+  color: var(--dark);
+}
+.drag-image span{
+  font-size: 14px;
+  font-weight: 300;
+  color:var(--dark);
+  margin: 10px 0 15px 0;
+}
+.drag-image button{
+  padding: 10px 25px;
+  font-size: 14px; 
+  font-weight: 300;
+  border: none;
+  outline: none;
+  background:transparent;
+  color: var(--dark);
+  border:1px solid var(--dark);
+  border-radius: 5px;
+  cursor: pointer;
+  transition:all 0.5s;
+}
+
+.drag-image button:hover{
+    background-color:var(--dark);
+    color:var(--light);
+}
+
+.drag-image img{
+  height: 100%;
+  width: 100%;
+  object-fit: cover;
+  border-radius: 5px;
+  object-position: center;
+}
+
+.background-page{
+    height: 220vh;
+    width: 100%;
+    background-color: var(--primary);
+    color: var(--light);
+}
+.checkbox-form h3{
+    margin-top: 30px;
+    margin-bottom: 20px;
+    text-align: center;
+}
+.checkbox-line{
+    margin-bottom: 10px ;
+}
+.checkbox-line:last-child{
+    margin: auto;
+    width: 100%;
+}
+.checkout-form-list{
+    width: 100%;
+    /* display: flex;
+    justify-content: space-between;
+    align-items: center; */
+}
+.checkout-form-list label{
+    font-size: 16px;
+    color: var(--primary);
+    text-transform: capitalize;
+    font-weight: 600;
+    width: 20%;
+
+}
+
+.checkout-form-list label span{
+    color: #FF6922;
+    font-size: 14px;
+}
+.checkout-form-list input , select{
+    width: 90%;
+    margin-right: 5px;
+    border: none;
+    border-bottom: 1px solid #c9ded2;
+    padding: 10px;
+    color: #9e9d9d;
+    font-size: 16px;
+    outline: 0;
+    margin-bottom: 20px;
+}
+.save-button input{
+    display: block;
+    text-align: center;
+    width: 80%;
+    margin: 40px 70px 40px 40px ; 
+    padding: 10px;
+    border: 1px solid;
+    border-color: var(--primary);
+    background: var(--primary);
+    color: var(--light);
+    font-size: 18px;
+    font-weight: 600;
+    float: right;
+    transition: all .5s ease-in-out;
+}
+.save-button input:hover{
+    background: var(--light);
+    color: var(--primary);
+}
