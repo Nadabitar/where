@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Events\placeCreated;
 use App\Models\Places;
 use App\Http\Requests\StorePlacesRequest;
 use App\Http\Requests\UpdatePlacesRequest;
@@ -67,8 +68,9 @@ class PlacesController extends Controller
 
         $place->image = $request->hasFile('image')? $this->uploadImage($request->file('image')->getRealPath()): $this->returnError(201 , 'image is required') ;
         $result = $place->save();
-
         if($result){
+
+            event(new placeCreated($place));
             return redirect()->route('subscriber.dashboard')->with([
                 'message' => 'Product Added successfully',
                 'alert-type' => 'success'

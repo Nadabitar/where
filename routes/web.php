@@ -30,7 +30,7 @@ Route::get('/', function () {
 })->name('welcome');
 
 Route::get('/info', [HomeController::class, 'index'])->middleware('auth')->name('info');
-Route::get('/dashboard' , [SubscriberController::class , 'index'])->middleware('auth')->name('dashboard');
+Route::get('/dashboard' , [SubscriberController::class , 'index'])->middleware('auth')->name('subscriber.dashboard');
 Auth::routes();
 
 

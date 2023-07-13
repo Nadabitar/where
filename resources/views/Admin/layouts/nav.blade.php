@@ -37,8 +37,10 @@
                     <ul class="show-notification">
                         <li>
                             <h6>Notifications</h6>
+                            <a href="#"><label class="label" style="background-color:var(--primary); cursor: pointer;">Show</label></a> 
                             <label class="label label-danger">New</label>
                         </li>
+                        @foreach ($notifications as $notification)
                         <li>
                             <div class="media">
                                 {{-- @if (auth()->user()->photo)
@@ -47,42 +49,13 @@
                                 <img class="d-flex align-self-center img-radius" src="{{asset('backend/assets/images/Default_User.jpg')}}" alt="Generic placeholder image">
                                 @endif --}}
                                 <div class="media-body">
-                                    <h5 class="notification-user">John Doe</h5>
-                                    <p class="notification-msg">Lorem ipsum dolor sit amet, consectetuer elit.</p>
-                                    <span class="notification-time">30 minutes ago</span>
+                                    <h5 class="notification-user">{{$notification->data['name'] ? $notification->data['name'] : "Nada Arab Bitar"}}</h5>
+                                    <p class="notification-msg">{{$notification->data['email']}}</p>
+                                    <span class="notification-time">{{ \Carbon\Carbon::parse($notification->created_at)->format('H : s : i') }}</span>
                                 </div>
                             </div>
                         </li>
-                        <li>
-                            <div class="media">
-                                {{-- @if (auth()->user()->photo)
-                                <img class="d-flex align-self-center img-radius" src="{{auth()->user()->photo}}" alt="Generic placeholder image">
-                                @else
-                                <img class="d-flex align-self-center img-radius" src="{{asset('backend/assets/images/Default_User.jpg')}}" alt="Generic placeholder image">
-                                @endif
-                               --}}
-                                <div class="media-body">
-                                    <h5 class="notification-user">Joseph William</h5>
-                                    <p class="notification-msg">Lorem ipsum dolor sit amet, consectetuer elit.</p>
-                                    <span class="notification-time">30 minutes ago</span>
-                                </div>
-                            </div>
-                        </li>
-                        <li>
-                            <div class="media">
-                                {{-- @if (auth()->user()->photo)
-                                <img class="d-flex align-self-center img-radius" src="{{auth()->user()->photo}}" alt="Generic placeholder image">
-                                @else
-                                <img class="d-flex align-self-center img-radius" src="{{asset('backend/assets/images/Default_User.jpg')}}" alt="Generic placeholder image">
-                                @endif --}}
-                              
-                                <div class="media-body">
-                                    <h5 class="notification-user">Sara Soudein</h5>
-                                    <p class="notification-msg">Lorem ipsum dolor sit amet, consectetuer elit.</p>
-                                    <span class="notification-time">30 minutes ago</span>
-                                </div>
-                            </div>
-                        </li>
+                        @endforeach
                     </ul>
                 </li>
                 <li class="user-profile header-notification">
