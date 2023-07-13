@@ -31,7 +31,7 @@
                             <h3 dir="rtl"> <i class="fa fa-map"></i>
                             إنشاء حساب جديد
                             </h3>
-                            <input  type="text" name="fullName" class="@error('fullName') is-invalid @enderror" id="fullName" placeholder="{{ __('الاشم الكامل') }} " required autocomplete="name" autofocus>
+                            <input  type="text" name="fullName" class="@error('fullName') is-invalid @enderror" id="fullName" placeholder="{{ __('الاشم الكامل') }} " required autofocus>
                             <span style="display: none" class="name-massege text-danger"> الاسم يجب أن يحتوي فقط على أحرف *</span>
                             @error('fullName')
                                 <span class="invalid-feedback" role="alert">
@@ -39,7 +39,7 @@
                                 </span>
                             @enderror
 
-                            <input  class=" @error('phone') is-invalid @enderror" type="text" name="phone" id="phone" placeholder="{{ __('رقم الهاتف') }}"required autocomplete="phone">
+                            <input  class=" @error('phone') is-invalid @enderror" type="text" name="phone" id="phone" placeholder="{{ __('رقم الهاتف') }}"required >
                             <span style="display: none" class="phone-massege text-danger"> رقم الهاتف يجب أن يحوي على أرقام فقط و يبدأ ب 09 أو 00963 أو +963*</span>
                             @error('phone')
                                 <span class="invalid-feedback" role="alert">
@@ -47,7 +47,6 @@
                                 </span>
                             @enderror
 
-                               
                                     {{-- <label>العنوان <span class="required">*</span></label> --}}
                                     <select id="region" id="region" name="regionId">
                                         <option>العنوان</option>
@@ -75,7 +74,7 @@
                                 
 
                             
-                            <input class=" @error('email') is-invalid @enderror" type="email" name="email" id="email" placeholder="{{ __('البريد الإلكتروني xxx@gmail.com') }}"required autocomplete="email">
+                            <input class=" @error('email') is-invalid @enderror" type="email" name="email" id="email" placeholder="{{ __('البريد الإلكتروني xxx@gmail.com') }}"required >
                             <span style="display: none" class="email-massege text-danger">xxx@gmail.com أدخل البريد الألكتروني بالشكل*</span>
                             
                             @error('email')
@@ -84,7 +83,7 @@
                                 </span>
                             @enderror
     
-                            <input  type="password" class="@error('password') is-invalid @enderror" name="password" id="password" placeholder="{{ __('كلمة المرور') }}" required autocomplete="new-password">
+                            <input  type="password" class="@error('password') is-invalid @enderror" name="password" id="password" placeholder="{{ __('كلمة المرور') }}" required >
                             <label  for="showPassword"> <input type="checkbox" name="" id="showPassword"></label>
                             <span style="display: none" class="password-massege text-danger"> الاسم يجب أن يحتوي فقط على أحرف *</span>
                             @error('password')
@@ -252,8 +251,7 @@
         success: function(response) {
             if (response.success) {
                 $('#street').prop('disabled' , false);
-                alert(data);
-                $.each(response.data , function(id , name){
+                $.each(response.data , function(name , id){
                     html_option += `<option value='`+id+`'> `+name+`</option>`
                 }); 
             } else {

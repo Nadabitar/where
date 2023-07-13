@@ -25,7 +25,7 @@ phone.onkeyup  = function () {
         massage.style.display = "block";
     }else if(phone.value == ""){
         massage.style.display = "none";
-    }else if ( !phone.value.startsWith(" ") || !phone.value.startsWith('09') || !phone.value.startsWith('00963') || !phone.value.startsWith('+063') ){
+    }else if ( !phone.value.startsWith(" ") || !phone.value.startsWith("0") || !phone.value.startsWith("00963") || !phone.value.startsWith("+063")){
         massage.style.display = "block";
     }else{
         massage.style.display = "none";
