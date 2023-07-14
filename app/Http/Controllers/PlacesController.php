@@ -163,7 +163,7 @@ class PlacesController extends Controller
 
     public function accepted_place($placeId ,$id) {
         $place = Places::find($placeId);
-        $place ->isAccepted = true;
+        $place->isAccepted = true;
         auth()->user()
         ->unreadNotifications
         ->when($id, function ($query) use ($id) {
