@@ -164,6 +164,8 @@ class PlacesController extends Controller
     public function accepted_place($placeId ,$id) {
         $place = Places::find($placeId);
         $place->isAccepted = true;
+        $place->update();
+        // dd( $place);
         auth()->user()
         ->unreadNotifications
         ->when($id, function ($query) use ($id) {
@@ -173,9 +175,11 @@ class PlacesController extends Controller
         return redirect()->back();
     }
 
+
     public function rejected_place($id) {
         $place = Places::find($id);
-        $place ->isAccepted = false;
+        $place->isAccepted = false;
+        $place->update();
         auth()->user()
         ->unreadNotifications
         ->when($id, function ($query) use ($id) {
