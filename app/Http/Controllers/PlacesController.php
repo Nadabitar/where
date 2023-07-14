@@ -42,7 +42,8 @@ class PlacesController extends Controller
      */
     public function create()
     {
-        return view('Admin.product.create');
+        $notifications = auth()->user()->unreadNotifications;
+        return view('Admin.places.create' ,  compact('notifications'));
     }
 
     /**
@@ -83,8 +84,8 @@ class PlacesController extends Controller
     public function show(Places $places)
     {
         $places = Places::latest()->get();
-        // dd($places);
-        return view('Admin.product.index' , compact('places'));
+        $notifications = auth()->user()->unreadNotifications;
+        return view('Admin.places.index' , compact('places' , 'notifications'));
     }
 
     public function edit(Places $places)
@@ -153,5 +154,34 @@ class PlacesController extends Controller
         }else{
             return $this->returnError('400' , "Not saved");
         }
+    }
+
+    public function new_registered_places() {
+        $notifications = auth()->user()->unreadNotifications;
+        return view('Admin.places.newPlaces' , compact('notifications'));
+    }
+
+    public function accepted_place($placeId ,$id) {
+        $place = Places::find($placeId);
+        $place ->isAccepted = true;
+        auth()->user()
+        ->unreadNotifications
+        ->when($id, function ($query) use ($id) {
+            return $query->where('id', $id);
+        })
+        ->markAsRead();
+        return redirect()->back();
+    }
+
+    public function rejected_place($id) {
+        $place = Places::find($id);
+        $place ->isAccepted = false;
+        auth()->user()
+        ->unreadNotifications
+        ->when($id, function ($query) use ($id) {
+            return $query->where('id', $id);
+        })
+        ->markAsRead();
+        return redirect()->back();
     }
 }

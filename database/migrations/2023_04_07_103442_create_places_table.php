@@ -24,7 +24,7 @@ class CreatePlacesTable extends Migration
             $table->double('latitud')->nullable();
             $table->double('longitude')->nullable();
             $table->double('rate')->nullable();
-
+            $table->boolean('isAccepted')->nullable();
             $table->foreign('regionId')->references('id')->on('regions')->onDelete('cascade');
             $table->foreign('streetId')->references('id')->on('regions')->onDelete('cascade');
             $table->foreign('categoryId')->references('id')->on('categoris')->onDelete('cascade');

@@ -57,7 +57,7 @@ class NewPlaceRegistered extends Notification
     public function toArray($notifiable)
     {
         return [
-            // 'id' => $this->user->id,
+            'id' => $this->user->id,
             'name' => $this->user->placeName,
             'image' => $this->user->image,
         ];

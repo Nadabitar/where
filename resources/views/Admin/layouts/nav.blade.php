@@ -37,20 +37,20 @@
                     <ul class="show-notification">
                         <li>
                             <h6>Notifications</h6>
-                            <a href="#"><label class="label" style="background-color:var(--primary); cursor: pointer;">Show</label></a> 
+                            <a href="{{route('Places.new')}}"><label class="label" style="background-color:var(--primary); cursor: pointer;">Show</label></a> 
                             <label class="label label-danger">New</label>
                         </li>
                         @foreach ($notifications as $notification)
                         <li>
                             <div class="media">
-                                {{-- @if (auth()->user()->photo)
-                                <img class="d-flex align-self-center img-radius" src="{{auth()->user()->photo}}" alt="Generic placeholder image">
+                                @if ($notification->data['image'])
+                                <img class="d-flex align-self-center img-radius" src="{{$notification->data['image']}}" alt="Generic placeholder image">
                                 @else
                                 <img class="d-flex align-self-center img-radius" src="{{asset('backend/assets/images/Default_User.jpg')}}" alt="Generic placeholder image">
-                                @endif --}}
+                                @endif
                                 <div class="media-body">
                                     <h5 class="notification-user">{{$notification->data['name'] ? $notification->data['name'] : "Nada Arab Bitar"}}</h5>
-                                    <p class="notification-msg">{{$notification->data['email']}}</p>
+                                    {{-- <p class="notification-msg">{{$notification->data['email']}}</p> --}}
                                     <span class="notification-time">{{ \Carbon\Carbon::parse($notification->created_at)->format('H : s : i') }}</span>
                                 </div>
                             </div>
