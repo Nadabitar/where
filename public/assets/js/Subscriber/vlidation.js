@@ -5,7 +5,11 @@ var password = document.getElementById('password');
 var password_confirm = document.getElementById('password-confirm');
 var region = document.getElementById('region');
 var showPassword = document.getElementById('showPassword');
+var showPassword1 = document.querySelector('#showPassword1');
+var showPassword2 = document.querySelector('#showPassword2');
 var letters = /^[A-Za-z]+$/
+var phoneno = /^\+?([0-9]{2})\)?[-. ]?([0-9]{4})[-. ]?([0-9]{4})$/;
+
 
 fname.onkeyup  = function () {
     massage = document.querySelector('.name-massege');
@@ -23,11 +27,9 @@ phone.onkeyup  = function () {
 
     if(phone.value.match(letters) ) {
         massage.style.display = "block";
-    }else if(phone.value == ""){
+    }else if(phone.value.match(phoneno)){
         massage.style.display = "none";
-    }else if ( !phone.value.startsWith(" ") || !phone.value.startsWith("0") || !phone.value.startsWith("09") || !phone.value.startsWith("00963") || !phone.value.startsWith("+963")){
-        massage.style.display = "block";
-    }else{
+    }else if(phone.value == "" || phone.value == " " ){
         massage.style.display = "none";
     }
 }
@@ -35,9 +37,24 @@ phone.onkeyup  = function () {
 showPassword.onclick = function(){
     if (password.type === "password") {
         password.type = "text";
-      } else {
+    } else {
         password.type = "password";
-      }
+    }
+}
+showPassword1.onclick = function(){
+    if (password.type == "password") {
+        password.type = "text";
+    } else {
+        password.type = "password";
+    }
+}
+showPassword2.onclick = function(){
+ 
+    if (password.type == "password") {
+        password.type = "text";
+    } else {
+        password.type = "password";
+    }
 }
 // email.onkeyup =  function(){
 //     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;

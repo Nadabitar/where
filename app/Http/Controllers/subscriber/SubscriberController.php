@@ -18,25 +18,25 @@ class SubscriberController extends Controller
 
         if ($place->isAccepted) {
             $services = Service::where('placeId' , $place->id)->latest()->get();
-            $promote =Service::where(['placeId'=> $place->id , 'isAd' => true ])->latest()->get();
-            $comments = Places::where('id' , $place->id)->first();
-            // $users = $this->numberUsers($place->id);
-            // $popularService = $this->popular($place->id);
+            $promote =Service::where(['placeId'=> $place->id , 'isPromo' => true ])->latest()->get();
+            $comments = $place->comment();
+            $users =  $place->isSaved();
+            $popularService = $this->popular($place);
             return view('subscriber.pages.dashboard')->with([
                 'place' => $place ,
                 'services' =>  $services,
                 'promote'=> $promote,
-                'comments' => $comments->comment,
-                // 'users' => $users,s
-                // 'popularService' => $popularService
+                'comments' => $comments,
+                'users' => $users,
+                'popularService' => $popularService
             ]);
         }
         return  View('errors.503');
     }
 
-    public function popular($id)
+    public function popular(Places  $place)
     {
-        
+        $services = Service::where('placeId' ,  $place->id)->get();
     }
 }
 

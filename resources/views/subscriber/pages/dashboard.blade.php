@@ -77,7 +77,7 @@
                                     <img class="img-fluid" src="{{asset('assets/img/Subscriber/comments.ico')}}" alt="Icon">
                                 </div>
                                 <h6>تعليقات</h6>
-                                <span>{{count($comments)}}</span>
+                                <span>{{$comments->count()}}</span>
                             </div>
                         </a>
                     </div>
@@ -87,8 +87,8 @@
                                 <div class="icon mb-3">
                                     <img class="img-fluid" src="{{asset('assets/img/Subscriber/visit.ico')}}" alt="Icon">
                                 </div>
-                                <h6>عدد الزوار</h6>
-                                <span>123 زائر</span>
+                                <h6>عدد المتابعين</h6>
+                                <span>{{$users->count()}}</span>
                             </div>
                         </a>
                     </div>
