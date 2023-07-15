@@ -14,13 +14,15 @@ class CreateSavedsTable extends Migration
     public function up()
     {
         Schema::create('saveds', function (Blueprint $table) {
+            $table->id();
             $table->unsignedBigInteger('userId');
-            $table->unsignedBigInteger('placeId'); 
-            $table->primary(['userId', 'placeId']);
+            $table->unsignedBigInteger('placeId')->nullable(); 
+            $table->unsignedBigInteger('serviceId')->nullable(); 
 
             $table->timestamps();
             
             $table->foreign('userId')->references('id')->on('users')->onDelete('cascade');
+            $table->foreign('serviceId')->references('id')->on('services')->onDelete('cascade');
             $table->foreign('placeId')->references('id')->on('places')->onDelete('cascade');
         });
     }

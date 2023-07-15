@@ -15,16 +15,21 @@ class SavedController extends Controller
     use GenralTraits;
     public function index()
     {
-        $user = User::where('id' , Auth::user()->id)->with('isSaved')->first();
+        $user = User::where('id' , Auth::user()->id)->with('isSaved' , 'savedService')->first();
 
         // foreach ($user->isSaved as $item) {
         //     $item['region'] = User::where('id' ,$item->accountId)->first()->region->name;
         //     $item['street'] = User::where('id' ,$item->accountId)->first()->street->name;
         // }
+        
+        $data = [
+            'places' =>  $user->isSaved ,
+            'services' =>  $user->savedService ,
+        ];
         if ($user) {
-            return $this->returnData('saved' , $user->isSaved);
+            return $this->returnData('saved' ,  $data );
         }else{
-            return $this->returnError('saved' , $user->isSaved , 'there is no saveds');
+            return $this->returnError('saved' ,  $data  , 'there is no saveds');
         }
     }
 
@@ -36,14 +41,16 @@ class SavedController extends Controller
     public function store(Request $request)
     {
         $validation = Validator::make($request->all() , [
-            'placeId' => 'required'
+            'placeId' => 'required|sometimes',
+            'serviceId' => 'required|sometimes'
         ]);
         if($validation->fails()){
             return response()->json($validation->errors());
         }
-
-        $user = User::where('id' , Auth::user()->id)->first();
-        $result = $user->isSaved()->attach($request->placeId);
+        if ($request->serviceId) {
+            $user = User::where('id' , Auth::user()->id)->first();
+            $result = $user->isSaved()->attach($request->placeId);
+        }
 
         if ($result) {
             return  $this->returnSuccessMessage("Saved successfully");
