@@ -31,7 +31,8 @@ class RegionController extends Controller
     public function create()
     {
         $regions = Region::latest()->get();
-        return view('Admin.region.create' ,  compact('regions'));
+        $notifications = auth()->user()->unreadNotifications;
+        return view('Admin.region.create' ,  compact('regions' , 'notifications'));
     }
 
     /**
@@ -54,7 +55,8 @@ class RegionController extends Controller
     public function show(Region $region)
     {
         $regions = Region::latest()->get();
-        return view('Admin.region.index' , compact('regions'));
+        $notifications = auth()->user()->unreadNotifications;
+        return view('Admin.region.index' , compact('regions' , 'notifications'));
     }
 
     /**

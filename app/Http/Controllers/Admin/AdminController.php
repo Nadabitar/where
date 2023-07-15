@@ -19,7 +19,8 @@ class AdminController extends Controller
      */
     public function index()
     {
-        return View('Admin.index');
+        $notifications = auth()->user()->unreadNotifications;
+        return View('Admin.layouts.index' , compact('notifications'));
     }
 
     /**

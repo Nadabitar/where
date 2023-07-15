@@ -1,4 +1,4 @@
-@extends('Admin.layouts.index')
+@extends('Admin.index' , ['notifications' => $notifications])
 @section('content')
 <div class="main-body">
     <div class="page-wrapper">

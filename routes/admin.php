@@ -68,6 +68,10 @@ Route::group(['middleware' => ['auth'] , 'prifex' => 'admin'] , function(){
         Route::Post('/place_update/{id}' , [PlacesController::class,'update'])->name('Place.update');
         Route::get('/place_delete/{id}' ,[PlacesController::class, 'destroy'])->name('Place.delete');
         Route::get('/view/place/{id}' , [PlacesController::class, 'view'])->name('Place.view');
+        Route::get('/registerd' , [PlacesController::class, 'new_registered_places'])->name('Places.new');
+        Route::get('/accepted/{placeId}/{id}' , [PlacesController::class, 'accepted_place'])->name('Place.accepted');
+        Route::get('/rejected/{placeId}/{id}' , [PlacesController::class, 'rejected_place'])->name('Place.rejected');
+
     });
 
     Route::prefix('users')->controller(UserController::class)->group(function () {

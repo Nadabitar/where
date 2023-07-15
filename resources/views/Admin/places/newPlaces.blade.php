@@ -7,24 +7,24 @@
             <div class="row align-items-end">
                 <div class="col-lg-8">
                     <div class="page-header-title">
-                       <a href="{{route('region.Add')}}"> <i class="ti-plus bg-c-blue"></i></a>
+                        <a href="{{route('Place.Add')}}"> <i class="ti-plus bg-c-blue"></i></a>
                         <div class="d-inline">
-                            <h4>Show All Region and Street</h4>
-                            <span class="badge badge-primary text-white">Total Regions : {{App\Models\Region::all()->count()}} </span>
+                            <h4>Show new registeed places</h4>
+                            <span class="badge badge-primary text-white">Total registered places : {{$notifications->count()}} </span>
                         </div>
                     </div>
                 </div>
                 <div class="col-lg-4">
                     <div class="page-header-breadcrumb">
-                       <ul class="breadcrumb-title">
+                        <ul class="breadcrumb-title">
                         <li class="breadcrumb-item">
                             <a href="{{route('admin')}}">
                                 <i class="icofont icofont-home"></i>
                             </a>
                         </li>
-                        <li class="breadcrumb-item"><a href="#!">Region</a>
+                        <li class="breadcrumb-item"><a href="#!">Places</a>
                         </li>
-                        <li class="breadcrumb-item"><a href="#!">All Regions</a>
+                        <li class="breadcrumb-item"><a href="#!">Registered Places</a>
                         </li>
                     </ul>
                 </div>
@@ -38,7 +38,7 @@
         <!-- Hover table card start -->
         <div class="card">
             <div class="card-header">
-                <h5>Regions table</h5>
+                <h5>Products table</h5>
                 <div class="card-header-right">
                     <ul class="list-unstyled card-option">
                         <li><i class="icofont icofont-simple-left "></i></li>        
@@ -54,43 +54,56 @@
                         <thead>
                             <tr>
                                 <th>S.N</th>
-                                <th>Name</th>
-                                <th>is_Parent</th>
-                                <th>Parent</th>
-                                <th>Status</th>
+                                <th>Photo</th>
+                                <th>Place Name</th>
+                                <th>Details</th>
+                                <th>Work Time</th>
+                                <th>Region</th>
+                                <th>Street</th>
+                                <th>Category</th>
                                 <th>Action</th>
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach ($regions as $region)
+
+                            @foreach ($notifications as $noti)
+                            @php
+                                $place = \App\Models\places::where('id' , $noti->data['id'])->first();
+                            @endphp
                             <tr>
-                                <th>{{$loop->iteration}}</th>
-                                <td>{{$region->name}}</td>
-                                <td>{{$region->isParent}}</td>
+                                <td>{{$loop->iteration}}</td>
                                 <td>
-                                    {{$region->getAllStreetByRegion($region->parentId)->name}}
+                                    <img style="max-height: 98px; max-width:128px;"
+                                    src="{{$place->image}}" alt="{{$place->placeName}} photo">
                                 </td>
-                                <td>
-                                        <input value="{{$region->id}}" name="toggle" type="checkbox" data-toggle="toggle" data-on="Active" data-off="unActive" data-onstyle="success" data-offstyle="danger" data-size='xs' {{$region->status == 'active'? 'checked' : ' '}} ></td>
+                                <td style="color: var(--primary); font-size: 16px; font-weight: 600; text-transform: capitalize" >{{$place->placeName}}</td>
+                                <td>{{$place->details}}</td>
+                                <td>{{$place->workTime}}</td> 
+                                <td>{{$place->account->region->name}} </td>
+                                <td>{{$place->streetId ? $place->account->street->name : 'null'}} </td>
+                                <td>{{$place->category->name }} || {{$place->subCtegoryId ? $place->subCtegory->name : 'null' }} </td>
                                 <td class="d-flex">
-                                    <a href="{{route('region.edit' , $region->id)}}" class='btn btn-sm btn-outline-warning  p-2 mx-1 ' data-toggle="tooltip" title="edit" data-placement = "bottom"><i class="ti-pencil "></i></a>
-                                    <form action="{{route('region.delete' , $region->id)}}" method="get">
+                                    <a href="{{route('Place.accepted' , ['placeId'=> $place->id , 'id' => $noti->id])}}" class='btn  btn-outline-success  p-1 mx-1' style="vertical-align: middle" data-toggle="tooltip" title="edit" data-placement = "bottom">Accept</a>
+                                    <form action="{{route('Place.rejected' ,  ['placeId'=> $place->id , 'id' => $noti->id])}}" method="get">
                                     @csrf
                                     @method('delete')
-                                    <a id="BtnDelet" class='btn btn-sm btn-outline-danger p-2 mx-1' data-id ="{{$region->id}}" data-toggle="tooltip" title="delete" data-placement = "bottom">
-                                        <i class="ti-trash"></i></a>
+                                    <a id="BtnDelet" class='btn  btn-outline-danger p-1 mx-1' data-id ="{{$place->id}}" data-toggle="tooltip" title="delete" data-placement = "bottom">
+                                       Reject
                                     </form>
                                 </td>
+                                
                             </tr>
                             @endforeach
                         </tbody>
                     </table>
                 </div>
+             
             </div>
         </div>
         <!-- Hover table card end -->
     </div>
     <!-- Page-body end -->
+
 @endsection
 
 @section('script')
@@ -113,6 +126,7 @@
                 .then((willDelete) => {
                 if (willDelete)
                 {
+                    alert(dataID);
                     form.submit();
                     swal("Poof! Your imaginary file has been deleted!", {
                     icon: "success"});
@@ -132,7 +146,7 @@
             var id  = $(this).val();
             // alert(id);
             $.ajax({
-                url: "{{route('region.status')}}",
+                url: "{{route('Place.status')}}",
                 type : 'post' ,
                 data : {
                     _token : '{{csrf_token()}}',
