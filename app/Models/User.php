@@ -44,16 +44,16 @@ class User extends Authenticatable
 
     public function makeComment() : BelongsToMany
     {
-        return $this->belongsToMany(Places::class , 'comments' , 'userId', 'placeId')->withPivot('content' , 'rate' , 'status');
+        return $this->belongsToMany(Places::class , 'comments' , 'userId', 'placeId')->withPivot('content' , 'rate' , 'status')->withTimestamps();
     }
 
     public function isSaved() : BelongsToMany
     {
-        return $this->belongsToMany(Places::class , 'saveds' , 'userId', 'placeId');
+        return $this->belongsToMany(Places::class , 'saveds' , 'userId', 'placeId')->withTimestamps();
     }
 
     public function savedService() : BelongsToMany
     {
-        return $this->belongsToMany(Places::class , 'saveds' , 'userId', 'serviceId');
+        return $this->belongsToMany(Places::class , 'saveds' , 'userId', 'serviceId')->withTimestamps();
     }
 }

@@ -18,7 +18,6 @@ class CreateSavedsTable extends Migration
             $table->unsignedBigInteger('userId');
             $table->unsignedBigInteger('placeId')->nullable(); 
             $table->unsignedBigInteger('serviceId')->nullable(); 
-
             $table->timestamps();
             
             $table->foreign('userId')->references('id')->on('users')->onDelete('cascade');

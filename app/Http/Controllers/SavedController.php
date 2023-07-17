@@ -41,18 +41,20 @@ class SavedController extends Controller
     public function store(Request $request)
     {
         $validation = Validator::make($request->all() , [
-            'placeId' => 'required|sometimes',
-            'serviceId' => 'required|sometimes'
+            'placeId' => 'sometimes|int',
+            'serviceId' => 'sometimes|int'
         ]);
         if($validation->fails()){
             return response()->json($validation->errors());
         }
-        if ($request->serviceId) {
-            $user = User::where('id' , Auth::user()->id)->first();
+        $user = User::where('id' , Auth::user()->id)->first();
+        if ($request->placeId) {
             $result = $user->isSaved()->attach($request->placeId);
+        }else{
+            $result = $user->savedService()->attach($request->serviceId);
         }
 
-        if ($result) {
+        if (!$result) {
             return  $this->returnSuccessMessage("Saved successfully");
         }else{
             return  $this->returnError('400',"Something went error");
@@ -75,27 +77,64 @@ class SavedController extends Controller
         //
     }
 
-    public function destroy(saved $saved)
+    public function destroy(Request $request)
     {
-        //
+        $validation = Validator::make($request->all() , [
+            'placeId' => 'sometimes|int',
+            'serviceId' => 'sometimes|int'
+        ]);
+        if($validation->fails()){
+            return response()->json($validation->errors());
+        }
+        $user = User::where('id' , Auth::user()->id)->first();
+
+        if ($request->placeId) {
+            $result = $user->isSaved()->detach($request->placeId);
+        }else if($request->serviceId){
+            $result = $user->savedService()->detach($request->serviceId);
+        }
+
+        if ($result) {
+            return  $this->returnSuccessMessage("unSaved successfully");
+        }else{
+            return  $this->returnError('400',"Something went error");
+        }
     }
 
     public function userIsSeved(Request $request)
     {
         $validation = Validator::make($request->all() , [
-            'placeId' => 'required'
+            'placeId' => 'required|int'
         ]);
         if($validation->fails()){
             return response()->json($validation->errors());
         }
-       $placeId = $request->placeId;
+        $placeId = $request->placeId;
         $user = DB::select('select * from saveds  
         where 
         userId = ? 
         and placeId = ?
         ' , [Auth::user()->id , $placeId]);
-        
-       
+        if ($user) {
+            return $this->returnSuccessMessage('founded' , 200 );
+        }else{
+            return $this->returnError('400' , "Not saved");
+        }
+    }
+    public function userServiceIsSaved(Request $request)
+    {
+        $validation = Validator::make($request->all() , [
+            'serviceId' => 'required|int'
+        ]);
+        if($validation->fails()){
+            return response()->json($validation->errors());
+        }
+        $serviceId = $request->serviceId;
+        $user = DB::select('select * from saveds  
+        where 
+        userId = ? 
+        and serviceId = ?
+        ' , [Auth::user()->id , $serviceId]);
         if ($user) {
             return $this->returnSuccessMessage('founded' , 200 );
         }else{

@@ -67,16 +67,12 @@ class CommentController extends Controller
         $userId  = auth()->user()->id;
         // return $userId;
         $placeId = $request->placeId;
-
-        // $ratingCount = Places::where('id' , $placeId)->whereHas('comment' , function($query) use ($userId){
-        //     $query->where('userId' , $userId);
-        // })->first();
-        // // $ratingCount = Places::where('id' , $placeId)->with('comment')->get();
             $user = User::where('id' , $userId)->first();
             $result =  $user->makeComment()->attach($placeId , 
-            [   "content" => $request->content ,
+            [   
+                "content" => $request->content ,
                 "rate" => $request->rating,
-            ]   );
+            ]);
 
             if ($result) {
                 return  $this->returnSuccessMessage("Added successfully");
@@ -93,11 +89,10 @@ class CommentController extends Controller
     {
         // $user = User::where('id' , Auth::user()->id)->with('makeComment')->first();
         $user = DB::select(' 
-        select comments.* ,places.id as placeId , places.placeName , places.details , places.image , regions.name as region
-        from comments join places
-        on comments.placeId = places.id 
-        and places.categoryId = regions.id
-        where userId = ?' , [ Auth::user()->id]);
+        select places.placeName , places.details , places.image , places.rate  ,comments.* 
+        from places 
+        JOIN comments on  places.id = comments.placeId 
+        where comments.userId = ?' , [ Auth::user()->id]);
         if ($user) {
             return $this->returnData('comment' , $user);
         }else{
@@ -168,7 +163,7 @@ class CommentController extends Controller
             return response()->json($validation->errors());
         }
         // ----------------------------
-        $result = DB::delete('dELETE FROM Customers WHERE CustomerName=?' , [ $request->commentId ]);
+        $result = DB::delete('delet from comments where commentId=?' , [ $request->commentId ]);
     
             if ($result) {
                 return  $this->returnSuccessMessage("Deleted successfully");

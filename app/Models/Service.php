@@ -30,6 +30,6 @@ class Service extends Model
 
     public function isSaved() : BelongsToMany
     {
-        return $this->belongsToMany(User::class , 'saveds' , 'serviceId' , 'userId');
+        return $this->belongsToMany(User::class , 'saveds' , 'serviceId' , 'userId')->withTimestamps();
     }
 }
