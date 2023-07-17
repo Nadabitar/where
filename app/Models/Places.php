@@ -49,11 +49,11 @@ class Places extends Model
 
     public function comment() : BelongsToMany
     {
-        return $this->belongsToMany(User::class , 'comments' , 'placeId' , 'userId')->withPivot('content' , 'rate' , 'status');
+        return $this->belongsToMany(User::class , 'comments' , 'placeId' , 'userId')->withPivot('content' , 'rate' , 'status')->withTimestamps();
     }
 
     public function isSaved() : BelongsToMany
     {
-        return $this->belongsToMany(User::class , 'saveds' , 'placeId' , 'userId');
+        return $this->belongsToMany(User::class , 'saveds' , 'placeId' , 'userId')->withTimestamps();
     }
 }

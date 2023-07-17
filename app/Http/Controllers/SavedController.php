@@ -15,16 +15,21 @@ class SavedController extends Controller
     use GenralTraits;
     public function index()
     {
-        $user = User::where('id' , Auth::user()->id)->with('isSaved')->first();
+        $user = User::where('id' , Auth::user()->id)->with('isSaved' , 'savedService')->first();
 
         // foreach ($user->isSaved as $item) {
         //     $item['region'] = User::where('id' ,$item->accountId)->first()->region->name;
         //     $item['street'] = User::where('id' ,$item->accountId)->first()->street->name;
         // }
+        
+        $data = [
+            'places' =>  $user->isSaved ,
+            'services' =>  $user->savedService ,
+        ];
         if ($user) {
-            return $this->returnData('saved' , $user->isSaved);
+            return $this->returnData('saved' ,  $data );
         }else{
-            return $this->returnError('saved' , $user->isSaved , 'there is no saveds');
+            return $this->returnError('saved' ,  $data  , 'there is no saveds');
         }
     }
 
@@ -36,16 +41,20 @@ class SavedController extends Controller
     public function store(Request $request)
     {
         $validation = Validator::make($request->all() , [
-            'placeId' => 'required'
+            'placeId' => 'sometimes|int',
+            'serviceId' => 'sometimes|int'
         ]);
         if($validation->fails()){
             return response()->json($validation->errors());
         }
-
         $user = User::where('id' , Auth::user()->id)->first();
-        $result = $user->isSaved()->attach($request->placeId);
+        if ($request->placeId) {
+            $result = $user->isSaved()->attach($request->placeId);
+        }else{
+            $result = $user->savedService()->attach($request->serviceId);
+        }
 
-        if ($result) {
+        if (!$result) {
             return  $this->returnSuccessMessage("Saved successfully");
         }else{
             return  $this->returnError('400',"Something went error");
@@ -68,27 +77,64 @@ class SavedController extends Controller
         //
     }
 
-    public function destroy(saved $saved)
+    public function destroy(Request $request)
     {
-        //
+        $validation = Validator::make($request->all() , [
+            'placeId' => 'sometimes|int',
+            'serviceId' => 'sometimes|int'
+        ]);
+        if($validation->fails()){
+            return response()->json($validation->errors());
+        }
+        $user = User::where('id' , Auth::user()->id)->first();
+
+        if ($request->placeId) {
+            $result = $user->isSaved()->detach($request->placeId);
+        }else if($request->serviceId){
+            $result = $user->savedService()->detach($request->serviceId);
+        }
+
+        if ($result) {
+            return  $this->returnSuccessMessage("unSaved successfully");
+        }else{
+            return  $this->returnError('400',"Something went error");
+        }
     }
 
     public function userIsSeved(Request $request)
     {
         $validation = Validator::make($request->all() , [
-            'placeId' => 'required'
+            'placeId' => 'required|int'
         ]);
         if($validation->fails()){
             return response()->json($validation->errors());
         }
-       $placeId = $request->placeId;
+        $placeId = $request->placeId;
         $user = DB::select('select * from saveds  
         where 
         userId = ? 
         and placeId = ?
         ' , [Auth::user()->id , $placeId]);
-        
-       
+        if ($user) {
+            return $this->returnSuccessMessage('founded' , 200 );
+        }else{
+            return $this->returnError('400' , "Not saved");
+        }
+    }
+    public function userServiceIsSaved(Request $request)
+    {
+        $validation = Validator::make($request->all() , [
+            'serviceId' => 'required|int'
+        ]);
+        if($validation->fails()){
+            return response()->json($validation->errors());
+        }
+        $serviceId = $request->serviceId;
+        $user = DB::select('select * from saveds  
+        where 
+        userId = ? 
+        and serviceId = ?
+        ' , [Auth::user()->id , $serviceId]);
         if ($user) {
             return $this->returnSuccessMessage('founded' , 200 );
         }else{

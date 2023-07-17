@@ -32,8 +32,14 @@ Route::middleware('auth:sanctum')->prefix('/user')->group( function () {
 
     Route::get('/get/all/cat' , [CategorisController::class , 'index']);
     Route::get('/get/promo' , [PromoController::class , 'getPromoUrl']);
-    Route::Post('/saved' ,  [SavedController::class , 'store']);
-    Route::get('/all/saved' ,  [SavedController::class , 'index']);
+
+    Route::prefix('saved')->group(function(){
+        Route::Post('/store' ,  [SavedController::class , 'store']);
+        Route::get('/all' ,  [SavedController::class , 'index']);
+        Route::post('/is' ,  [SavedController::class , 'userIsSeved']);
+        Route::post('/is/service' ,  [SavedController::class , 'userServiceIsSaved']);
+        Route::post('/unSaved' ,  [SavedController::class , 'destroy']);
+    });
     
     Route::prefix('place')->group(function(){
         Route::post('/get' , [PlacesController::class,'index']);
