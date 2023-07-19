@@ -46,6 +46,9 @@ Route::prefix('subscriber')->group(function(){
         Route::get('/service/show/update/{id}' , [serviceController::class , 'edit'])->name('Service.show.update.form');
         Route::get('/service/update/{id}' , [serviceController::class , 'edit'])->name('Service.update');
         Route::get('/service/delete/{id}' , [serviceController::class , 'destroy'])->name('Service.delete');
+        Route::get('/new/{id}' , [serviceController::class , 'newService'])->name('Service.new');
+        Route::get('/active/{id}' , [serviceController::class , 'activeService'])->name('Service.active');
+        Route::get('/unactive/{id}' , [serviceController::class , 'unActiveService'])->name('Service.unActive');
     });
 
     Route::prefix('Advertising')->controller(PromoController::class)->group(function ()

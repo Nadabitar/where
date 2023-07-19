@@ -17,9 +17,9 @@ class SubscriberController extends Controller
         $place = Places::where('accountId' , Auth::user()->id)->first();
 
         if ($place->isAccepted) {
-            $services = Service::where('placeId' , $place->id)->latest()->get();
+            $services = Service::where('placeId' , $place->id)->orderBy('created_at','desc')->take(9)->get();
             $promote =Service::where(['placeId'=> $place->id , 'isPromo' => true ])->latest()->get();
-            $comments = $place->comment();
+            $comments = $place->comment ? $place->comment : null;
             $users =  $place->isSaved();
             $popularService = $this->popular($place);
             return view('subscriber.pages.dashboard')->with([

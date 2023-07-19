@@ -125,4 +125,23 @@ class ServiceController extends Controller
 
 
     }
+
+
+    public function newService(Request $request){
+        $services = Service::where('placeId' , $request->id)->get();
+        // dd( $services );
+        return $this->returnData('services' , $services );
+    }
+
+    public function activeService(Request $request){
+        $services = Service::where('placeId' , $request->id)->Where('status' , 1)->orderBy('created_at','desc')->take(5)->get();
+        return $this->returnData('services' , $services );
+    }
+
+    public function unActiveService(Request $request){
+        $services = Service::where('placeId' , $request->id)->Where('status' , 0)->orderBy('created_at','desc')->take(5)->get();
+        return $this->returnData('services' , $services );
+    }
+
+    
 }
