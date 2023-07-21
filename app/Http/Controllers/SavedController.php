@@ -41,8 +41,8 @@ class SavedController extends Controller
     public function store(Request $request)
     {
         $validation = Validator::make($request->all() , [
-            'placeId' => 'sometimes|int',
-            'serviceId' => 'sometimes|int'
+            'placeId' => 'required|sometimes|int',
+            'serviceId' => 'required|sometimes|int'
         ]);
         if($validation->fails()){
             return response()->json($validation->errors());
@@ -50,8 +50,10 @@ class SavedController extends Controller
         $user = User::where('id' , Auth::user()->id)->first();
         if ($request->placeId) {
             $result = $user->isSaved()->attach($request->placeId);
-        }else{
+        }else if($request->serviceId){
             $result = $user->savedService()->attach($request->serviceId);
+        }else{
+            return  $this->returnError('400',"you need to pass Place Id or Service Id");
         }
 
         if (!$result) {
