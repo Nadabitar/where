@@ -29,7 +29,7 @@ class UserController extends Controller
      */
     public function create()
     {
-        //
+        
     }
 
     /**
@@ -74,7 +74,7 @@ class UserController extends Controller
      */
     public function update(Request $request )
     {
-        //
+        $user = User::where('id' , Auth()->user->id)->first();
     }
 
     /**
