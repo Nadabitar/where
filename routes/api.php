@@ -11,6 +11,7 @@ use App\Http\Controllers\PromoController;
 use App\Http\Controllers\RegionController;
 use App\Http\Controllers\SavedController;
 use App\Http\Controllers\ServiceController;
+use App\Http\Controllers\UserController;
 use App\Models\Places;
 use Illuminate\Support\Facades\Auth;
 
@@ -30,10 +31,13 @@ use Illuminate\Support\Facades\Auth;
 Route::middleware('auth:sanctum')->prefix('/user')->group( function () {
     // return Auth::user();
 
-    Route::get('/get/all/cat' , [CategorisController::class , 'index']);  
+    Route::get('/get/all/cat' , [CategorisController::class , 'index']);
     Route::post('/get/child/cat' , [CategorisController::class , 'get_cat_by_parent']);
     Route::get('/get/promo' , [PromoController::class , 'getPromoUrl']);
     Route::post('/searchByPlaceName' , [PlacesController::class , 'searchByPlaceName']);
+    Route::post('/searchPlaceByCategory' , [PlacesController::class , 'searchPlaceByCategory']);
+    Route::post('/searchByName' , [CategorisController::class , 'searchByName']);
+    Route::post('/update/profile' , [UserController::class , 'update']);
 
     Route::prefix('saved')->group(function(){
         Route::Post('/store' ,  [SavedController::class , 'store']);
@@ -58,7 +62,7 @@ Route::middleware('auth:sanctum')->prefix('/user')->group( function () {
 
 Route::prefix('auth')->group(function(){
     Route::post('/login' , [HomeController::class , 'login']);
-    Route::post('/logout/{token?}' , [HomeController::class , 'logout'])->middleware('auth:sanctum');
+    Route::post('/logout/{token?}' , [HomeController::class , 'logout']);
     Route::post('/register' , [HomeController::class , 'register']);
 });
 

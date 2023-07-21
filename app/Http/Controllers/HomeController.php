@@ -99,8 +99,8 @@ class HomeController extends Controller
 
     public function logout(Request $request)
     {
-        auth()->user()->tokens()->delete()->where('name' , $request->deviceId);
-
+        // auth()->user()->tokens()->delete()->where('name' , $request->deviceId);
+        Auth::user()->tokens()->delete()->where('name' , $request->deviceId);
         // // return  $request->token;
             // $account = Auth::user();
             // // return $account;
