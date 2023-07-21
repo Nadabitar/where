@@ -30,8 +30,10 @@ use Illuminate\Support\Facades\Auth;
 Route::middleware('auth:sanctum')->prefix('/user')->group( function () {
     // return Auth::user();
 
-    Route::get('/get/all/cat' , [CategorisController::class , 'index']);
+    Route::get('/get/all/cat' , [CategorisController::class , 'index']);  
+    Route::post('/get/child/cat' , [CategorisController::class , 'get_cat_by_parent']);
     Route::get('/get/promo' , [PromoController::class , 'getPromoUrl']);
+    Route::post('/searchByPlaceName' , [PlacesController::class , 'searchByPlaceName']);
 
     Route::prefix('saved')->group(function(){
         Route::Post('/store' ,  [SavedController::class , 'store']);

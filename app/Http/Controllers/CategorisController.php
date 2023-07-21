@@ -9,6 +9,7 @@ use App\Traits\GenralTraits;
 use App\Traits\ImageTraits;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Validator;
 
 class CategorisController extends Controller
 {
@@ -125,9 +126,24 @@ class CategorisController extends Controller
 
 
 
-    public function get_cat_by_parent($id)
+    public function get_cat_by_parent(Request $request)
     {
         $category = new Categoris();
-        return response()->json(['data' =>  $category->getAllChildByParent($id) , 'success' => true] , 200);
+        return response()->json(['data' =>  $category->getAllChildByParent($request->id) , 'success' => true] , 200);
     }
+
+    
+    public function searchByName(Request $request){
+      $validation = Validator::make($request->all() , [
+          'word' => 'required|string'
+      ]);
+      if($validation->fails()){
+          return response()->json($validation->errors());
+      }
+      $categories = Categoris::where('parentId' , null)->where('name','LIKE' ,"%{$request->word}%")
+      ->orWhere('name','LIKE' ,"%{$request->word}")
+      ->orWhere('name','LIKE' ,"{$request->word}%")->get();
+
+      return $this->returnData('categories' , $categories);
+  }
 }

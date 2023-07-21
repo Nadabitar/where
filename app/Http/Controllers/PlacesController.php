@@ -188,4 +188,18 @@ class PlacesController extends Controller
         ->markAsRead();
         return redirect()->back();
     }
+
+    public function searchByPlaceName(Request $request){
+        $validation = Validator::make($request->all() , [
+            'word' => 'required|string'
+        ]);
+        if($validation->fails()){
+            return response()->json($validation->errors());
+        }
+        $places = Places::where('placeName','LIKE' ,"%{$request->word}%")
+        ->orWhere('placeName','LIKE' ,"%{$request->word}")
+        ->orWhere('placeName','LIKE' ,"{$request->word}%")->get();
+
+        return $this->returnData('places' , $places);
+    }
 }
