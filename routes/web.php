@@ -10,6 +10,7 @@ use App\Http\Controllers\{
     PromoController,
     RegionController,
     ServiceController,  
+    MapController
 };
 
 use App\Http\Controllers\subscriber\SubscriberController;
@@ -55,3 +56,5 @@ Route::prefix('subscriber')->group(function(){
         Route::get('/drop/{id}' , [PromoController::class , 'index'])->name('Advertising.drop');
     });
 });
+
+Route::get('/map',  [MapController::class , 'index'])->name('map');
