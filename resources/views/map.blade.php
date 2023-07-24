@@ -20,22 +20,13 @@
             <div class="container">
                 <div class="row">
                     <div class="col-md-12 ">
-                        <h3>Google Map with Multiple Marker and Info Box in Laravel - CodeSolutionStuff </h3>
                         <div id="map" style='height:400px'></div>
 
                     </div>
                 </div>
             </div>
         </div>
-        <!-- credits -->
-        <div class="text-center">
-            <p>
-                <a href="#" target="_top">Google Map with Multiple Marker and Info Box in Laravel
-                </a>
-            </p>
-            <p>
-                <a href="https://www.codesolutionstuff.com" target="_top">CodeSolutionStuff.com</a>
-            </p>
+
         </div>
     </div>
 

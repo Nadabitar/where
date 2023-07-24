@@ -57,4 +57,4 @@ Route::prefix('subscriber')->group(function(){
     });
 });
 
-Route::get('/map',  [MapController::class , 'index'])->name('map');
+Route::get('/map',  [MapController::class , 'index']);
