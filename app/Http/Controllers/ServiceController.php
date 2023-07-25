@@ -128,18 +128,23 @@ class ServiceController extends Controller
 
 
     public function newService(Request $request){
-        $services = Service::where('placeId' , $request->id)->get();
-        // dd( $services );
+        $services = Service::where('placeId' , $request->id)->latest()->limit(6)->get();
+        foreach ($services as $item) {
+            $item['image'] =  $item->gallery[0]->url;
+            $item['savedCount'] = count( $item->isSaved);
+
+        }
         return $this->returnData('services' , $services );
     }
 
-    public function activeService(Request $request){
-        $services = Service::where('placeId' , $request->id)->Where('status' , 1)->orderBy('created_at','desc')->take(5)->get();
-        return $this->returnData('services' , $services );
-    }
 
     public function unActiveService(Request $request){
-        $services = Service::where('placeId' , $request->id)->Where('status' , 0)->orderBy('created_at','desc')->take(5)->get();
+        $services = Service::where('placeId' , $request->id)->Where('status' , 0)->orderBy('created_at','desc')->limit(6)->get();
+        foreach ($services as $item) {
+            $item['image'] =  $item->gallery[0]->url;
+            $item['savedCount'] = count( $item->isSaved);
+
+        }
         return $this->returnData('services' , $services );
     }
 

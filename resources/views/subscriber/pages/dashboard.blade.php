@@ -136,10 +136,11 @@
                                 <a  id="newService" class="btn btn-outline-primary active" data-id="{{$place->id}}" href="#" >جديد</a>
                             </li>
                             <li class="nav-item me-2">
-                                <a id="activeService" class="btn btn-outline-primary" data-id="{{$place->id}}" data-bs-toggle="pill" href="#tab-2">فعال</a>
-                            </li>
-                            <li class="nav-item me-0">
                                 <a id="unActiveService"  class="btn btn-outline-primary" data-id="{{$place->id}}" data-bs-toggle="pill" href="#tab-3">غير فعال</a>
+                            </li>
+                            <li class="nav-item me-0" >
+                                <a id="activeService"  style="background-color: var(--secondary);
+                                color: white;" class="btn"  data-bs-toggle="pill"  href="{{route('Service.all')}}">عرض كافة الخدمات</a>
                             </li>
                         </ul>
                     </div>
