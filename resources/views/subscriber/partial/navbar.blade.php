@@ -13,7 +13,7 @@
                 </button>
                 <div class="collapse navbar-collapse" id="navbarCollapse">
                     <div class="navbar-nav ms-auto">
-                        <a href="index.html" class="nav-item nav-link active">الصفحة الرئيسية</a>
+                        <a href="{{route('subscriber.dashboard')}}" class="nav-item nav-link active">الصفحة الرئيسية</a>
                         <div class="nav-item dropdown">
                             <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">خدمات</a>
                             <div class="dropdown-menu rounded-0 m-0">
@@ -28,10 +28,10 @@
                             <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">الملف الشخصي</a>
                             <div class="dropdown-menu rounded-0 m-0">
                                 <a href="profile.html" class="dropdown-item">تعديل الملف الشخصي</a>
-                                <a href="404.html" class="dropdown-item">تسجيل الخروح</a>
+                                <a href="{{route('logout')}}" class="dropdown-item">تسجيل الخروح</a>
                             </div>
                         </div>
-                        <a href="about.html" class="nav-item nav-link">المستخدمين</a>
+                        <a href="about.html" class="nav-item nav-link">كافة التعليقات</a>
                         <a href="contact.html" class="nav-item nav-link">تواصل</a>
                     </div>
                     <a href="{{route('Service.show')}}" class="btn btn-primary px-3 d-none d-lg-flex">إضافة خدمة</a>
