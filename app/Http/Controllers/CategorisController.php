@@ -7,6 +7,7 @@ use App\Http\Requests\StoreCategorisRequest;
 use App\Http\Requests\UpdateCategorisRequest;
 use App\Traits\GenralTraits;
 use App\Traits\ImageTraits;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
@@ -140,9 +141,11 @@ class CategorisController extends Controller
       if($validation->fails()){
           return response()->json($validation->errors());
       }
-      $categories = Categoris::where('parentId' , null)->where('name','LIKE' ,"%{$request->word}%")
-      ->orWhere('name','LIKE' ,"%{$request->word}")
-      ->orWhere('name','LIKE' ,"{$request->word}%")->get();
+      $categories = Categoris::where('parentId' , null)->Where(function (Builder $query) use ($request){
+        $query->where('name','LIKE' ,"%{$request->word}%")
+        ->orWhere('name','LIKE' ,"%{$request->word}")
+        ->orWhere('name','LIKE' ,"{$request->word}%");
+    })->get();
 
       return $this->returnData('categories' , $categories);
   }

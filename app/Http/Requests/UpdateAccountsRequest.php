@@ -13,7 +13,7 @@ class UpdateAccountsRequest extends FormRequest
      */
     public function authorize()
     {
-        return false;
+        return true;
     }
 
     /**
@@ -24,7 +24,12 @@ class UpdateAccountsRequest extends FormRequest
     public function rules()
     {
         return [
-            //
+            'email' => 'required|string|exits:users|email',
+            'fullName' => 'required|string',
+            'gender' => 'required|in:male,famle',
+            'phone' => 'required|numeric|unique:users|starts_with:09,+963,00963',
+            'regionId' => 'nullable|integer' ,
+            'streetId' => 'nullable|integer',
         ];
     }
 }

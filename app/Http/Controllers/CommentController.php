@@ -74,9 +74,9 @@ class CommentController extends Controller
                 "rate" => $request->rating,
             ]);
 
-            if ($result) {
+            if (!$result) {
                 return  $this->returnSuccessMessage("Added successfully");
-            }else{  return  $this->returnError(  400,"Added successfully");}
+            }else{  return  $this->returnError(400,"Some thing went error");}
     }
 
     /**
@@ -163,7 +163,7 @@ class CommentController extends Controller
             return response()->json($validation->errors());
         }
         // ----------------------------
-        $result = DB::delete('delet from comments where commentId=?' , [ $request->commentId ]);
+        $result = DB::delete('delete from comments where id=?' , [ $request->commentId ]);
     
             if ($result) {
                 return  $this->returnSuccessMessage("Deleted successfully");

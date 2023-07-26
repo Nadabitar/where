@@ -10,6 +10,7 @@ use App\Models\Region;
 use App\Models\User;
 use App\Traits\GenralTraits;
 use App\Traits\ImageTraits;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Facades\App;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -201,5 +202,24 @@ class PlacesController extends Controller
         ->orWhere('placeName','LIKE' ,"{$request->word}%")->get();
 
         return $this->returnData('places' , $places);
+    }
+
+    public function searchPlaceByCategory(Request $request){
+        $validation = Validator::make($request->all() , [
+            'catId' => 'required|int',
+            'word' => 'required|string'
+        ]);
+
+        if($validation->fails()){
+            return response()->json($validation->errors());
+        }
+
+        $places = Places::where(['categoryId'=>$request->catId] , ['isParent' => null])->Where(function (Builder $query) use ($request){
+            $query->where('placeName','LIKE' ,"%{$request->word}%")
+            ->orWhere('placeName','LIKE' ,"%{$request->word}")
+            ->orWhere('placeName','LIKE' ,"{$request->word}%");
+        })->get();
+
+        return $this->returnData('places' , $places );
     }
 }
