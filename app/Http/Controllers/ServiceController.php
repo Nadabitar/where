@@ -117,7 +117,7 @@ class ServiceController extends Controller
         }
 
 
-        $services = Service::with('gallery' , 'place')->where('placeId' , $request->placeId)->first();
+        $services = Service::with('gallery' , 'place')->where('placeId' , $request->placeId)->get();
         // $link = $services->place->links;
         // $services['links'] = $link;
 

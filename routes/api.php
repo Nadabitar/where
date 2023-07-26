@@ -31,7 +31,7 @@ use Illuminate\Support\Facades\Auth;
 Route::middleware('auth:sanctum')->prefix('/user')->group( function () {
     // return Auth::user();
 
-    Route::get('/get/all/cat' , [CategorisController::class , 'index']);
+    Route::post('/get/all/cat' , [CategorisController::class , 'index']);
     Route::post('/get/child/cat' , [CategorisController::class , 'get_cat_by_parent']);
     Route::get('/get/promo' , [PromoController::class , 'getPromoUrl']);
     Route::post('/searchByPlaceName' , [PlacesController::class , 'searchByPlaceName']);
@@ -55,9 +55,10 @@ Route::middleware('auth:sanctum')->prefix('/user')->group( function () {
     });
 
     Route::post('/add/comment' , [CommentController::class , 'store']);
+    Route::post('/destroy/comment' , [CommentController::class , 'destroy']);
     Route::post('/update/comment' , [CommentController::class , 'update']);
     Route::post('/get/comment' , [CommentController::class , 'index']);
-
+    Route::get('/all/comment' , [CommentController::class , 'show']);
 });
 
 Route::prefix('auth')->group(function(){
