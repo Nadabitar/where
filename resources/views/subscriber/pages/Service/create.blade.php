@@ -30,7 +30,7 @@
                         @csrf
                         <div class="row">
                             <div class="col-md-12">
-                                <input id="service-imag" class="form-control" type="file" name="image">
+                                <input id="service-imag" class="form-control" type="file" name="image" multiple>
                             </div>
                             
                             </div>

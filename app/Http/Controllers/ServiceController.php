@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\ServiceStoreRequest;
+use App\Http\Requests\ServiceUpdateRequest;
 use App\Models\Gallery;
 use App\Models\Places;
 use App\Models\Service;
@@ -70,22 +71,25 @@ class ServiceController extends Controller
         return View('subscriber.pages.Service.update' ,  compact('service' , 'place'));
     }
 
-    public function update(Request $request,$id)
+    public function update(ServiceUpdateRequest $request,$id)
     {
         $request->validated();
         $service = Service::find($id);
+        // dd(  $service);
         $service->placeId =$service->place->id ;
         $service->content = $request->content;
         $service->title =  $request->title;
         $service->save();
         
-        if($result = $this->getUrlImage($service , $request)){
-            return redirect()->route('subscriber.dashboard')->with([
+        if($result = $this->updateUrlImage($service , $request)){
+            // dd($result);
+            return redirect()->route('Service.all')->with([
                 'message' => 'Service Added successfully',
                 'alert-type' => 'success'
             ]);
         }else{
-            return back()->with(['error' => 'Something went error']);
+            // dd($result);
+            return back()->with(['errors' => 'Something went error']);
         }
     }
     
@@ -93,7 +97,7 @@ class ServiceController extends Controller
     {
         $service = Service::find($id);
         $service->delete();
-        return redirect()->back();
+        return redirect()->back()->with('success' , 'Deleted Successfuly');
     }
 
     public function getUrlImage(Service $service , Request $request)
@@ -106,6 +110,20 @@ class ServiceController extends Controller
 
         return $result;
     }
+
+    public function updateUrlImage(Service $service , Request $request)
+    {
+        $image = $request->hasFile('image')? $this->uploadImage($request->file('image')->getRealPath()): $this->returnError(201 , 'image is required') ;
+        $gallary = Gallery::where('serviceId' , $request->id)->first();
+        // dd($gallary);
+        $gallary->url = $image;
+
+        $result = $service->gallery()->save($gallary);
+
+        return $result;
+    }
+
+
 
     public function getServices(Request $request)
     {

@@ -37,7 +37,7 @@
           </div>
       </div>
       <!-- Search End -->
-
+@include('subscriber.partial.flash')
 <section class="service-section">
     <div class="container">
         <div class="row">
@@ -70,9 +70,12 @@
                               </div>
                             </td>
                             <td>{{$service->content}}</td>
-                              <td class="status"><span class=" {{$service->status == true ? 'active' : 'waiting'}}">
+                              <td class="status">
+                                {{-- <span class=" {{$service->status == true ? 'active' : 'waiting'}}">
                               {{$service->status == true ? 'Active' : 'Un-Active'}}
-                            </span></td>
+                            </span> --}}
+                            <input value="{{$service->id}}" name="toggle" type="checkbox" data-toggle="toggle" data-on="فعال" data-off="غير فعال" data-onstyle="success" data-offstyle="danger" data-size='xs' {{$service->status == 'active'? 'checked' : ' '}} >
+                          </td>
                             <td>
                                 <ul class="s-action">
                                   <li data-bs-toggle="modal" data-bs-target="#showPlace{{$service->id}}" style="color:var(--primary)" class="s-show">
@@ -159,4 +162,29 @@
 
 
 
+@endsection
+
+@section('scripts')
+<script>
+  $('input[name=toggle]').change(function(){
+      var mode = $(this).prop('checked');
+      var id  = $(this).val();
+      $.ajax({
+          url: "{{route('category.status')}}",
+          type : 'post' ,
+          data : {
+              _token : '{{csrf_token()}}',
+              mode : mode,
+              id : id,
+          },
+          success:function(response){
+              if(response.status){
+              alert(response.msg);
+              }else{
+                  alert('Please Try Again');
+              }
+          }
+      });
+  })
+</script>
 @endsection

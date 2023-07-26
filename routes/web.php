@@ -44,7 +44,7 @@ Route::prefix('subscriber')->group(function(){
         Route::get('/service/show' , [serviceController::class , 'show'])->name('Service.show');
         Route::post('/service/form/{id}' , [serviceController::class , 'store'])->name('Service.store');
         Route::get('/service/show/update/{id}' , [serviceController::class , 'edit'])->name('Service.show.update.form');
-        Route::get('/service/update/{id}' , [serviceController::class , 'edit'])->name('Service.update');
+        Route::Post('/service/update/{id}' , [serviceController::class , 'update'])->name('Service.update');
         Route::get('/service/delete/{id}' , [serviceController::class , 'destroy'])->name('Service.delete');
         Route::get('/new/{id}' , [serviceController::class , 'newService'])->name('Service.new');
         Route::get('/unactive/{id}' , [serviceController::class , 'unActiveService'])->name('Service.unActive');
