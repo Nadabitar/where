@@ -26,7 +26,7 @@ class ServiceUpdateRequest extends FormRequest
         return [
             'title' => 'required|string' ,
             'content' => 'required' , 
-            'image' => 'Nullable' ,
+            'image' => 'Nullable|array' ,
         ];
     }
 }

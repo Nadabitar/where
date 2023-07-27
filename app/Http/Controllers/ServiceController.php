@@ -38,6 +38,7 @@ class ServiceController extends Controller
 
     public function store(ServiceStoreRequest $request , $id)
     {
+        // dd($request);
         $request->validated();
         // Create
         $service = new Service();
@@ -102,11 +103,17 @@ class ServiceController extends Controller
 
     public function getUrlImage(Service $service , Request $request)
     {
-        $image = $request->hasFile('image')? $this->uploadImage($request->file('image')->getRealPath()): $this->returnError(201 , 'image is required') ;
-        $gallary = new Gallery();
-        $gallary->url = $image;
+        $result = null;
 
-        $result = $service->gallery()->save($gallary);
+        if ($request->hasFile('image')) {
+            foreach ($request->file('image') as  $img) {
+                $gallary = new Gallery();
+                $gallary->url = $this->uploadImage($img->getRealPath());
+                $result = $service->gallery()->save($gallary);
+            }
+        }else{
+            $this->returnError(201 , 'image is required') ;
+        }
 
         return $result;
     }

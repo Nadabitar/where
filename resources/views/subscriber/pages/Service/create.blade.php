@@ -17,10 +17,14 @@
     <div class="container-fluid">
         <div class="row">
             <div class="col-md-6">
-                <div class="owl-carousel header-carousel">
-                    <div class="owl-carousel-item">
-                        {{-- <img id="holder" style="margin-top:15px;max-height:100px;"> --}}
-                        <img class="img-fluid" src="{{asset('assets/img/Subscriber/1.jpg')}}" alt="">
+                <div class="col-12 animated fadeIn" id="file-result">
+                    <div  class="owl-carousel header-carousel">
+                            <div class="owl-carousel-item">
+                                    <img class="img-fluid" src="{{asset('assets/img/Subscriber/1.jpg')}}" alt="">
+                            </div>
+                            <div class="owl-carousel-item">
+                                <img class="img-fluid" src="{{asset('assets/img/Subscriber/2.jpg')}}" alt="">
+                            </div>
                     </div>
                 </div>
             </div>
@@ -30,7 +34,7 @@
                         @csrf
                         <div class="row">
                             <div class="col-md-12">
-                                <input id="service-imag" class="form-control" type="file" name="image" multiple>
+                                <input id="service-imag" class="form-control" type="file" name="image[]" multiple>
                             </div>
                             
                             </div>
@@ -62,4 +66,6 @@
 <script>
     $('#lfm').filemanager('image');
 </script>
+
+<script src="{{asset('assets/js/Subscriber/service.js')}}"></script>   
 @endsection
