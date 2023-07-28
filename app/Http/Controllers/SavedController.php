@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\saved;
+use App\Models\Service;
 use App\Models\User;
 use App\Traits\GenralTraits;
 use Illuminate\Http\Request;
@@ -15,22 +16,21 @@ class SavedController extends Controller
     use GenralTraits;
     public function index()
     {
-        // $user = User::where('id' , Auth::user()->id)->with('isSaved' , 'savedService')->first();
-        $places = DB::select(' select places.placeName , places.details , places.image , places.rate  ,saveds.* 
-        from places join  saveds
-        on  places.id = saveds.placeId 
-        where saveds.userId = ?' , [ Auth::user()->id]);
-
-        $services = DB::select('  select saveds.id as id , saveds.serviceId ,saveds.userId, services.placeId , services.content , services.title , galleries.url as url
-        from services join  saveds
-        on  services.id = saveds.serviceId
-        JOIN galleries 
-        ON services.id = galleries.serviceId
-        where saveds.userId = ?' , [ Auth::user()->id]);
+        $user = User::where('id' , Auth::user()->id)->with('isSaved' , 'savedService')->first();
+        // $places = DB::select(' select places.* , saveds.id as savesId , saveds.userId
+        // from places join  saveds
+        // on  places.id = saveds.placeId 
+        // where saveds.userId = ?' , [ Auth::user()->id]);
         
+        // $services = DB::select('select saveds.id as id , saveds.serviceId ,saveds.userId, services.placeId , services.content , services.title , galleries.url as url
+        // from services join  saveds
+        // on  services.id = saveds.serviceId
+        // JOIN galleries 
+        // ON services.id = galleries.serviceId
+        // where saveds.userId = ?' , [ Auth::user()->id]);
         $data = [
-            'places' => $places ,
-            'services' =>  $services ,
+            'places' => $user->isSaved(),
+            'services' =>  $user->savedService() ,
         ];
         return $this->returnData('saved' ,  $data );
     }
@@ -50,9 +50,12 @@ class SavedController extends Controller
             return response()->json($validation->errors());
         }
         $user = User::where('id' , Auth::user()->id)->first();
+        $service = Service::where('id' ,$request->serviceId)->first();
         if ($request->placeId) {
             $result = $user->isSaved()->attach($request->placeId);
         }else if($request->serviceId){
+            $service->count =  $service->count + 1;
+            $service->update();
             $result = $user->savedService()->attach($request->serviceId);
         }else{
             return  $this->returnError('400',"you need to pass Place Id or Service Id");

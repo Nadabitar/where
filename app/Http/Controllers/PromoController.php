@@ -99,7 +99,7 @@ class PromoController extends Controller
         if ($promo) {
             return $this->returnData('promo' , $promo );
         }else{
-            return $this->returnError('404' , "No promo to display");
+            return $this->returnData('promo' , $promo  , 'faild');
         }
     }
 }

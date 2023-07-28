@@ -103,16 +103,17 @@
                 <div class="row g-5 align-items-center">
                     <div class="col-lg-6 wow fadeIn" data-wow-delay="0.1s">
                         <div class="about-img position-relative overflow-hidden p-5 pe-0">
-                            <img class="img-fluid w-100" src="{{asset('assets/img/Subscriber/about.jpg')}}">
+                            <img class="img-fluid w-100" src="{{count($popularService->gallery) != 0 ? $popularService->gallery[0] : asset('assets/img/subscriber/noImage.jpg') }}">
                         </div>
                     </div>
                     <div class="col-lg-6 wow fadeIn" data-wow-delay="0.5s">
                         <div class="mb-4">
                             <h1 class="mb-3">الخدمة الأكثر انتشاراً بين الزبائن</h1>
-                            <p> الخدمة التي تم زيارتها بكثرة من قبل الزبائن في سبعة أيام الأخيرة المهتمين و المتابعين لكم </p>
+                            <h3> {{$popularService->title}}</h3>
+                            <p>{{$popularService->content}}</p>
                         </div>
-                        <a href="" class="btn btn-primary py-3 px-4 me-2"><i class="fa fa-eye me-2"></i>عرض</a>
-                        <a href="" class="btn btn-dark py-3 px-4"><i class="fa fa-comments me-2"></i>عرض التعليقات</a>
+                        <a href="" class="btn btn-primary py-3 px-4 me-2"><i class="fa fa-eye me-2"></i>عرض المستخدمين</a>
+                        <a href="{{route('Service.all')}}" class="btn btn-dark py-3 px-4"><i class="fa fa-comments me-2"></i>عرض كافة الخدمات</a>
                     </div>
                 </div>
             </div>
@@ -155,7 +156,7 @@
                                         style="width: 350px;
                                         height: 240px;" 
                                         >
-                                            <a href=""><img class="img-fluid w-100 postion-center" src="{{$service->gallery[0]->url}}" alt=""></a>
+                                            <a href=""><img class="img-fluid w-100 postion-center" src="{{count($service->gallery) != 0 ? $service->gallery[0]->url :  asset('assets/img/subscriber/noImage.jpg')  }}" alt=""></a>
                                             {{-- <div class="bg-primary rounded text-white position-absolute start-0 top-0 m-4 py-1 px-3">{{$services->isAd == true? إعلان : خدمة}}</div> --}}
                                             <div class="bg-white rounded-top text-primary position-absolute start-0 bottom-0 mx-4 pt-1 px-3"></div>
                                         </div>

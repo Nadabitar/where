@@ -11,6 +11,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
+use PhpParser\Node\Expr\Cast\Double;
 
 class CommentController extends Controller
 {
@@ -73,7 +74,7 @@ class CommentController extends Controller
                 "content" => $request->content ,
                 "rate" => $request->rating,
             ]);
-
+            $this->calculateRating( $placeId);
             if (!$result) {
                 return  $this->returnSuccessMessage("Added successfully");
             }else{  return  $this->returnError(400,"Some thing went error");}
@@ -171,4 +172,16 @@ class CommentController extends Controller
                 return  $this->returnError('400',"Something went error");
             }
     }
+
+    public function calculateRating($id){
+
+        $place = Places::find($id);
+        
+        $rating = DB::select("select SUM(comments.rate) / COUNT(comments.userId) as rate FROM comments where comments.placeId = ?" , [$id]);
+        $place->rate = doubleval($rating[0]->rate);
+        $place->update();
+
+        
+    }
+
 }

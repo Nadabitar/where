@@ -22,14 +22,9 @@ class CategorisController extends Controller
      */
     public function index(Request $request)
     {
-      if ($request->perPage) {
-        $categoris = Categoris::latest()->paginate($request->perPage);
-      }
-      else{
         $categoris = Categoris::latest()->get();
-      }
-
-      return $this->returnData('categoris' , $categoris , 'success' );
+        
+        return $this->returnData('categoris' , $categoris , 'success' );
     }
 
     public function show()
