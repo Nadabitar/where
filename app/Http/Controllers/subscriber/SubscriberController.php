@@ -21,7 +21,7 @@ class SubscriberController extends Controller
             $promote =Service::where(['placeId'=> $place->id , 'isPromo' => true ])->latest()->get();
             $comments = $place->comment ? $place->comment : null;
             $users =  $place->isSaved();
-            $popularService = $this->popular($place);
+            $popularService = Service::find($this->popular($place));
             return view('subscriber.pages.dashboard')->with([
                 'place' => $place ,
                 'services' =>  $services,
@@ -36,7 +36,12 @@ class SubscriberController extends Controller
 
     public function popular(Places  $place)
     {
-        $services = Service::where('placeId' ,  $place->id)->get();
+        if (count($place->services) == 0 ) {
+            return null;
+        }else{
+            $service = Service::where('placeId' ,  $place->id)->max('count');
+            return $service;
+        }
     }
 }
 
