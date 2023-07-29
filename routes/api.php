@@ -26,7 +26,7 @@ use Illuminate\Support\Facades\Auth;
 |
 */
 
-
+Route::post('/filter' , [PlacesController::class , 'filter']);
 
 Route::middleware('auth:sanctum')->prefix('/user')->group( function () {
     // return Auth::user();

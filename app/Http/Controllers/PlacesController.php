@@ -222,4 +222,18 @@ class PlacesController extends Controller
 
         return $this->returnData('places' , $places );
     }
+
+    public function filter(Request $request) {
+        $validation = Validator::make($request->all() , [
+            'category' => 'required|array',
+        ]);
+
+        if($validation->fails()){
+            return response()->json($validation->errors());
+        }
+
+        $places = Places::whereIn('categoryId' , $request->category[0] )->get();
+
+        return   $places ;
+    }
 }
