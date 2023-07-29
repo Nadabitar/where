@@ -59,6 +59,12 @@ Route::middleware('auth:sanctum')->prefix('/user')->group( function () {
     Route::post('/update/comment' , [CommentController::class , 'update']);
     Route::post('/get/comment' , [CommentController::class , 'index']);
     Route::get('/all/comment' , [CommentController::class , 'show']);
+
+
+    Route::prefix('auth')->group(function(){
+        Route::get('/change' ,[HomeController::class , 'changePassword']);
+        Route::post('/update' ,[HomeController::class , 'updatePassword']);
+    });
 });
 
 Route::prefix('auth')->group(function(){
