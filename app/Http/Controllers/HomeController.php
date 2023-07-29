@@ -103,17 +103,13 @@ class HomeController extends Controller
 
     public function logout(Request $request)
     {
-        // auth()->user()->tokens()->delete()->where('name' , $request->deviceId);
-        Auth::user()->tokens()->delete()->where('name' , $request->deviceId);
-        // // return  $request->token;
-            // $account = Auth::user();
-            // // return $account;
-            // $personalToken = PersonalAccessToken::findToken($request->token);
-            // // return $personalToken;
-            // if ($account->id == $personalToken->tokenable_id &&
-            //     get_class($account) == $personalToken->tokenable_type) {
-            //     $personalToken->delete();
-        // }
+        $result = Auth::user()->tokens()->where('name' , $request->deviceId)->delete();
+
+        if ($result) {
+            return $this->returnSuccessMessage('logout successfully');
+        }else {
+            return $this->returnError( '400','Something went error');
+        }
     }
 
     public function changePassword()

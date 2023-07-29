@@ -64,6 +64,7 @@ Route::middleware('auth:sanctum')->prefix('/user')->group( function () {
     Route::prefix('auth')->group(function(){
         Route::get('/change' ,[HomeController::class , 'changePassword']);
         Route::post('/update' ,[HomeController::class , 'updatePassword']);
+        Route::post('/logout' , [HomeController::class , 'logout']);
     });
 });
 
