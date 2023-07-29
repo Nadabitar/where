@@ -81,13 +81,7 @@ class UserController extends Controller
         $request->validate();
         $user = User::find(Auth::user()->id);
 
-        $user->email = $request->email;
         $user->fullName = $request->fullName;
-        // $user->password = Hash::make($request->password);
-        // $user->deviceId = $request->deviceId;
-        // $user->userType = $request->userType;
-        $user->gender = $request->gender;
-        $user->phone = $request->phone;
         $user->regionId = $request->regionId ;
         $user->streetId = $request->streetId;
 
