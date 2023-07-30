@@ -27,7 +27,7 @@
                         <div class="nav-item dropdown">
                             <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">الملف الشخصي</a>
                             <div class="dropdown-menu rounded-0 m-0">
-                                <a href="profile.html" class="dropdown-item">تعديل الملف الشخصي</a>
+                                <a href="{{route('Profile.show')}}" class="dropdown-item">تعديل الملف الشخصي</a>
                                 <a href="{{route('logout')}}" class="dropdown-item">تسجيل الخروح</a>
                             </div>
                         </div>
