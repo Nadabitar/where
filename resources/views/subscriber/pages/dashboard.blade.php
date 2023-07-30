@@ -3,7 +3,7 @@
 @section('content')
 
         @include('subscriber.partial.navbar', ['place'=>$place ,
-                                                'services' => $services])
+                                                'promo' => $promo])
 
         <!-- Search Start -->
         <div class="container-fluid bg-primary mb-5 wow fadeIn" data-wow-delay="0.1s" style="padding: 35px;">
@@ -66,7 +66,7 @@
                                     <img class="img-fluid" src="{{asset('assets/img/Subscriber/advertising.ico')}}" alt="Icon">
                                 </div>
                                 <h6>إعلانات</h6>
-                                <span>{{count($promote)}}</span>
+                                <span>{{count($promo)}}</span>
                             </div>
                         </a>
                     </div>
@@ -201,6 +201,7 @@
                 <div class="text-center mx-auto mb-5 wow fadeInUp" data-wow-delay="0.1s" style="max-width: 600px;">
                     <h1 class="mb-3">ماذا يقول عملائكم عنكم</h1>
                     <p>سيتم عرض بعض الأراءالتي تم نشرها من قبل عملائكم عن الخدمات المقدمة من قبلكم</p>
+                    <a href="{{route('Comments.All' , $place->id )}}">عرض كافة التعليقات</a>
                 </div>
                 <div class="owl-carousel testimonial-carousel wow fadeInUp" data-wow-delay="0.1s">
                     @forelse ($comments as $comment)

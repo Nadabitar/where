@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\{
     HomeController,
     CategorisController,
+    CommentController,
     PlacesController,
     PromoController,
     RegionController,
@@ -55,5 +56,12 @@ Route::prefix('subscriber')->group(function(){
         Route::get('/page' , [PromoController::class , 'index'])->name('Advertising');
         Route::post('/save/{id}' , [PromoController::class , 'store'])->name('Advertising.save');
         Route::get('/drop/{id}' , [PromoController::class , 'index'])->name('Advertising.drop');
+    });
+
+    
+    Route::prefix('comments')->controller(PromoController::class)->group(function ()
+    {
+        Route::get('/All/{id}' , [CommentController::class , 'getCommetsForPlaces'])->name('Comments.All');
+        Route::post('/search/name' , [CommentController::class , 'searchCommentsByName'])->name('Comments.search');
     });
 });

@@ -18,14 +18,14 @@ class SubscriberController extends Controller
 
         if ($place->isAccepted) {
             $services = Service::where('placeId' , $place->id)->orderBy('created_at','desc')->take(9)->get();
-            $promote =Service::where(['placeId'=> $place->id , 'isPromo' => true ])->latest()->get();
+            $promo =Service::where(['placeId'=> $place->id , 'isPromo' => true ])->latest()->get();
             $comments = $place->comment ? $place->comment : null;
             $users =  $place->isSaved();
             $popularService = Service::find($this->popular($place));
             return view('subscriber.pages.dashboard')->with([
                 'place' => $place ,
                 'services' =>  $services,
-                'promote'=> $promote,
+                'promo'=> $promo,
                 'comments' => $comments,
                 'users' => $users,
                 'popularService' => $popularService
@@ -33,6 +33,7 @@ class SubscriberController extends Controller
         }
         return  View('errors.503');
     }
+    
 
     public function popular(Places  $place)
     {

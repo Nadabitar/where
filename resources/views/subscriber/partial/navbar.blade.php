@@ -46,7 +46,7 @@
                 <div class="row g-0 align-items-center flex-column-reverse flex-md-row">
                     <div class="col-12 animated fadeIn">
                         <div class="owl-carousel header-carousel">
-                                @forelse ($promote as $item)
+                                @forelse ($promo as $item)
                                 <div class="owl-carousel-item">
                                     @if (count($item->gallery) != 0)
                                         <img class="img-fluid" src=" {{$item->gallery[0]->url}}" alt="">
