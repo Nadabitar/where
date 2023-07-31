@@ -10,6 +10,7 @@ use App\Http\Controllers\{
     PlacesController,
     PromoController,
     RegionController,
+    MapController,
     ServiceController,
     UserController,
 };
@@ -80,3 +81,5 @@ Route::prefix('subscriber')->group(function(){
         Route::get('/update/subCategor' , [UserController::class , 'updateSubCategor'])->name('Profile.update.subCategory');
     });
 });
+
+Route::get('/map',  [MapController::class , 'index']);
