@@ -11,6 +11,7 @@ use App\Http\Controllers\PromoController;
 use App\Http\Controllers\RegionController;
 use App\Http\Controllers\SavedController;
 use App\Http\Controllers\ServiceController;
+use App\Http\Controllers\UserController;
 use App\Models\Places;
 use Illuminate\Support\Facades\Auth;
 
@@ -24,14 +25,17 @@ use Illuminate\Support\Facades\Auth;
 | is assigned the "api" middleware group. Enjoy building your API!
 |
 */
-
-
-
+Route::post('/filterByName' , [PlacesController::class , 'filterPlaceName']);
 Route::middleware('auth:sanctum')->prefix('/user')->group( function () {
     // return Auth::user();
 
     Route::get('/get/all/cat' , [CategorisController::class , 'index']);
+    Route::post('/get/child/cat' , [CategorisController::class , 'get_cat_by_parent']);
     Route::get('/get/promo' , [PromoController::class , 'getPromoUrl']);
+    Route::post('/searchByPlaceName' , [PlacesController::class , 'searchByPlaceName']);
+    Route::post('/searchPlaceByCategory' , [PlacesController::class , 'searchPlaceByCategory']);
+    Route::post('/searchByName' , [CategorisController::class , 'searchByName']);
+    Route::post('/update/profile' , [UserController::class , 'update']);
 
     Route::prefix('saved')->group(function(){
         Route::Post('/store' ,  [SavedController::class , 'store']);
@@ -45,22 +49,33 @@ Route::middleware('auth:sanctum')->prefix('/user')->group( function () {
         Route::post('/get' , [PlacesController::class,'index']);
         Route::post('/get/services' , [ServiceController::class,'getServices']);
         Route::post('/get/byCategory' , [PlacesController::class,'getPlaceByCat']);
-
+        Route::post('/filter' , [PlacesController::class , 'filter']);
+        Route::post('/filterByName' , [PlacesController::class , 'filterPlaceName']);
     });
 
     Route::post('/add/comment' , [CommentController::class , 'store']);
+    Route::post('/destroy/comment' , [CommentController::class , 'destroy']);
     Route::post('/update/comment' , [CommentController::class , 'update']);
     Route::post('/get/comment' , [CommentController::class , 'index']);
+    Route::get('/all/comment' , [CommentController::class , 'show']);
 
+
+    Route::prefix('auth')->group(function(){
+        Route::get('/change' ,[HomeController::class , 'changePassword']);
+        Route::post('/update' ,[HomeController::class , 'updatePassword']);
+        Route::post('/logout' , [HomeController::class , 'logout']);
+    });
 });
 
 Route::prefix('auth')->group(function(){
     Route::post('/login' , [HomeController::class , 'login']);
-    Route::post('/logout/{token?}' , [HomeController::class , 'logout'])->middleware('auth:sanctum');
+    Route::post('/logout/{token?}' , [HomeController::class , 'logout']);
     Route::post('/register' , [HomeController::class , 'register']);
 });
 
-Route::post('/uploadimg' , [PlacesController::class , 'sendimg']);
+// Route::post('/uploadimg' ,function(){
+//     Places::where('place_id',$id)->selectRaw('SUM(rating)/COUNT(user_id) AS avg_rating')->first()->avg_rating;
+// });
 
 
 Route::get('/get/all/region' , [RegionController::class , 'index']);

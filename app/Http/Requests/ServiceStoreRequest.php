@@ -26,7 +26,7 @@ class ServiceStoreRequest extends FormRequest
         return [
             'title' => 'required|string' ,
             'content' => 'required' , 
-            'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:10000',
+            'image' => 'required|array',
         ];
     }
 }

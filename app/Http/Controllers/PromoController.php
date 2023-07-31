@@ -11,6 +11,7 @@ use App\Traits\GenralTraits;
 use App\Traits\ImageTraits;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
 
 class PromoController extends Controller
@@ -89,14 +90,16 @@ class PromoController extends Controller
 
     public function getPromoUrl()
     {
-        $promo = Gallery::WhereHas('service' , function ($query)
-        {
-            $query->where('placeId' ,  $this->get_Place()->id)->where('isAd' , 1);
-        })->latest()->get();
+        $promo = DB::select(' select services.* , galleries.url as url 
+        from services join  galleries
+        on  services.id = galleries.serviceId
+        where services.isPromo = 1
+         ORDER BY services.created_at');
 
-        for ($i=0; $i < count($promo); $i++) { 
-            $promo[$i]['placeId'] = $promo[$i]->service->placeId;
+        if ($promo) {
+            return $this->returnData('promo' , $promo );
+        }else{
+            return $this->returnData('promo' , $promo  , 'faild');
         }
-        return $promo;
     }
 }

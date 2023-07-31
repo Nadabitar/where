@@ -1,169 +1,264 @@
 @extends('subscriber.app')
+
+@section('header')
+<link href="{{asset('assets/css/subscriber/profile.css')}}" rel="stylesheet">
+@endsection
 @section('content')
     
-            {{-- @include('subscriber.partial.top') --}}
-                <!-- breadcrumb start -->
-                <div class="breadcrumb-area" id="profile-enter">
-                    <div class="container-fluid text-center">
-                        <div class="breadcrumb-stye gray-bg ptb-100">
-                            <label for="images" class="drop-container">
-                                <span class="drop-title">Drop files here</span>
-                                or
-                                <input id="place-image" type="file" name="image"  accept="image/jpeg, image/png, image/jpg" required>
-                            </label>
+          
+<section id="info-page">
+    <div class="info">
+        <div class="row p-0 m-0">
+            <div class="col-md-12">
+                    <div class="container">
+                        <div class="drag-image mt-5">
+                            {{-- <div class="icon"><i class="fas fa-cloud-upload-alt"></i></div>
+                            <h6>Drag & Drop File Here</h6> --}}
+                            <img src="{{$place->image}}" alt="image">
                         </div>
-                    </div>
-                </div>
-                <!-- breadcrumb end -->
-                <!-- contact-area start -->
-                <div class="contact-area ptb-100">
-                    <div class="container-fluid map-contact">
+                        {{-- PLace inpuuuuuuuut --}}
                         <div class="row">
-                            <div class="col-lg-7 col-md-7 col-sm-12 text-center">
-                                <div class="contact-from gray-bg">
-                                    <form id="contact-form" action="mail.php" method="post">
-                                        <input name="placeName" type="text" placeholder="Brand Name">
-                                        <input name="phoneNumber" type="email" placeholder="Phone Number">
-                                        <input name="workTime" type="text" placeholder="Work Time">
-                                        <textarea name="details" placeholder="Your message"></textarea>
-                                    </form>
-                                    <p class="form-messege"></p>
-                                </div>
-                            </div>
-                            <div class="col-lg-5 col-md-5 col-sm-12">
-                                <div class="communication contact-from">
-                                    <form action="" method="post">
-                                        <div class="single-communication">
-                                        <div class="communication-icon">
-                                            <i class="fa fa-facebook" aria-hidden="true"></i>
-                                        </div>
-                                        <div class="communication-text">
-                                            <!-- <h3>Facebook:</h3> -->
-                                            <input type="url" placeholder="Facebook">
-                                        </div>
-                                        </div>
-                                        <div class="single-communication">
-                                            <div class="communication-icon">
-                                                <i class="fa fa-whatsapp" aria-hidden="true"></i>
-                                            </div>
-                                            <div class="communication-text">
-                                                <!-- <h3>What's up:</h3> -->
-                                                <input type="url" placeholder="What's Up">
-                                            </div>
-                                        </div>
-                                        <div class="single-communication">
-                                            <div class="communication-icon">
-                                                <i class="fa fa-instagram" aria-hidden="true"></i>
-                                            </div>
-                                            <div class="communication-text">
-                                                <!-- <h3>Instagram</h3> -->
-                                                <input type="url" placeholder="Instagram">
-                                            </div>
-                                        </div>
-                                        <div class="single-communication">
-                                            <div class="communication-icon">
-                                                <i class="fa fa-envelope-o" aria-hidden="true"></i>
-                                            </div>
-                                            <div class="communication-text">
-                                                <!-- <h3>Gmail:</h3> -->
-                                                <input type="url" placeholder="Gmail">
-                                            </div>
-                                        </div>
-                                    </form>
-                                </div>
-                            </div>
-                        </div>
-    
-                        <div class="row put-margin">
-                            <div class="col-lg-7 col-md-7 col-sm-12 text-center">
-                                <div class="contact-from gray-bg">
-                                    <form id="contact-form" action="mail.php" method="post">
-                                        <select class="form-control">
-                                            <option class="hidden"  selected disabled>Region</option>
-                                            <option>What is your Birthdate?</option>
-                                            <option>What is Your old Phone Number</option>
-                                            <option>What is your Pet Name?</option>
-                                        </select>
-    
-                                        <select class="form-control">
-                                            <option class="hidden"  selected disabled>Street</option>
-                                            <option>What is your Birthdate?</option>
-                                            <option>What is Your old Phone Number</option>
-                                            <option>What is your Pet Name?</option>
-                                        </select>
-                                    </form>
-                                    <p class="form-messege"></p>
-                                </div>
-                            </div>
-                            <div class="col-lg-5 col-md-5 col-sm-12">
-                                <div class="communication contact-from">
-                                    <form action="" method="post">
-                                        <select class="form-control">
-                                            <option class="hidden"  selected disabled>Category</option>
-                                            <option>What is your Birthdate?</option>
-                                            <option>What is Your old Phone Number</option>
-                                            <option>What is your Pet Name?</option>
-                                        </select>
-    
-                                        <select class="form-control">
-                                            <option class="hidden"  selected disabled>Sub Category</option>
-                                            <option>What is your Birthdate?</option>
-                                            <option>What is Your old Phone Number</option>
-                                            <option>What is your Pet Name?</option>
-                                        </select>
-                                    </form>
-                                </div>
-                            </div>
-                        </div>
-    
-                        <!-- <div class="row put-margin">
-                            <div class="col">
-                                <div class="contact-from gray-bg">
-                                    <form id="contact-form" action="mail.php" method="post">
-                                        <select class="form-control">
-                                            <option class="hidden"  selected disabled>Category</option>
-                                            <option>What is your Birthdate?</option>
-                                            <option>What is Your old Phone Number</option>
-                                            <option>What is your Pet Name?</option>
-                                        </select>
-                                        <select class="form-control">
-                                            <option class="hidden"  selected disabled>Sub Category</option>
-                                            <option>What is your Birthdate?</option>
-                                            <option>What is Your old Phone Number</option>
-                                            <option>What is your Pet Name?</option>
-                                        </select>
-    
-                                        <select class="form-control">
-                                            <option class="hidden"  selected disabled>Please select your Sequrity Question</option>
-                                            <option>What is your Birthdate?</option>
-                                            <option>What is Your old Phone Number</option>
-                                            <option>What is your Pet Name?</option>
-                                        </select>
-    
-                                        <select class="form-control">
-                                            <option class="hidden"  selected disabled>Please select your Sequrity Question</option>
-                                            <option>What is your Birthdate?</option>
-                                            <option>What is Your old Phone Number</option>
-                                            <option>What is your Pet Name?</option>
-                                        </select>
-                                    </form>
-                                    <p class="form-messege"></p>
-                                </div>
-                            </div>
-                        </div> -->
-                    </div>
-                </div>
-                <div class="contact-map pb-100">
-                    <div id="hastech">Mappppppps</div>
-                </div>
-    
-                <div  class="breadcrumb-area">
-                    <button class="submit" type="submit">Send Information</button>
-                </div>
-                <!-- contact-area end -->
+                            <form enctype="multipart/form-data"   action="{{route('Place.store')}}" method="post">
+                                @csrf
+                                <div class="col-lg-12 col-md-12">
+                                    <div class="checkbox-form" dir="rtl">						
+                                        <h3>تعديل تفاصيل المكان</h3>
+                                        <div class="row">
 
-        
+                                            <div class="col-md-12 checkbox-line ">
+                                                <div class="checkout-form-list">
+                                                    <form action="{{ route('Profile.update.Image')}}" method="GET">
+                                                        <div class="row">
+                                                            <div class="col-10">
+                                                                <label>image</label>
+                                                                <input  type="file" name="image" id="img-place">
+                                                            </div>
+                                                            <div class="col-2">
+                                                                <div class="Edit-button">
+                                                                    <input type="submit" value="تعديل الصورة" value="{{ $place->image }}" />
+                                                                </div>		
+                                                            </div>
+                                                        </div>
+                                                    </form>
+                                                </div>  
+                                                
+                                            </div>
+
+                                            <div class="col-md-12 checkbox-line ">
+                                                <div class="checkout-form-list">
+                                                    <form action="{{ route('Profile.update.category')}}" method="GET" >
+                                                        <div class="row">
+                                                            <div class="col-10">
+                                                                <label>الصنف التابع له المكان <span class="required">*</span></label>
+                                                                <select id="category" name="categoryId">
+                                                                    @foreach (\App\Models\Categoris::where( 'isParent' ,true)->get() as $item)
+                                                                        <option value="{{$item->id}}"  {{$item->id == $place->categoryId ? 'selected' : ' '}}>{{$item->name}}</option>
+                                                                    @endforeach
+                                                                </select> 
+                                                            </div>
+                                                            <div class="col-2">
+                                                                <div class="Edit-button">
+                                                                    <input type="submit" value="تعديل الصنف الرئيسي" />
+                                                                </div>		
+                                                            </div>
+                                                        </div>
+                                                    </form>										
+                                                </div>
+                                            </div>
+
+                                            <div id="sub-category-box" class="col-md-12 checkbox-line">
+                                                <form action="{{ route('Profile.update.subCategory')}}" method="GET"  >
+                                                    <div class="row">
+                                                        <div class="col-10">
+                                                            <div class="country-select">
+                                                                <label>الصنف الفرعي <span class="required">*</span></label>
+                                                                <select  id="sub-category" name="subCategoryId">
+                                                                    @foreach (\App\Models\Categoris::where('parentId' , $place->categoryId)->get() as $item)
+                                                                        <option value="{{$item->id}}"  {{$item->id == $place->subCategoryId ? 'selected' : ' '}}>{{$item->name}}</option>
+                                                                    @endforeach
+                                                                </select> 										
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-2">
+                                                            <div class="Edit-button">
+                                                                <input type="submit" value="تعديل الصنف الفرعي" />
+                                                            </div>		
+                                                        </div>
+                                                    </div>
+                                                </form>		
+                                            </div>
+
+                                            <div class="col-md-12 checkbox-line ">
+                                                <div class="checkout-form-list">
+                                                    <form action="{{ route('Profile.update.placeName')}}" method="GET"  >
+                                                        <div class="row">
+                                                            <div class="col-10">
+                                                                <label>اسم المكان</label>
+                                                                <input name="placeName" type="text" placeholder="اسم المكان" value="{{ $place->placeName }}" />
+                                                                @error('placeName')
+                                                                <span class="invalid-feedback" role="alert">
+                                                                    <strong>{{ $message }}</strong>
+                                                                </span>
+                                                                @enderror
+                                                            </div>
+                                                            <div class="col-2">
+                                                                <div class="Edit-button">
+                                                                    <input type="submit" value="تعديل اسم المكان" />
+                                                                </div>		
+                                                            </div>
+                                                        </div>
+                                                    </form>		
+                                                </div>
+                                            </div>
+
+                                            <div class="col-md-12 checkbox-line ">
+                                                <div class="checkout-form-list">
+                                                    <form action="{{ route('Profile.update.phoneNumber')}}" method="GET"  >
+                                                        <div class="row">
+                                                            <div class="col-10">
+                                                                <label>رقم الهاتف <span class="required">*</span></label>
+                                                                <input type="text" placeholder="رقم الهاتف" name="phoneNumber"  value="{{ $place->phone}}"/>
+                                                                <input style="margin: 15px 8px" type="text" name="addtionalPhone" placeholder="هل هناك رقم تواصل أخر!!" />
+                                                                @error('phoneNumber')
+                                                                <span class="invalid-feedback" role="alert">
+                                                                    <strong>{{ $message }}</strong>
+                                                                </span>
+                                                                @enderror										
+                                                            </div>
+                                                            <div class="col-2">
+                                                                <div class="Edit-button">
+                                                                    <input type="submit" value="تعديل رقم الهاتف" />
+                                                                </div>		
+                                                            </div>
+                                                        </div>
+                                                    </form>		
+                                                </div>
+                                            </div>
+    
+                                            <div class="col-md-12 checkbox-line" >
+                                                <div class="checkout-form-list">
+                                                    <form action="{{ route('Profile.update.workTime')}}" method="GET"  >
+                                                        <div class="row">
+                                                            <div class="col-10">
+                                                                <div class="row">
+                                                                    <div class="col-6">
+                                                                        <label>وقت العمل <span class="required">*</span></label> 
+                                                                        {{-- <span style="display: none" class="from-massege text-danger">وقت الافتتاح يجب أن يكون قبل وقت الإغلاق </span> --}}
+                                                                        <span style="display: none"  class="time-massege text-info">أدخل الوقت بنظام الإثنى عشر ساعة </span>
+                                                                        <input  id="from" type="text" placeholder="من" name="from"  value="{{ $place->workTime }}"/>
+                                                                        <span style="display: none"  class="num-from-massege text-danger">فقط أرقام لا يسمح بالأحرف</span>
+                                                                        @error('from')
+                                                                        <span class="invalid-feedback" role="alert">
+                                                                            <strong>{{ $message }}</strong>
+                                                                        </span>
+                                                                        @enderror
+                                                                    </div>
+                                                                    <div class="col-6">
+                                                                        <label>وقت العمل <span class="required">*</span></label>								
+                                                                        <input id="to" type="text" placeholder="إلى" name="to" value="{{ $place->workTime }}" />
+                                                                        <span style="display: none" class="to-massege text-danger"> وقت الإغلاق يجب أن يكون بعد وقت الافتتاح</span>
+                                                                        <span style="display: none"  class="num-to-massege text-danger">فقط أرقام لا يسمح بالأحرف</span>
+                                                                        @error('to')
+                                                                        <span class="invalid-feedback" role="alert">
+                                                                            <strong>{{ $message }}</strong>
+                                                                        </span>
+                                                                        @enderror
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-2">
+                                                                <div class="Edit-button">
+                                                                    <input type="submit" value="تعديل اوقات الدوام" />
+                                                                </div>		
+                                                            </div>
+                                                        </div>
+                                                    </form>		
+                                                </div>
+                                            </div>
+                                        
+                                            <div class="col-md-12 checkbox-line" >
+                                                <div class="checkout-form-list">
+                                                    <form action="{{ route('Profile.update.links')}}" method="GET"  >
+                                                        <div class="row">
+                                                            <div class="col-10">
+                                                                <div class="row">
+                                                                    <div class="col-md-4">
+                                                                        <label> الواتس آب</label>										
+                                                                        <input name="whats" type="text" placeholder="  آب/رابط مجموعة"  value="{{ $place->links['whats'] }}"/>
+                                                                        @error('whats')
+                                                                        <span class="invalid-feedback" role="alert">
+                                                                            <strong>{{ $message }}</strong>
+                                                                        </span>
+                                                                        @enderror
+                                                                    </div>
+                                                                    <div class="col-md-4">
+                                                                        <label>فيسبوك </label>										
+                                                                        <input name="facebook" type="text" placeholder="فيسبوك " value="{{ $place->links['facebook'] }}" />
+                                                                        @error('facebook')
+                                                                        <span class="invalid-feedback" role="alert">
+                                                                            <strong>{{ $message }}</strong>
+                                                                        </span>
+                                                                        @enderror
+                                                                    </div>
+                                                                    <div class="col-md-4">
+                                                                        <label>انستغرام</label>										
+                                                                        <input name="instagram" type="text" placeholder="انستغرام" value="{{ $place->links['instagram'] }}" />
+                                                                        @error('instagram')
+                                                                        <span class="invalid-feedback" role="alert">
+                                                                            <strong>{{ $message }}</strong>
+                                                                        </span>
+                                                                        @enderror
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-2">
+                                                                <div class="Edit-button">
+                                                                    <input type="submit" value="تعديل روابط التواصل" />
+                                                                </div>		
+                                                            </div>
+                                                        </div>
+                                                    </form>		
+                                                </div>
+                                            </div>
+
+                                            <div class="col-md-12 checkbox-line" >
+                                                <div class="checkout-form-list">	
+                                                    <form action="{{ route('Profile.update.Details')}}" method="GET"  >
+                                                        <div class="row">
+                                                            <div class="col-10">
+                                                                <div class="country-select">
+                                                                    <label> تفاصيل  <span class="required">*</span></label>								
+                                                                    <input type="text" placeholder="تفاصيل" name="details"  value="{{ $place->details }}"/>
+                                                                    @error('details')
+                                                                    <span class="invalid-feedback" role="alert">
+                                                                        <strong>{{ $message }}</strong>
+                                                                    </span>
+                                                                    @enderror										
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-2">
+                                                                <div class="Edit-button">
+                                                                    <input type="submit" value="تعديل الوصف عن المكان" />
+                                                                </div>		
+                                                            </div>
+                                                        </div>
+                                                    </form>		
+                                                </div>
+                                            </div>
+                                        </div>											
+                                    </div>
+                                </div>	
+                                <div class="save-button">
+                                    <input type="submit" value="حفظ" />
+                                </div>		
+                            </form>
+                        </div>
+
+                    </div>
+            </div>
         </div>
+    </div>
+</section>
 @endsection
 
 @section('script')
@@ -199,6 +294,7 @@
         }
         google.maps.event.addDomListener(window, 'load', initialize);
     </script>
-    <script src="{{asset('assets/js/Subscriber/profile.js')}}"></script>   
+    {{-- <script src="{{asset('assets/js/Subscriber/profile.js')}}"></script>    --}}
+  <script src="{{asset('assets/js/Subscriber/info.js')}}"></script>   
 
 @endsection

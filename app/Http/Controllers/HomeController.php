@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Mail\SendCodeMail;
 use App\Models\Comment;
 use App\Models\Places;
 use App\Models\Service;
@@ -10,7 +11,10 @@ use App\Traits\GenralTraits;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Validator;
+
+use function PHPUnit\Framework\returnSelf;
 
 class HomeController extends Controller
 {
@@ -99,16 +103,44 @@ class HomeController extends Controller
 
     public function logout(Request $request)
     {
-        auth()->user()->tokens()->delete()->where('name' , $request->deviceId);
+        $result = Auth::user()->tokens()->where('name' , $request->deviceId)->delete();
 
-        // // return  $request->token;
-            // $account = Auth::user();
-            // // return $account;
-            // $personalToken = PersonalAccessToken::findToken($request->token);
-            // // return $personalToken;
-            // if ($account->id == $personalToken->tokenable_id &&
-            //     get_class($account) == $personalToken->tokenable_type) {
-            //     $personalToken->delete();
-        // }
+        if ($result) {
+            return $this->returnSuccessMessage('logout successfully');
+        }else {
+            return $this->returnError( '400','Something went error');
+        }
+    }
+
+    public function changePassword()
+    {
+        $c = rand(100000, 500000);
+        $code = [
+            'yourCode' =>   $c ,
+        ];
+        Mail::to(Auth::user()->email)->send(new SendCodeMail($code));
+
+        return $this->returnData('code' ,   $c  , 'Check your Email');
+    }
+    public function updatePassword(Request $request)
+    {
+        $validation = Validator::make($request->all() , [
+            'newPassword' => 'required'
+        ]);
+        if($validation->fails()){
+            return response()->json($validation->errors());
+        }
+
+        $user = User::where('id' , Auth::user()->id)->first();
+
+        $user->password = Hash::make($request->newPassword);
+
+        $result = $user->update();
+        
+        if ($result) {
+            return $this->returnSuccessMessage('updated password successfully');
+        }else {
+            return $this->returnError( '400','Something went error');
+        }
     }
 }

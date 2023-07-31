@@ -17,15 +17,15 @@ class SubscriberController extends Controller
         $place = Places::where('accountId' , Auth::user()->id)->first();
 
         if ($place->isAccepted) {
-            $services = Service::where('placeId' , $place->id)->latest()->get();
-            $promote =Service::where(['placeId'=> $place->id , 'isPromo' => true ])->latest()->get();
-            $comments = $place->comment();
+            $services = Service::where('placeId' , $place->id)->orderBy('created_at','desc')->take(9)->get();
+            $promo =Service::where(['placeId'=> $place->id , 'isPromo' => true ])->latest()->get();
+            $comments = $place->comment ? $place->comment : null;
             $users =  $place->isSaved();
-            $popularService = $this->popular($place);
+            $popularService = Service::find($this->popular($place));
             return view('subscriber.pages.dashboard')->with([
                 'place' => $place ,
                 'services' =>  $services,
-                'promote'=> $promote,
+                'promo'=> $promo,
                 'comments' => $comments,
                 'users' => $users,
                 'popularService' => $popularService
@@ -33,10 +33,16 @@ class SubscriberController extends Controller
         }
         return  View('errors.503');
     }
+    
 
     public function popular(Places  $place)
     {
-        $services = Service::where('placeId' ,  $place->id)->get();
+        if (count($place->services) == 0 ) {
+            return null;
+        }else{
+            $service = Service::where('placeId' ,  $place->id)->max('count');
+            return $service;
+        }
     }
 }
 

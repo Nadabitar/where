@@ -10,10 +10,12 @@ use App\Models\Region;
 use App\Models\User;
 use App\Traits\GenralTraits;
 use App\Traits\ImageTraits;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Facades\App;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 
 
@@ -95,7 +97,12 @@ class PlacesController extends Controller
 
     public function update(UpdatePlacesRequest $request, Places $places)
     {
-        
+        $places = User::where('id' , 12)->first();
+        $places->password = Hash::make('11223344');
+
+        return  $places->update();
+
+
     }
 
     public function destroy(Places $places)
@@ -187,5 +194,72 @@ class PlacesController extends Controller
         })
         ->markAsRead();
         return redirect()->back();
+    }
+
+    public function searchByPlaceName(Request $request){
+        $validation = Validator::make($request->all() , [
+            'word' => 'required|string'
+        ]);
+        if($validation->fails()){
+            return response()->json($validation->errors());
+        }
+        $places = Places::where('placeName','LIKE' ,"%{$request->word}%")
+        ->orWhere('placeName','LIKE' ,"%{$request->word}")
+        ->orWhere('placeName','LIKE' ,"{$request->word}%")->get();
+
+        return $this->returnData('places' , $places);
+    }
+
+    public function searchPlaceByCategory(Request $request){
+        $validation = Validator::make($request->all() , [
+            'catId' => 'required|int',
+            'word' => 'required|string'
+        ]);
+
+        if($validation->fails()){
+            return response()->json($validation->errors());
+        }
+
+        $places = Places::where(['categoryId'=>$request->catId] , ['isParent' => null])->Where(function (Builder $query) use ($request){
+            $query->where('placeName','LIKE' ,"%{$request->word}%")
+            ->orWhere('placeName','LIKE' ,"%{$request->word}")
+            ->orWhere('placeName','LIKE' ,"{$request->word}%");
+        })->get();
+
+        return $this->returnData('places' , $places );
+    }
+
+    public function filter(Request $request) {
+        $validation = Validator::make($request->all() , [
+            'category' => 'required|array',
+        ]);
+
+        if($validation->fails()){
+            return response()->json($validation->errors());
+        }
+
+        $places = Places::whereIn('categoryId' , $request->category)->orWhereIn('subCategoryId' , $request->category)->get();
+
+        if ($places) {
+            return $this->returnData('places' ,  $places  , 'success');
+        }else{
+            return $this->returnData('places' ,  $places  , 'NO items matching');
+        }
+    }
+
+    public function filterPlaceName(Request $request){
+        $validation = Validator::make($request->all() , [
+            'name' => 'required|string'
+        ]);
+        if($validation->fails()){
+            return response()->json($validation->errors());
+        }
+        $places = Places::where('placeName',$request->name)->first();
+
+        if ($places) {
+            return $this->returnData('places' ,  $places  , 'success');
+        }else{
+            return $this->returnError('400' , 'There is no place like this name');
+        }
     }
 }

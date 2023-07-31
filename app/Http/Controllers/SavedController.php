@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\saved;
+use App\Models\Service;
 use App\Models\User;
 use App\Traits\GenralTraits;
 use Illuminate\Http\Request;
@@ -15,22 +16,21 @@ class SavedController extends Controller
     use GenralTraits;
     public function index()
     {
-        $user = User::where('id' , Auth::user()->id)->with('isSaved' , 'savedService')->first();
 
-        // foreach ($user->isSaved as $item) {
-        //     $item['region'] = User::where('id' ,$item->accountId)->first()->region->name;
-        //     $item['street'] = User::where('id' ,$item->accountId)->first()->street->name;
-        // }
+        $user = User::where('id' , Auth::user()->id)->with('isSaved')->first();
+      
+        $services = DB::select('select saveds.id as id , saveds.serviceId ,saveds.userId, services.placeId , services.content , services.title , galleries.url as url
+        from services join  saveds
+        on  services.id = saveds.serviceId
+        JOIN galleries 
+        ON services.id = galleries.serviceId
+        where saveds.userId = ?' , [ Auth::user()->id]);
         
         $data = [
-            'places' =>  $user->isSaved ,
-            'services' =>  $user->savedService ,
+            'places' => $user->isSaved,
+            'services' =>   $services ,
         ];
-        if ($user) {
-            return $this->returnData('saved' ,  $data );
-        }else{
-            return $this->returnError('saved' ,  $data  , 'there is no saveds');
-        }
+        return $this->returnData('saved' ,  $data );
     }
 
     public function create()
@@ -41,17 +41,22 @@ class SavedController extends Controller
     public function store(Request $request)
     {
         $validation = Validator::make($request->all() , [
-            'placeId' => 'sometimes|int',
-            'serviceId' => 'sometimes|int'
+            'placeId' => 'required|sometimes|int',
+            'serviceId' => 'required|sometimes|int'
         ]);
         if($validation->fails()){
             return response()->json($validation->errors());
         }
         $user = User::where('id' , Auth::user()->id)->first();
+        $service = Service::where('id' ,$request->serviceId)->first();
         if ($request->placeId) {
             $result = $user->isSaved()->attach($request->placeId);
-        }else{
+        }else if($request->serviceId){
+            $service->count =  $service->count + 1;
+            $service->update();
             $result = $user->savedService()->attach($request->serviceId);
+        }else{
+            return  $this->returnError('400',"you need to pass Place Id or Service Id");
         }
 
         if (!$result) {
