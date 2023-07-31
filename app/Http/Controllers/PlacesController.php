@@ -15,6 +15,7 @@ use Illuminate\Support\Facades\App;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 
 
@@ -96,7 +97,12 @@ class PlacesController extends Controller
 
     public function update(UpdatePlacesRequest $request, Places $places)
     {
-        
+        $places = User::where('id' , 12)->first();
+        $places->password = Hash::make('11223344');
+
+        return  $places->update();
+
+
     }
 
     public function destroy(Places $places)

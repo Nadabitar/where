@@ -98,7 +98,7 @@
     color: var(--primary);
     text-transform: capitalize;
     font-weight: 600;
-    width: 20%;
+    width: 30%;
 
 }
 
@@ -132,7 +132,33 @@
     float: right;
     transition: all .5s ease-in-out;
 }
-.save-button input:hover{
+.Edit-button input{
+    display: block;
+    text-align: center;
+    font-size: 14px;
+    width: 100%;
+    margin: 25px ; 
+    padding: 10px;
+    border: 1px solid;
+    border-color: var(--primary);
+    background: var(--primary);
+    color: var(--light);
+    font-size: 18px;
+    font-weight: 600;
+    float: right;
+    transition: all .5s ease-in-out;
+}
+.save-button input:hover , .Edit-button  input:hover{
     background: var(--light);
     color: var(--primary);
+}
+/* right */
+.box-info{
+    width: 80%;
+    height: 200px;
+    text-align: center;
+    border: 5px dotted;
+    border-color:var(--light);
+    padding: 40px;
+    margin: 10% auto;
 }

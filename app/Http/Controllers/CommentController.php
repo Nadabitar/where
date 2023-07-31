@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\CommentStore;
 use App\Models\Comment;
 use App\Models\Places;
+use App\Models\Service;
 use App\Models\User;
 use App\Traits\GenralTraits;
 use Illuminate\Http\Request;
@@ -182,6 +183,45 @@ class CommentController extends Controller
         $place->update();
 
         
+    }
+
+    function getCommetsForPlaces($id) {
+        $comments = Places::with('comment')->where('id' ,$id)->latest()->first();
+        // dd( $comments );
+        $promo =Service::where(['placeId'=> $id , 'isPromo' => true ])->latest()->get();
+        $place = Places::where('accountId' , Auth::user()->id)->first();
+        return view('subscriber.pages.AllComments' , compact('comments'))->with([
+            'place' => $place ,
+            'promo'=> $promo,
+            'comments' => $comments->comment,
+        ]);;
+    }
+
+    function searchCommentsByName(Request $request) {
+        $validation = Validator::make($request->all() , [
+            'name' => 'sometimes',
+            'date' => 'sometimes' , 
+        ]);
+        if($validation->fails()){
+            return response()->json($validation->errors());
+        }
+        // ----------------------------
+
+
+        $place = Places::where('accountId' , Auth::user()->id)->first();
+        $comments = Places::whereHas('comment')->where('id' ,$place->id)->latest()->first();
+        $promo =Service::where(['placeId'=>$place->id , 'isPromo' => true ])->latest()->get();
+        if ($request->name && $request->date) {
+            $comments= $comments->comment->where('created_at' ,'>=' , $request->date)->where('fullName' , $request->name);
+        } else if($request->name) {
+            $comments= $comments->comment->where('created_at' ,'>=' , $request->date);
+        }else if($request->date) {
+            $comments= $comments->comment->where('fullName' , $request->name);
+        }
+
+
+        //  dd($comments);
+        return view('subscriber.pages.AllComments',compact('comments' , 'place' , 'promo'));
     }
 
 }

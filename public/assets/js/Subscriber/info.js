@@ -4,6 +4,9 @@ button = dropArea.querySelector("button"),
 input = document.getElementById("img-place"),
 drop_button = document.getElementsByClassName("drop_button");
 let file; 
+var from = document.getElementById('from');
+var to = document.getElementById('to');
+var pattern = /^[0-9]+$/;
 
 
 // button.onclick = ()=>{
@@ -146,3 +149,44 @@ if( rg_id != null){
 }
 });
 
+
+
+from.addEventListener("focus", () => {
+  massage = document.querySelector('.time-massege');
+  massage.style.display = "block";
+});
+
+from.addEventListener("blur", () => {
+  massage = document.querySelector('.time-massege');
+  massage.style.display = "none";
+});
+
+from.onkeyup  = function () {
+  massage = document.querySelector('.num-from-massege');
+  if(from.value == "  "|| from.value === "" ) {
+    massage.style.display = "none";
+  }else if (!from.value.match(pattern)) {
+    massage.style.display = "block";
+  } 
+}
+to.onkeyup  = function () {
+  massage1 = document.querySelector('.num-to-massege');
+  if(to.value == "  "|| to.value === "" ) {
+    massage1.style.display = "none";
+  }else if (!to.value.match(pattern)) {
+    massage1.style.display = "block";
+  } 
+  massage = document.querySelector('.to-massege');
+  var val1 = from.value;
+  var val2 = to.value;
+  if (val1 > val2) {
+    massage.style.display = "block";
+  }else{
+    massage.style.display = "none";
+  }
+  // massage1 = document.querySelector('.to-massege');
+  // massage2 = document.querySelector('.from-massege');
+  // if(to.val <= from.val) {
+  //    alert('kk');
+  // }
+}

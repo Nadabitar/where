@@ -27,7 +27,7 @@
                         <div class="nav-item dropdown">
                             <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">الملف الشخصي</a>
                             <div class="dropdown-menu rounded-0 m-0">
-                                <a href="profile.html" class="dropdown-item">تعديل الملف الشخصي</a>
+                                <a href="{{route('Profile.show')}}" class="dropdown-item">تعديل الملف الشخصي</a>
                                 <a href="{{route('logout')}}" class="dropdown-item">تسجيل الخروح</a>
                             </div>
                         </div>
@@ -46,7 +46,7 @@
                 <div class="row g-0 align-items-center flex-column-reverse flex-md-row">
                     <div class="col-12 animated fadeIn">
                         <div class="owl-carousel header-carousel">
-                                @forelse ($promote as $item)
+                                @forelse ($promo as $item)
                                 <div class="owl-carousel-item">
                                     @if (count($item->gallery) != 0)
                                         <img class="img-fluid" src=" {{$item->gallery[0]->url}}" alt="">

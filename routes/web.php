@@ -6,10 +6,12 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\{
     HomeController,
     CategorisController,
+    CommentController,
     PlacesController,
     PromoController,
     RegionController,
-    ServiceController,  
+    ServiceController,
+    UserController,
 };
 
 use App\Http\Controllers\subscriber\SubscriberController;
@@ -35,6 +37,7 @@ Auth::routes();
 
 
 Route::prefix('subscriber')->group(function(){
+
     Route::post('/category/{id}' , [CategorisController::class , 'get_cat_by_parent'] );
     Route::post('/region/{id}' , [RegionController::class , 'get_street_by_region'] );
     Route::post('/place/add' , [PlacesController::class , 'store'])->name('Place.store');
@@ -55,5 +58,25 @@ Route::prefix('subscriber')->group(function(){
         Route::get('/page' , [PromoController::class , 'index'])->name('Advertising');
         Route::post('/save/{id}' , [PromoController::class , 'store'])->name('Advertising.save');
         Route::get('/drop/{id}' , [PromoController::class , 'index'])->name('Advertising.drop');
+    });
+
+    
+    Route::prefix('comments')->controller(PromoController::class)->group(function ()
+    {
+        Route::get('/All/{id}' , [CommentController::class , 'getCommetsForPlaces'])->name('Comments.All');
+        Route::post('/search/name' , [CommentController::class , 'searchCommentsByName'])->name('Comments.search');
+    });
+
+    Route::prefix('profile')->controller(PromoController::class)->group(function ()
+    {
+        Route::get('/show' , [UserController::class , 'show'])->name('Profile.show');
+        Route::get('/update/Image' , [UserController::class , 'updateImage'])->name('Profile.update.Image');
+        Route::get('/update/PlaceName' , [UserController::class , 'updatePlaceName'])->name('Profile.update.placeName');
+        Route::get('/update/PhoneNumber' , [UserController::class , 'updatePhoneNumber'])->name('Profile.update.phoneNumber');
+        Route::get('/update/Details' , [UserController::class , 'updateDetails'])->name('Profile.update.Details');
+        Route::get('/update/WorkTime' , [UserController::class , 'updateWorkTime'])->name('Profile.update.workTime');
+        Route::get('/update/Links' , [UserController::class , 'updateLinks'])->name('Profile.update.links');
+        Route::get('/update/category' , [UserController::class , 'updateCategory'])->name('Profile.update.category');
+        Route::get('/update/subCategor' , [UserController::class , 'updateSubCategor'])->name('Profile.update.subCategory');
     });
 });

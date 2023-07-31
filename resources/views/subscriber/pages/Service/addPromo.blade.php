@@ -1,7 +1,8 @@
 @extends('subscriber.app')
 
 @section('content')
-@include('subscriber.partial.navbar', ['place'=>$place , 'services' => $services])
+@include('subscriber.partial.navbar', ['place'=>$place ,
+'promo' => $promo])
 
         <!-- Search Start -->
         <div class="container-fluid bg-primary mb-5 wow fadeIn" data-wow-delay="0.1s" style="padding: 35px;">
