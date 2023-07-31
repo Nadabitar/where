@@ -19,8 +19,9 @@ class CreateServicesTable extends Migration
             $table->string('title');
             $table->boolean('isAd')->default(false);
             $table->boolean('isPromo')->default(false);
-            $table->string('content');
+            $table->text('content');
             $table->boolean('status')->default(true);
+            $table->integer('count')->nullable()->default(0); 
 
             
             $table->foreign('placeId')->references('id')->on('places')->onDelete('cascade');

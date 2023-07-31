@@ -29,7 +29,7 @@ Route::post('/filterByName' , [PlacesController::class , 'filterPlaceName']);
 Route::middleware('auth:sanctum')->prefix('/user')->group( function () {
     // return Auth::user();
 
-    Route::post('/get/all/cat' , [CategorisController::class , 'index']);
+    Route::get('/get/all/cat' , [CategorisController::class , 'index']);
     Route::post('/get/child/cat' , [CategorisController::class , 'get_cat_by_parent']);
     Route::get('/get/promo' , [PromoController::class , 'getPromoUrl']);
     Route::post('/searchByPlaceName' , [PlacesController::class , 'searchByPlaceName']);
@@ -73,7 +73,9 @@ Route::prefix('auth')->group(function(){
     Route::post('/register' , [HomeController::class , 'register']);
 });
 
-Route::post('/uploadimg' , [PlacesController::class , 'sendimg']);
+// Route::post('/uploadimg' ,function(){
+//     Places::where('place_id',$id)->selectRaw('SUM(rating)/COUNT(user_id) AS avg_rating')->first()->avg_rating;
+// });
 
 
 Route::get('/get/all/region' , [RegionController::class , 'index']);

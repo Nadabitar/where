@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\ServiceStoreRequest;
+use App\Http\Requests\ServiceUpdateRequest;
 use App\Models\Gallery;
 use App\Models\Places;
 use App\Models\Service;
@@ -38,6 +39,7 @@ class ServiceController extends Controller
 
     public function store(ServiceStoreRequest $request , $id)
     {
+        // dd($request);
         $request->validated();
         // Create
         $service = new Service();
@@ -71,22 +73,25 @@ class ServiceController extends Controller
         return View('subscriber.pages.Service.update' ,  compact('service' , 'place'));
     }
 
-    public function update(Request $request,$id)
+    public function update(ServiceUpdateRequest $request,$id)
     {
         $request->validated();
         $service = Service::find($id);
+        // dd(  $service);
         $service->placeId =$service->place->id ;
         $service->content = $request->content;
         $service->title =  $request->title;
         $service->save();
         
-        if($result = $this->getUrlImage($service , $request)){
-            return redirect()->route('subscriber.dashboard')->with([
+        if($result = $this->updateUrlImage($service , $request)){
+            // dd($result);
+            return redirect()->route('Service.all')->with([
                 'message' => 'Service Added successfully',
                 'alert-type' => 'success'
             ]);
         }else{
-            return back()->with(['error' => 'Something went error']);
+            // dd($result);
+            return back()->with(['errors' => 'Something went error']);
         }
     }
     
@@ -94,19 +99,39 @@ class ServiceController extends Controller
     {
         $service = Service::find($id);
         $service->delete();
-        return redirect()->back();
+        return redirect()->back()->with('success' , 'Deleted Successfuly');
     }
 
     public function getUrlImage(Service $service , Request $request)
     {
+        $result = null;
+
+        if ($request->hasFile('image')) {
+            foreach ($request->file('image') as  $img) {
+                $gallary = new Gallery();
+                $gallary->url = $this->uploadImage($img->getRealPath());
+                $result = $service->gallery()->save($gallary);
+            }
+        }else{
+            $this->returnError(201 , 'image is required') ;
+        }
+
+        return $result;
+    }
+
+    public function updateUrlImage(Service $service , Request $request)
+    {
         $image = $request->hasFile('image')? $this->uploadImage($request->file('image')->getRealPath()): $this->returnError(201 , 'image is required') ;
-        $gallary = new Gallery();
+        $gallary = Gallery::where('serviceId' , $request->id)->first();
+        // dd($gallary);
         $gallary->url = $image;
 
         $result = $service->gallery()->save($gallary);
 
         return $result;
     }
+
+
 
     public function getServices(Request $request)
     {
@@ -130,4 +155,28 @@ class ServiceController extends Controller
         return $this->returnData('services' , $services  , 'success');
 
     }
+
+
+    public function newService(Request $request){
+        $services = Service::where('placeId' , $request->id)->latest()->limit(6)->get();
+        foreach ($services as $item) {
+            $item['image'] =  $item->gallery[0]->url;
+            $item['savedCount'] = count( $item->isSaved);
+
+        }
+        return $this->returnData('services' , $services );
+    }
+
+
+    public function unActiveService(Request $request){
+        $services = Service::where('placeId' , $request->id)->Where('status' , 0)->orderBy('created_at','desc')->limit(6)->get();
+        foreach ($services as $item) {
+            $item['image'] =  $item->gallery[0]->url;
+            $item['savedCount'] = count( $item->isSaved);
+
+        }
+        return $this->returnData('services' , $services );
+    }
+
+    
 }

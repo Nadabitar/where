@@ -70,10 +70,14 @@
                                                         @enderror
                                                     </div>
                                                 </div>
+    	
                                                 <div class="col-md-6 checkbox-line" >
                                                     <div class="checkout-form-list">
-                                                        <label>وقت العمل <span class="required">*</span></label>										
-                                                        <input type="text" placeholder="من" name="from" />
+                                                        <label>وقت العمل <span class="required">*</span></label> 
+                                                        {{-- <span style="display: none" class="from-massege text-danger">وقت الافتتاح يجب أن يكون قبل وقت الإغلاق </span> --}}
+                                                        <span style="display: none"  class="time-massege text-info">أدخل الوقت بنظام الإثنى عشر ساعة </span>
+                                                        <input  id="from" type="text" placeholder="من" name="from" />
+                                                        <span style="display: none"  class="num-from-massege text-danger">فقط أرقام لا يسمح بالأحرف</span>
                                                         @error('from')
                                                         <span class="invalid-feedback" role="alert">
                                                             <strong>{{ $message }}</strong>
@@ -84,7 +88,9 @@
                                                 <div class="col-md-6 checkbox-line" >
                                                     <div class="checkout-form-list">	
                                                         <label>وقت العمل <span class="required">*</span></label>								
-                                                        <input type="text" placeholder="إلى" name="to" />
+                                                        <input id="to" type="text" placeholder="إلى" name="to" />
+                                                        <span style="display: none" class="to-massege text-danger"> وقت الإغلاق يجب أن يكون بعد وقت الافتتاح</span>
+                                                        <span style="display: none"  class="num-to-massege text-danger">فقط أرقام لا يسمح بالأحرف</span>
                                                         @error('to')
                                                         <span class="invalid-feedback" role="alert">
                                                             <strong>{{ $message }}</strong>
@@ -152,7 +158,37 @@
 
                 {{-- xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx --}}
                 <div class="col-md-5 p-0">
-                    <div class="background-page">Right</div>
+                    <div class="background-page">
+                        <div class="row">
+                            <div class="box-info mt-5">
+                                <h4>
+                                    إدارة تفاصيل المشترك
+                                </h4>
+                                <p>   يساعد تطبيقنا  للمشترك في تعديل (ارقام - عنوان - بريد الكتروني)
+                                    في حال أراد المشترك إضافة أو حذف أو تعديل بياناته الخاصة به في بطاقة المعلومات
+                                </p>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="box-info ">
+                                <h4>رؤية التقييمات للمشترك</h4>
+                                <p>
+                                    يمكن للمشترك رؤية معدل التقييم الخاص به من قبل المستخدمين من خمس نجوم. كما يمكنه استعراض كافة تعليقات المستخدمين 
+                                </p>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="box-info">
+                                <h4>إدارة الخدمات</h4>
+                                <p>
+                                    يتيح تطبيقنا بإدارة الخدمات 
+                                    (حذف-تعديل-إضافة) 
+                                    .الخاصة بالمشترك في بطاقة المعلومات
+                                </p>
+                            </div>
+                        </div>
+
+                    </div>
                 </div>
             </div>
         </div>
@@ -195,5 +231,4 @@
         google.maps.event.addDomListener(window, 'load', initialize);
     </script>
     <script src="{{asset('assets/js/Subscriber/info.js')}}"></script>   
-
 @endsection

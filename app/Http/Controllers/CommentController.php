@@ -5,12 +5,14 @@ namespace App\Http\Controllers;
 use App\Http\Requests\CommentStore;
 use App\Models\Comment;
 use App\Models\Places;
+use App\Models\Service;
 use App\Models\User;
 use App\Traits\GenralTraits;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
+use PhpParser\Node\Expr\Cast\Double;
 
 class CommentController extends Controller
 {
@@ -73,7 +75,7 @@ class CommentController extends Controller
                 "content" => $request->content ,
                 "rate" => $request->rating,
             ]);
-
+            $this->calculateRating( $placeId);
             if (!$result) {
                 return  $this->returnSuccessMessage("Added successfully");
             }else{  return  $this->returnError(400,"Some thing went error");}
@@ -171,4 +173,55 @@ class CommentController extends Controller
                 return  $this->returnError('400',"Something went error");
             }
     }
+
+    public function calculateRating($id){
+
+        $place = Places::find($id);
+        
+        $rating = DB::select("select SUM(comments.rate) / COUNT(comments.userId) as rate FROM comments where comments.placeId = ?" , [$id]);
+        $place->rate = doubleval($rating[0]->rate);
+        $place->update();
+
+        
+    }
+
+    function getCommetsForPlaces($id) {
+        $comments = Places::with('comment')->where('id' ,$id)->latest()->first();
+        // dd( $comments );
+        $promo =Service::where(['placeId'=> $id , 'isPromo' => true ])->latest()->get();
+        $place = Places::where('accountId' , Auth::user()->id)->first();
+        return view('subscriber.pages.AllComments' , compact('comments'))->with([
+            'place' => $place ,
+            'promo'=> $promo,
+            'comments' => $comments->comment,
+        ]);;
+    }
+
+    function searchCommentsByName(Request $request) {
+        $validation = Validator::make($request->all() , [
+            'name' => 'sometimes',
+            'date' => 'sometimes' , 
+        ]);
+        if($validation->fails()){
+            return response()->json($validation->errors());
+        }
+        // ----------------------------
+
+
+        $place = Places::where('accountId' , Auth::user()->id)->first();
+        $comments = Places::whereHas('comment')->where('id' ,$place->id)->latest()->first();
+        $promo =Service::where(['placeId'=>$place->id , 'isPromo' => true ])->latest()->get();
+        if ($request->name && $request->date) {
+            $comments= $comments->comment->where('created_at' ,'>=' , $request->date)->where('fullName' , $request->name);
+        } else if($request->name) {
+            $comments= $comments->comment->where('created_at' ,'>=' , $request->date);
+        }else if($request->date) {
+            $comments= $comments->comment->where('fullName' , $request->name);
+        }
+
+
+        //  dd($comments);
+        return view('subscriber.pages.AllComments',compact('comments' , 'place' , 'promo'));
+    }
+
 }

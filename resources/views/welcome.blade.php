@@ -219,51 +219,51 @@
     <script src="{{asset('assets/js/Subscriber/vendor/jquery-1.12.0.min.js')}}"></script>
     <script src="{{asset('assets/js/Subscriber/bootstrap.min.js')}}"></script>
     <script src="{{asset('assets/js/Subscriber/vlidation.js')}}"></script>
-    <script>
-    $('#region').change(function(){
+<script>
+        $('#region').change(function(){
 
-    $.ajaxSetup({
-        headers: {
-        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-        }
-    });
-    var html_option = `<option value=""> شارع </option>`;
-    var rg_id = $(this).val();
-    //   alert(cat_id);
-    if( rg_id != null){
-    $.ajax({
-        url : '/subscriber/region/'+ rg_id,
-        type : "POST" ,
-        dataType: 'json',
-        CORS: true ,
-        contentType:'application/json',
-        secure: true,
-        headers: {
-        'Access-Control-Allow-Origin': '*',
-        },
-        beforeSend: function (xhr) {
-        xhr.setRequestHeader ("Authorization", "Basic " + btoa(""));
-        },
-        data : {
-            "_token":"{{ csrf_token() }}",
-            id: rg_id,
-        },
-        success: function(response) {
-            if (response.success) {
-                $('#street').prop('disabled' , false);
-                $.each(response.data , function(name , id){
-                    html_option += `<option value='`+id+`'> `+name+`</option>`
-                }); 
-            } else {
-                $('#street').addAttr('disabeld');
+        $.ajaxSetup({
+            headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
             }
-            $('#street').html(html_option);
-        },
-    });
-    }
-    });
+        });
+        var html_option = `<option value=""> شارع </option>`;
+        var rg_id = $(this).val();
+        //   alert(cat_id);
+        if( rg_id != null){
+        $.ajax({
+            url : '/subscriber/region/'+ rg_id,
+            type : "POST" ,
+            dataType: 'json',
+            CORS: true ,
+            contentType:'application/json',
+            secure: true,
+            headers: {
+            'Access-Control-Allow-Origin': '*',
+            },
+            beforeSend: function (xhr) {
+            xhr.setRequestHeader ("Authorization", "Basic " + btoa(""));
+            },
+            data : {
+                "_token":"{{ csrf_token() }}",
+                id: rg_id,
+            },
+            success: function(response) {
+                if (response.success) {
+                    $('#street').prop('disabled' , false);
+                    $.each(response.data , function(name , id){
+                        html_option += `<option value='`+id+`'> `+name+`</option>`
+                    }); 
+                } else {
+                    $('#street').addAttr('disabeld');
+                }
+                $('#street').html(html_option);
+            },
+        });
+        }
+        });
 
-    </script>
+</script>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" crossorigin="anonymous"></script>
 </body>

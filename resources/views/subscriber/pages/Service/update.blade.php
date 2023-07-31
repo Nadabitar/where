@@ -1,7 +1,8 @@
 @extends('subscriber.app')
 
 @section('content')
-@include('subscriber.partial.navbar', ['place'=>$place , 'services' => []])
+@include('subscriber.partial.navbar', ['place'=>$place ,
+'promo' => $promo])
 
         <!-- Search Start -->
         <div class="container-fluid bg-primary mb-5 wow fadeIn" data-wow-delay="0.1s" style="padding: 35px;">
@@ -20,23 +21,24 @@
                 <div class="owl-carousel header-carousel">
                     <div class="owl-carousel-item">
                         {{-- <img id="holder" style="margin-top:15px;max-height:100px;"> --}}
-                        <img class="img-fluid" src="{{asset('assets/img/Subscriber/1.jpg')}}" alt="">
+                        <img class="img-fluid" src="{{$service->gallery[0]->url}}" alt="">
                     </div>
                 </div>
             </div>
             <div class="col-md-6">
                 <div class="add-service">
-                    <form action="{{route('Service.update' , $service->id)}}"  method="POST">
+                    <form action="{{route('Service.update' , $service->id)}}"  method="POST" enctype="multipart/form-data">
+                        @method('POST')
                         @csrf
                         <div class="row">
                             <div class="col-md-12">
                                 <div class="input-group mb-5 w-90 p-0">
-                                    <span class="input-group-btn">
+                                    {{-- <span class="input-group-btn">
                                         <a id="lfm" data-input="thumbnail" data-preview="holder" class="btn btn-primary">
                                             <i class="fa fa-picture-o"></i> Choose
                                         </a>
-                                    </span>
-                                    <input id="thumbnail" class="form-control" type="text" name="url" value="{{$service->gallery[0]->url}}">
+                                    </span> --}}
+                                    <input id="thumbnail" class="form-control" type="file" name="image" value="{{$service->gallery[0]->url}}" multiple>
                                 </div>
                             
                             </div>

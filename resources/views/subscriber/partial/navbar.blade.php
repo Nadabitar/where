@@ -13,7 +13,7 @@
                 </button>
                 <div class="collapse navbar-collapse" id="navbarCollapse">
                     <div class="navbar-nav ms-auto">
-                        <a href="index.html" class="nav-item nav-link active">الصفحة الرئيسية</a>
+                        <a href="{{route('subscriber.dashboard')}}" class="nav-item nav-link active">الصفحة الرئيسية</a>
                         <div class="nav-item dropdown">
                             <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">خدمات</a>
                             <div class="dropdown-menu rounded-0 m-0">
@@ -27,11 +27,11 @@
                         <div class="nav-item dropdown">
                             <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">الملف الشخصي</a>
                             <div class="dropdown-menu rounded-0 m-0">
-                                <a href="profile.html" class="dropdown-item">تعديل الملف الشخصي</a>
-                                <a href="404.html" class="dropdown-item">تسجيل الخروح</a>
+                                <a href="{{route('Profile.show')}}" class="dropdown-item">تعديل الملف الشخصي</a>
+                                <a href="{{route('logout')}}" class="dropdown-item">تسجيل الخروح</a>
                             </div>
                         </div>
-                        <a href="about.html" class="nav-item nav-link">المستخدمين</a>
+                        <a href="about.html" class="nav-item nav-link">كافة التعليقات</a>
                         <a href="contact.html" class="nav-item nav-link">تواصل</a>
                     </div>
                     <a href="{{route('Service.show')}}" class="btn btn-primary px-3 d-none d-lg-flex">إضافة خدمة</a>
@@ -46,9 +46,13 @@
                 <div class="row g-0 align-items-center flex-column-reverse flex-md-row">
                     <div class="col-12 animated fadeIn">
                         <div class="owl-carousel header-carousel">
-                                @forelse ($services as $item)
+                                @forelse ($promo as $item)
                                 <div class="owl-carousel-item">
-                                    <img class="img-fluid" src=" {{$item->gallery[0]->url}}" alt="">
+                                    @if (count($item->gallery) != 0)
+                                        <img class="img-fluid" src=" {{$item->gallery[0]->url}}" alt="">
+                                    @else
+                                        <img class="img-fluid" src=" {{asset('assets/img/subscriber/1.jpg')}}" alt="">
+                                    @endif
                                 
                                 </div>
                                 @empty
