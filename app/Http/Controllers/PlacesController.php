@@ -232,8 +232,28 @@ class PlacesController extends Controller
             return response()->json($validation->errors());
         }
 
-        $places = Places::whereIn('categoryId' , $request->category[0] )->get();
+        $places = Places::whereIn('categoryId' , $request->category)->orWhereIn('subCategoryId' , $request->category)->get();
 
-        return   $places ;
+        if ($places) {
+            return $this->returnData('places' ,  $places  , 'success');
+        }else{
+            return $this->returnData('places' ,  $places  , 'NO items matching');
+        }
+    }
+
+    public function filterPlaceName(Request $request){
+        $validation = Validator::make($request->all() , [
+            'name' => 'required|string'
+        ]);
+        if($validation->fails()){
+            return response()->json($validation->errors());
+        }
+        $places = Places::where('placeName',$request->name)->first();
+
+        if ($places) {
+            return $this->returnData('places' ,  $places  , 'success');
+        }else{
+            return $this->returnError('400' , 'There is no place like this name');
+        }
     }
 }
