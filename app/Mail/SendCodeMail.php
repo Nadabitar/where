@@ -10,15 +10,15 @@ use Illuminate\Queue\SerializesModels;
 class SendCodeMail extends Mailable
 {
     use Queueable, SerializesModels;
-    public $details;
+    public $code;
     /**
      * Create a new message instance.
      *
      * @return void
      */
-    public function __construct( $details)
+    public function __construct( $code)
     {
-        $this->details = $details;
+        $this->code = $code;
     }
 
     /**
@@ -29,6 +29,6 @@ class SendCodeMail extends Mailable
     public function build()
     {
         return $this->subject('Mail from ItSolutionStuff.com')
-        ->view('emails.code');
+        ->view('emails.sendCode');
     }
 }

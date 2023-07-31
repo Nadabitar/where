@@ -25,9 +25,7 @@ use Illuminate\Support\Facades\Auth;
 | is assigned the "api" middleware group. Enjoy building your API!
 |
 */
-
-
-
+Route::post('/filterByName' , [PlacesController::class , 'filterPlaceName']);
 Route::middleware('auth:sanctum')->prefix('/user')->group( function () {
     // return Auth::user();
 
@@ -51,7 +49,8 @@ Route::middleware('auth:sanctum')->prefix('/user')->group( function () {
         Route::post('/get' , [PlacesController::class,'index']);
         Route::post('/get/services' , [ServiceController::class,'getServices']);
         Route::post('/get/byCategory' , [PlacesController::class,'getPlaceByCat']);
-
+        Route::post('/filter' , [PlacesController::class , 'filter']);
+        Route::post('/filterByName' , [PlacesController::class , 'filterPlaceName']);
     });
 
     Route::post('/add/comment' , [CommentController::class , 'store']);
@@ -59,6 +58,13 @@ Route::middleware('auth:sanctum')->prefix('/user')->group( function () {
     Route::post('/update/comment' , [CommentController::class , 'update']);
     Route::post('/get/comment' , [CommentController::class , 'index']);
     Route::get('/all/comment' , [CommentController::class , 'show']);
+
+
+    Route::prefix('auth')->group(function(){
+        Route::get('/change' ,[HomeController::class , 'changePassword']);
+        Route::post('/update' ,[HomeController::class , 'updatePassword']);
+        Route::post('/logout' , [HomeController::class , 'logout']);
+    });
 });
 
 Route::prefix('auth')->group(function(){

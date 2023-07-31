@@ -12,6 +12,7 @@ use App\Traits\ImageTraits;
 use Facade\FlareClient\View;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
 
 class ServiceController extends Controller
@@ -134,6 +135,7 @@ class ServiceController extends Controller
 
     public function getServices(Request $request)
     {
+        
         $validation = Validator::make($request->all() , [
             'placeId' => 'string|required',
         ]);
@@ -142,12 +144,15 @@ class ServiceController extends Controller
         }
 
 
-        $services = Service::with('gallery' , 'place')->where('placeId' , $request->placeId)->get();
-        // $link = $services->place->links;
-        // $services['links'] = $link;
+        $services = Service::with('gallery' , 'place'  )->where('placeId' , $request->placeId)->get();
+        foreach ($services as $service) {
+            $service['saved'] = DB::select('select * from saveds  
+            where 
+            userId = ? 
+            and serviceId = ? ' , [Auth::user()->id , $service->id]) ? true : false ;
+        }
 
         return $this->returnData('services' , $services  , 'success');
-
 
     }
 

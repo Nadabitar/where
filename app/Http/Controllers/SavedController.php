@@ -16,12 +16,9 @@ class SavedController extends Controller
     use GenralTraits;
     public function index()
     {
-        $user = User::where('id' , Auth::user()->id)->with('isSaved' , 'savedService')->first();
-        // $places = DB::select(' select places.* , saveds.id as savesId , saveds.userId
-        // from places join  saveds
-        // on  places.id = saveds.placeId 
-        // where saveds.userId = ?' , [ Auth::user()->id]);
-        
+
+        $user = User::where('id' , Auth::user()->id)->with('isSaved')->first();
+      
         $services = DB::select('select saveds.id as id , saveds.serviceId ,saveds.userId, services.placeId , services.content , services.title , galleries.url as url
         from services join  saveds
         on  services.id = saveds.serviceId
