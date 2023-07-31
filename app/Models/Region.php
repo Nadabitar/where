@@ -20,6 +20,10 @@ class Region extends Model
         return Region::where('parentId' , $id)->first()->pluck('id' , 'name');
     }
 
+    public function getAllStreetsByRegion($id)
+    {
+        return Region::where('parentId' , $id)->get();
+    }
 
     public function street(): HasMany
     {

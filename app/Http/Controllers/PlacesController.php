@@ -259,7 +259,7 @@ class PlacesController extends Controller
         if ($places) {
             return $this->returnData('places' ,  $places  , 'success');
         }else{
-            return $this->returnError('400' , 'There is no place like this name');
+            return response()->json(['status' => 400 , 'msg'  => 'There is no place like this name' , 'place'  => $places ]);
         }
     }
 }

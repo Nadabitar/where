@@ -99,4 +99,11 @@ class RegionController extends Controller
         $region = new Region();
         return response()->json(['data' =>   $region->getAllStreetByRegion($request->id) , 'success' => true] , 200);
     }
+
+    public function get_streets_by_region(Request $request)
+    {
+        
+        $region = new Region();
+        return response()->json(['data' =>   $region->getAllStreetsByRegion($request->id) , 'success' => true] , 200);
+    }
 }
