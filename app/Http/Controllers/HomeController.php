@@ -49,7 +49,6 @@ class HomeController extends Controller
             'deviceId' => 'required|string|max:255',
             'userType' => 'required|in:admin,user,subscriber',
             'gender' => 'required|in:male,fmale',
-            'phone' => 'required|numeric|unique:users|starts_with:09,+963,00963',
             'regionId' => 'nullable|integer' ,
             'streetId' => 'nullable|integer',
         ]);
@@ -66,7 +65,6 @@ class HomeController extends Controller
             'deviceId' => $request->deviceId,
             'userType' => $request->userType,
             'gender' => $request->gender,
-            'phone' => $request->phone,
             'regionId'=> $request->regionId ,
             'streetId' => $request->streetId,
 

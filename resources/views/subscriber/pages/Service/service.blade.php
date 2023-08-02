@@ -1,48 +1,41 @@
 @extends('subscriber.app')
 
 @section('content')
-@include('subscriber.partial.navbar', ['place'=>$place ,
-'promo' => $promo])
+  @include('subscriber.partial.navbar', ['place'=>$place ,
+  'promo' => $promo])
 
-        <!-- Search Start -->
-        <div class="container-fluid bg-primary mb-5 wow fadeIn" data-wow-delay="0.1s" style="padding: 35px;">
-          <div class="container">
-              <div class="row g-2">
-                  <div class="col-md-10">
-                      <div class="row g-2">
-                          <div class="col-md-4">
-                              <input type="text" class="form-control border-0 py-3" placeholder="Search Keyword">
-                          </div>
-                          <div class="col-md-4">
-                              <select class="form-select border-0 py-3">
-                                  <option selected>Service Type</option>
-                                  <option value="1">New Service</option>
-                                  <option value="2">Old Service</option>
-                                  <option value="3">Un-Active  Service</option>
-                              </select>
-                          </div>
-                          <div class="col-md-4">
-                              <select class="form-select border-0 py-3">
-                                  <option selected>Coments</option>
-                                  <option value="1">Location 1</option>
-                                  <option value="2">Location 2</option>
-                                  <option value="3">Location 3</option>
-                              </select>
-                          </div>
-                      </div>
-                  </div>
-                  <div class="col-md-2">
-                      <button class="btn btn-dark border-0 w-100 py-3">Search</button>
-                  </div>
-              </div>
-          </div>
-      </div>
-      <!-- Search End -->
+       <!-- Search Start -->
+       <div class="container-fluid bg-primary mb-5 wow fadeIn" data-wow-delay="0.1s" style="padding: 35px;">
+        <div class="container">
+        <form action="{{route('Service.search')}}" method="POST">
+            @csrf
+            @method('POST')
+            <div class="row g-2">
+                    <div class="col-md-10">
+                        <div class="row g-2">
+                            <div class="col-md-6">
+                                <input name="name" dir="rtl" type="text" class="form-control border-0 py-3" placeholder="ابحث عن طريق اسم الخدمة">
+                            </div>
+                            <div class="col-md-6">
+                                <input name="date" dir="rtl" type="date" class="form-control border-0 py-3" placeholder="ابحث عن طريق التاريخ النشر">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-2">
+                        <button type="submit" class="btn btn-dark border-0 w-100 py-3">ابحث</button>
+                    </div>
+            </div>
+        </form>
+        </div>
+    </div>
+
 @include('subscriber.partial.flash')
+
+
 <section class="service-section">
     <div class="container">
         <div class="row">
-          <h1 class="add-service-text">عرض خدمة جديدة</h1>
+          <h1 class="add-service-text">عرض كافة الخدمات</h1>
             <div class="col-md-12">
                 <div class="table-wrap">
                   @if (count($services) != 0)
@@ -71,19 +64,22 @@
                               </div>
                             </td>
                             <td>{{$service->content}}</td>
-                              <td class="status">
-                                {{-- <span class=" {{$service->status == true ? 'active' : 'waiting'}}">
-                              {{$service->status == true ? 'Active' : 'Un-Active'}}
-                            </span> --}}
-                            <input value="{{$service->id}}" name="toggle" type="checkbox" data-toggle="toggle" data-on="فعال" data-off="غير فعال" data-onstyle="success" data-offstyle="danger" data-size='xs' {{$service->status == 'active'? 'checked' : ' '}} >
+                            <td class="status">
+                              <div>
+                                <label class="toggle" for="myToggle">
+                                  <input class="toggle__input" id="myToggle" value="{{$service->id}}" name="toggle" type="checkbox" data-toggle="toggle" data-on="Active" data-off="unActive" data-onstyle="success" data-offstyle="danger" data-size='xs' {{$service->status == 1 ? 'checked' : ' '}} >
+                                  <div class="toggle__fill"></div>
+                                </label>
+                              </div>
                           </td>
+                          
                             <td>
                                 <ul class="s-action">
                                   <li data-bs-toggle="modal" data-bs-target="#showPlace{{$service->id}}" style="color:var(--primary)" class="s-show">
                                     <i class="fa fa-eye"></i>
                                     Show
-                                               <!-- Modal -->
-                                               <div class="modal fade" id="showPlace{{$service->id}}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                              <!-- Modal -->
+                                              <div class="modal fade" id="showPlace{{$service->id}}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                                                 <@php
                                                   $service = \App\Models\Service::where('id' ,$service->id)->first();
                                                 @endphp
@@ -159,20 +155,22 @@
         </div>
     </div>
 </section>
-
-
-
-
 @endsection
 
-@section('scripts')
+@section('script')
 <script>
   $('input[name=toggle]').change(function(){
+    // alert('ssss');
       var mode = $(this).prop('checked');
       var id  = $(this).val();
+      $.ajaxSetup({
+        headers: {
+          'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        }
+      });
       $.ajax({
-          url: "{{route('category.status')}}",
-          type : 'post' ,
+          url: "{{route('Service.status')}}",
+          type : 'get' ,
           data : {
               _token : '{{csrf_token()}}',
               mode : mode,

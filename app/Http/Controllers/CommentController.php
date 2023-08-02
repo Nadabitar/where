@@ -213,9 +213,9 @@ class CommentController extends Controller
         $promo =Service::where(['placeId'=>$place->id , 'isPromo' => true ])->latest()->get();
         if ($request->name && $request->date) {
             $comments= $comments->comment->where('created_at' ,'>=' , $request->date)->where('fullName' , $request->name);
-        } else if($request->name) {
+        } else if($request->date) {
             $comments= $comments->comment->where('created_at' ,'>=' , $request->date);
-        }else if($request->date) {
+        }else if($request->name) {
             $comments= $comments->comment->where('fullName' , $request->name);
         }
 

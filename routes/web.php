@@ -52,6 +52,8 @@ Route::prefix('subscriber')->group(function(){
         Route::get('/service/delete/{id}' , [serviceController::class , 'destroy'])->name('Service.delete');
         Route::get('/new/{id}' , [serviceController::class , 'newService'])->name('Service.new');
         Route::get('/unactive/{id}' , [serviceController::class , 'unActiveService'])->name('Service.unActive');
+        Route::get('/status' , [serviceController::class , 'serviceStatus'])->name('Service.status');
+        Route::post('/search/name' , [CommentController::class , 'searchServices'])->name('Service.search');
     });
 
     Route::prefix('Advertising')->controller(PromoController::class)->group(function ()

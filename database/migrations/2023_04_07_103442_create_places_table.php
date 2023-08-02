@@ -19,7 +19,6 @@ class CreatePlacesTable extends Migration
             $table->string('details')->nullable();
             $table->string('workTime');
             $table->string('image')->nullable();
-            $table->string('tags')->nullable();
             $table->json('links')->nullable();
             $table->double('latitud')->nullable();
             $table->double('longitude')->nullable();

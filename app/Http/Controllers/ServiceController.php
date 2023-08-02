@@ -28,8 +28,8 @@ class ServiceController extends Controller
     {
         $place = Places::where('accountId' , Auth::user()->id)->first();
         $services = Service::where('placeId' , $place->id)->has('gallery')->latest()->get();
-        // dd($services[0]->gallery);
-        return View('subscriber.pages.Service.service' ,  compact('place' , 'services'));
+        $promo =Service::where(['placeId'=> $place->id , 'isPromo' => true ])->latest()->get();
+        return View('subscriber.pages.Service.service' ,  compact('place' , 'services' , 'promo'));
     }
 
     public function create()
@@ -63,14 +63,16 @@ class ServiceController extends Controller
         // dd(Auth::user()->id);
         $place = Places::where('accountId' , Auth::user()->id)->first();
         $services = Service::has('gallery')->where('placeId' , $place->id)->latest()->paginate(4);
-        return View('subscriber.pages.Service.create' , compact('place' , 'services'));
+        $promo =Service::where(['placeId'=> $place->id , 'isPromo' => true ])->latest()->get();
+        return View('subscriber.pages.Service.create' , compact('place' , 'services' , 'promo'));
     }
 
     public function edit(Service $service , $id)
     {
         $service = Service::with('gallery')->where('id' , $id)->get()[0];
         $place = Places::where('accountId' , Auth::user()->id)->first();
-        return View('subscriber.pages.Service.update' ,  compact('service' , 'place'));
+        $promo =Service::where(['placeId'=> $place->id , 'isPromo' => true ])->latest()->get();
+        return View('subscriber.pages.Service.update' ,  compact('service' , 'place' , 'promo'));
     }
 
     public function update(ServiceUpdateRequest $request,$id)
@@ -178,5 +180,40 @@ class ServiceController extends Controller
         return $this->returnData('services' , $services );
     }
 
-    
+    public function serviceStatus(Request $request){
+        if($request->mode == 'true'){
+          DB::table('services')->where('id' , $request->id)->update(['status' => '1']);
+        }else{
+          DB::table('services')->where('id' , $request->id)->update(['status' => '0']);
+        }
+        return response()->json(['msg' => 'Status Updated Successful' , 'status' => true]);
+      }
+
+
+      function searchServices(Request $request) {
+        $validation = Validator::make($request->all() , [
+            'name' => 'sometimes',
+            'date' => 'sometimes' , 
+        ]);
+        if($validation->fails()){
+            return response()->json($validation->errors());
+        }
+        // ----------------------------
+
+        $place = Places::where('accountId' , Auth::user()->id)->first();
+        $services = Service::where('placeId' ,$place->id)->latest()->first();
+        $promo =Service::where(['placeId'=>$place->id , 'isPromo' => true ])->latest()->get();
+        if ($request->name && $request->date) {
+            $services= Service::where('created_at' ,'>=' , $request->date)->where('title' , $request->name);
+        } else if($request->date) {
+            $services= Service::where('created_at' ,'>=' , $request->date);
+        }else if($request->name) {
+            $services= Service::where('title' , $request->name);
+        }
+
+
+        //  dd($comments);
+        return view('subscriber.pages.Service.service',compact('comments' , 'place' , 'promo'));
+    }
+
 }

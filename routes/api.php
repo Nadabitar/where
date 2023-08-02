@@ -25,7 +25,6 @@ use Illuminate\Support\Facades\Auth;
 | is assigned the "api" middleware group. Enjoy building your API!
 |
 */
-Route::post('/filterByName' , [PlacesController::class , 'filterPlaceName']);
 Route::middleware('auth:sanctum')->prefix('/user')->group( function () {
     // return Auth::user();
 
@@ -51,6 +50,7 @@ Route::middleware('auth:sanctum')->prefix('/user')->group( function () {
         Route::post('/get/byCategory' , [PlacesController::class,'getPlaceByCat']);
         Route::post('/filter' , [PlacesController::class , 'filter']);
         Route::post('/filterByName' , [PlacesController::class , 'filterPlaceName']);
+        Route::post('/get/max/rating' , [PlacesController::class , 'getMaxRatingPlace']);
     });
 
     Route::post('/add/comment' , [CommentController::class , 'store']);
@@ -79,4 +79,4 @@ Route::prefix('auth')->group(function(){
 
 
 Route::get('/get/all/region' , [RegionController::class , 'index']);
-Route::post('/get/street' , [RegionController::class , 'get_street_by_region']);
+Route::post('/get/street' , [RegionController::class , 'get_streets_by_region']);
