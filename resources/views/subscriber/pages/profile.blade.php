@@ -18,8 +18,6 @@
                         </div>
                         {{-- PLace inpuuuuuuuut --}}
                         <div class="row">
-                            <form enctype="multipart/form-data"   action="{{route('Place.store')}}" method="post">
-                                @csrf
                                 <div class="col-lg-12 col-md-12">
                                     <div class="checkbox-form" dir="rtl">						
                                         <h3>تعديل تفاصيل المكان</h3>
@@ -248,10 +246,39 @@
                                         </div>											
                                     </div>
                                 </div>	
-                                <div class="save-button">
-                                    <input type="submit" value="حفظ" />
-                                </div>		
-                            </form>
+                        </div>
+
+                        <div class="row" style="margin: 20px" dir="rtl">
+                            <div class="col-md-12" >
+                                <div class="checkout-form-list">
+                                    <form action="{{ route('Profile.add.location')}}" method="GET"  >
+                                        <div class="row">
+                                            <div class="col-10">
+                                                <div class="row">
+                                                    <div class="col-6">
+                                                        <label>خط الطول </label> 
+                                                        <input id="lng" type="text" placeholder="خط الطول" name="lng" value="{{ $place->latitud ? $place->latitud : ' ' }}" />
+                                                    </div>
+                                                    <div class="col-6">
+                                                        <label>خط العرض</label>								
+                                                        <input id="lat" type="text" placeholder="خط العرض" name="lat" value="{{ $place->longitude ? $place->longitude : ' ' }}" />
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-2">
+                                                <div class="Edit-button">
+                                                    <input type="submit" value="حفظ العنوان" />
+                                                </div>		
+                                            </div>
+                                        </div>
+                                    </form>		
+                                </div>
+                            </div>
+                        
+                            <div class="col-md-12 ">
+                                <div id="map" style='height:400px'></div>
+        
+                            </div>
                         </div>
 
                     </div>
@@ -263,7 +290,7 @@
 
 @section('script')
     <!-- google map api -->
-    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD_qDiT4MyM7IxaGPbQyLnMjVUsJck02N0"></script>
+    {{-- <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD_qDiT4MyM7IxaGPbQyLnMjVUsJck02N0"></script>
     <script>
         var myCenter=new google.maps.LatLng(30.249796, -97.754667);
         function initialize()
@@ -293,8 +320,69 @@
             marker.setMap(map);
         }
         google.maps.event.addDomListener(window, 'load', initialize);
+    </script> --}}
+    <script type="text/javascript">
+        // Note: This example requires that you consent to location sharing when
+// prompted by your browser. If you see the error "The Geolocation service
+// failed.", it means you probably did not give permission for the browser to
+// locate you.
+let map, infoWindow;
+
+        function initMap() {
+        map = new google.maps.Map(document.getElementById("map"), {
+            center: { lat: 36.2021, lng: 37.1343 },
+            zoom: 10,
+        });
+        infoWindow = new google.maps.InfoWindow();
+
+        const locationButton = document.createElement("button");
+
+        locationButton.textContent = "Pan to Current Location";
+        locationButton.classList.add("custom-map-control-button");
+        map.controls[google.maps.ControlPosition.TOP_CENTER].push(locationButton);
+        locationButton.addEventListener("click", () => {
+            // Try HTML5 geolocation.
+            if (navigator.geolocation) {
+            navigator.geolocation.getCurrentPosition(
+                (position) => {
+                const pos = {
+                    lat: position.coords.latitude,
+                    lng: position.coords.longitude,
+                };
+                document.getElementById("lat").value = pos['lat'];
+                document.getElementById("lng").value = pos['lng'];
+                infoWindow.setPosition(pos);
+                infoWindow.setContent("Location found.");
+                infoWindow.open(map);
+                map.setCenter(pos);
+                },
+                () => {
+                handleLocationError(true, infoWindow, map.getCenter());
+                },
+            );
+            } else {
+            // Browser doesn't support Geolocation
+            handleLocationError(false, infoWindow, map.getCenter());
+            }
+        });
+        }
+
+        function handleLocationError(browserHasGeolocation, infoWindow, pos) {
+        infoWindow.setPosition(pos);
+        infoWindow.setContent(
+            browserHasGeolocation
+            ? "Error: The Geolocation service failed."
+            : "Error: Your browser doesn't support geolocation.",
+        );
+        infoWindow.open(map);
+        }
+
+        window.initMap = initMap;
     </script>
-    {{-- <script src="{{asset('assets/js/Subscriber/profile.js')}}"></script>    --}}
+    
+    <script type="text/javascript" src="https://maps.google.com/maps/api/js?key={{ env('GOOGLE_MAPS_API_KEY') }}&callback=initMap"></script>
+    
+    
   <script src="{{asset('assets/js/Subscriber/info.js')}}"></script>   
 
 @endsection

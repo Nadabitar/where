@@ -39,14 +39,6 @@
                                 </span>
                             @enderror
 
-                            <input  class=" @error('phone') is-invalid @enderror" type="text" name="phone" id="phone" placeholder="{{ __('رقم الهاتف') }}"required >
-                            <span style="display: none" class="phone-massege text-danger"> رقم الهاتف يجب أن يحوي على أرقام فقط و يبدأ ب 09 أو 00963 أو +963*</span>
-                            @error('phone')
-                                <span class="invalid-feedback" role="alert">
-                                    <strong>{{ $message }}</strong>
-                                </span>
-                            @enderror
-
                                     {{-- <label>العنوان <span class="required">*</span></label> --}}
                                     <select id="region" id="region" name="regionId">
                                         <option>العنوان</option>
@@ -61,7 +53,7 @@
                                     @enderror
                                 
                 
-                              	
+                            
                                     {{-- <label>الشارع <span class="required">*</span></label>								 --}}
                                     <select  id="street" name="streetId" disabled>
                                         <option>الشارع</option>

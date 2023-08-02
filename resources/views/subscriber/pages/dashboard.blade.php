@@ -9,31 +9,9 @@
         <div class="container-fluid bg-primary mb-5 wow fadeIn" data-wow-delay="0.1s" style="padding: 35px;">
             <div class="container">
                 <div class="row g-2">
-                    <div class="col-md-10">
-                        <div class="row g-2">
-                            <div class="col-md-4">
-                                <input type="text" class="form-control border-0 py-3" placeholder="Search Keyword">
-                            </div>
-                            <div class="col-md-4">
-                                <select class="form-select border-0 py-3">
-                                    <option selected>Service Type</option>
-                                    <option value="1">New Service</option>
-                                    <option value="2">Old Service</option>
-                                    <option value="3">Un-Active  Service</option>
-                                </select>
-                            </div>
-                            <div class="col-md-4">
-                                <select class="form-select border-0 py-3">
-                                    <option selected>Coments</option>
-                                    <option value="1">Location 1</option>
-                                    <option value="2">Location 2</option>
-                                    <option value="3">Location 3</option>
-                                </select>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-2">
-                        <button class="btn btn-dark border-0 w-100 py-3">Search</button>
+                    <div class="col-md-12 ">
+                        <div id="map" style='height:400px'></div>
+
                     </div>
                 </div>
             </div>
@@ -103,14 +81,14 @@
                 <div class="row g-5 align-items-center">
                     <div class="col-lg-6 wow fadeIn" data-wow-delay="0.1s">
                         <div class="about-img position-relative overflow-hidden p-5 pe-0">
-                            <img class="img-fluid w-100" src="{{count($popularService->gallery) != 0 ? $popularService->gallery[0] : asset('assets/img/subscriber/noImage.jpg') }}">
+                            <img class="img-fluid w-100" src="{{$popularService  && count($popularService->gallery) != 0 ? $popularService->gallery[0] : asset('assets/img/subscriber/noImage.jpg') }}">
                         </div>
                     </div>
                     <div class="col-lg-6 wow fadeIn" data-wow-delay="0.5s">
                         <div class="mb-4">
                             <h1 class="mb-3">الخدمة الأكثر انتشاراً بين الزبائن</h1>
-                            <h3> {{$popularService->title}}</h3>
-                            <p>{{$popularService->content}}</p>
+                            <h3> {{$popularService ? $popularService->title : 'ليس هناك خدمات بعد'}}</h3>
+                            <p>{{$popularService ? $popularService->content : 'ليس هناك خدمات بعد'}}</p>
                         </div>
                         <a href="" class="btn btn-primary py-3 px-4 me-2"><i class="fa fa-eye me-2"></i>عرض المستخدمين</a>
                         <a href="{{route('Service.all')}}" class="btn btn-dark py-3 px-4"><i class="fa fa-comments me-2"></i>عرض كافة الخدمات</a>
@@ -251,12 +229,40 @@
         <!-- Testimonial End -->
         
 
+   
 @endsection
 
 @section('script')
-    <!-- google map api -->
-    
-    {{-- <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD_qDiT4MyM7IxaGPbQyLnMjVUsJck02N0"></script> --}}
-    <script src="{{asset('assets/js/Subscriber/service.js')}}"></script>   
+
+
+
+    <script src="{{asset('assets/js/Subscriber/service.js')}}"></script> 
+    <script type="text/javascript">
+    function initializeMap() {
+        const locations = <?php echo json_encode($locations) ?>
+
+        const map = new google.maps.Map(document.getElementById("map"));
+        var infowindow = new google.maps.InfoWindow();
+        var bounds = new google.maps.LatLngBounds();
+        for (var location of locations) {
+            var marker = new google.maps.Marker({
+                position: new google.maps.LatLng(location.lat, location.lng),
+                map: map
+            });
+            bounds.extend(marker.position);
+            google.maps.event.addListener(marker, 'click', (function(marker, location) {
+                return function() {
+                    infowindow.setContent(location.lat + " & " + location.lng);
+                    infowindow.open(map, marker);
+                }
+            })(marker, location));
+
+        }
+        map.fitBounds(bounds);
+    }
+</script>
+
+<script type="text/javascript" src="https://maps.google.com/maps/api/js?key={{ env('GOOGLE_MAPS_API_KEY') }}&callback=initializeMap"></script>
+  
 
 @endsection

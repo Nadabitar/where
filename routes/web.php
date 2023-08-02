@@ -81,7 +81,6 @@ Route::prefix('subscriber')->group(function(){
         Route::get('/update/Links' , [UserController::class , 'updateLinks'])->name('Profile.update.links');
         Route::get('/update/category' , [UserController::class , 'updateCategory'])->name('Profile.update.category');
         Route::get('/update/subCategor' , [UserController::class , 'updateSubCategor'])->name('Profile.update.subCategory');
+        Route::get('/add/location' , [UserController::class , 'addLocation'])->name('Profile.add.location');
     });
 });
-
-Route::get('/map',  [MapController::class , 'index']);

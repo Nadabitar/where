@@ -174,7 +174,7 @@ class PlacesController extends Controller
         $msg = [
             'massage' =>  "تم قبول تسجيلك في تطبيقنا ،الأن يمكنك التمتع بكافة الخدمات"
         ];
-        Mail::to(Auth::user()->email)->send(new email_To_Place($msg));
+        Mail::to($place->account->email)->send(new email_To_Place($msg));
 
         return redirect()->back();
     }
@@ -194,7 +194,7 @@ class PlacesController extends Controller
         $msg = [
             'massage' =>   'تم رفض تسجيلك في تطبيقنا ، الرجاء محاولة التسجيل مرة أخرى مع إدخال بيانات صحيحية' ,
         ];
-        Mail::to(Auth::user()->email)->send(new email_To_Place($msg));
+        Mail::to($place->account->email)->send(new email_To_Place($msg));
         //delete account
         $account = User::find($place->accountId)->delete();
         return redirect()->back();

@@ -31,8 +31,7 @@
                                 <a href="{{route('logout')}}" class="dropdown-item">تسجيل الخروح</a>
                             </div>
                         </div>
-                        <a href="about.html" class="nav-item nav-link">كافة التعليقات</a>
-                        <a href="contact.html" class="nav-item nav-link">تواصل</a>
+                        <a href="{{route('Comments.All' , $place->id)}}" class="nav-item nav-link">كافة التعليقات</a>
                     </div>
                     <a href="{{route('Service.show')}}" class="btn btn-primary px-3 d-none d-lg-flex">إضافة خدمة</a>
                 </div>
