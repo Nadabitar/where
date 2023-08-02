@@ -39,23 +39,12 @@ class PlacesController extends Controller
         return $this->returnData('place' , $place , 'Success');
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function create()
     {
         $notifications = auth()->user()->unreadNotifications;
         return view('Admin.places.create' ,  compact('notifications'));
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \App\Http\Requests\StorePlacesRequest  $request
-     * @return \Illuminate\Http\Response
-     */
     public function store(StorePlacesRequest $request)
     {
 
@@ -132,7 +121,7 @@ class PlacesController extends Controller
             return response()->json($validation->errors());
         }
 
-        $places = Places::where('categoryId' , $request->catId)->orWhere('subCategoryId' , $request->catId)->get();
+        $places = Places::where('categoryId' , $request->catId)->orWhere('subCategoryId' , $request->catId)->orderBy('rate' , 'desc')->get();
         
         if ($places) {
             return $this->returnData('places' ,$places);
@@ -181,11 +170,12 @@ class PlacesController extends Controller
             return $query->where('id', $id);
         })
         ->markAsRead();
+        //send Email
         $msg = [
             'massage' =>  "تم قبول تسجيلك في تطبيقنا ،الأن يمكنك التمتع بكافة الخدمات"
         ];
         Mail::to(Auth::user()->email)->send(new email_To_Place($msg));
-        return redirect()->back();
+
         return redirect()->back();
     }
 
@@ -200,10 +190,13 @@ class PlacesController extends Controller
             return $query->where('id', $id);
         })
         ->markAsRead();
+        //send email
         $msg = [
             'massage' =>   'تم رفض تسجيلك في تطبيقنا ، الرجاء محاولة التسجيل مرة أخرى مع إدخال بيانات صحيحية' ,
         ];
         Mail::to(Auth::user()->email)->send(new email_To_Place($msg));
+        //delete account
+        $account = User::find($place->accountId)->delete();
         return redirect()->back();
     }
 
@@ -242,14 +235,25 @@ class PlacesController extends Controller
 
     public function filter(Request $request) {
         $validation = Validator::make($request->all() , [
-            'category' => 'required|array',
+            'category' => 'present|array',
+            'region' => 'present|array',
         ]);
-
+        
         if($validation->fails()){
             return response()->json($validation->errors());
         }
+        if (count($request->region) != 0 ) {
+            $places = Places::whereHas('account' , function ($q) use ($request) {
+                $q->whereIn('regionId' , $request->region);
+            })->orderBy('rate' , 'desc')->get();
 
-        $places = Places::whereIn('categoryId' , $request->category)->orWhereIn('subCategoryId' , $request->category)->get();
+        } else {
+            $places = Places::orderBy('rate' , 'desc')->get();
+        }
+        
+        if (count($request->category) != 0 ) {
+            $places = $places->whereIn('subCategoryId' , $request->category);
+        } 
 
         if ($places) {
             return $this->returnData('places' ,  $places  , 'success');
@@ -272,5 +276,12 @@ class PlacesController extends Controller
         }else{
             return response()->json(['status' => 400 , 'msg'  => 'There is no place like this name' , 'place'  => $places ]);
         }
+    }
+
+
+    public function getMaxRatingPlace() {
+        $place = Places::where('rate' , '>' , 3)->orderBy('rate' , 'desc')->get();
+
+        return $this->returnData('place' , $place , 'Success');
     }
 }

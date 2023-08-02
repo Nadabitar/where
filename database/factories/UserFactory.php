@@ -19,7 +19,6 @@ class UserFactory extends Factory
             'fullName' => $this->faker->name(),
             'gender' => $this->faker->randomElement(['male', 'famle']),
             'userType' => $this->faker->randomElement(['user', 'subscriber']),
-            'phone' => $this->faker->phoneNumber(),
             'deviceId' => $this->faker->randomNumber(4),
             'regionId' => $this->faker->randomElement(Region::pluck('id')->toArray()),
             'streetId' => $this->faker->randomElement(Region::where('isParent' , 0)->pluck('id')->toArray()),

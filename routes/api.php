@@ -50,6 +50,7 @@ Route::middleware('auth:sanctum')->prefix('/user')->group( function () {
         Route::post('/get/byCategory' , [PlacesController::class,'getPlaceByCat']);
         Route::post('/filter' , [PlacesController::class , 'filter']);
         Route::post('/filterByName' , [PlacesController::class , 'filterPlaceName']);
+        Route::post('/get/max/rating' , [PlacesController::class , 'getMaxRatingPlace']);
     });
 
     Route::post('/add/comment' , [CommentController::class , 'store']);
