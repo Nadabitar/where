@@ -6,6 +6,7 @@ use App\Events\placeCreated;
 use App\Models\Places;
 use App\Http\Requests\StorePlacesRequest;
 use App\Http\Requests\UpdatePlacesRequest;
+use App\Mail\email_To_Place;
 use App\Models\Region;
 use App\Models\User;
 use App\Traits\GenralTraits;
@@ -16,6 +17,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Validator;
 
 
@@ -179,6 +181,11 @@ class PlacesController extends Controller
             return $query->where('id', $id);
         })
         ->markAsRead();
+        $msg = [
+            'massage' =>  "تم قبول تسجيلك في تطبيقنا ،الأن يمكنك التمتع بكافة الخدمات"
+        ];
+        Mail::to(Auth::user()->email)->send(new email_To_Place($msg));
+        return redirect()->back();
         return redirect()->back();
     }
 
@@ -193,6 +200,10 @@ class PlacesController extends Controller
             return $query->where('id', $id);
         })
         ->markAsRead();
+        $msg = [
+            'massage' =>   'تم رفض تسجيلك في تطبيقنا ، الرجاء محاولة التسجيل مرة أخرى مع إدخال بيانات صحيحية' ,
+        ];
+        Mail::to(Auth::user()->email)->send(new email_To_Place($msg));
         return redirect()->back();
     }
 

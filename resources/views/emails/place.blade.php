@@ -4,8 +4,8 @@
     <title>laravelia.com</title>
 </head>
 <body>
-    <h1>Your validation Code</h1>
-    <p>{{ $code['massage'] }}</p>
+    <h1>Our Team want to told you </h1>
+    <p>{{ $msg['massage'] }}</p>
   
     <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
     tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,

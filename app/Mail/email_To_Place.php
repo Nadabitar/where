@@ -16,9 +16,9 @@ class email_To_Place extends Mailable
      *
      * @return void
      */
-    public function __construct()
+    public function __construct($msg)
     {
-        //
+        $this->msg = $msg;
     }
 
     /**
