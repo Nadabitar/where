@@ -75,8 +75,11 @@ class UserController extends Controller
 
     public function show()
     {
+        $locations = [
+            ["lat" => 36.2021, "lng" => 37.1343],
+          ];
         $place = Places::where('accountId' , Auth::user()->id )->first();
-        return view('subscriber.pages.profile' , compact('place'));
+        return view('subscriber.pages.profile' , compact('place' , 'locations'));
     }
 
     public function updatePhoneNumber(Request $request)
@@ -237,6 +240,32 @@ class UserController extends Controller
         }else{
             return back()->with(['error' => 'something went error']);
         }
+    }
+
+
+    public function addLocation(Request $request){
+        $validation = Validator::make($request->all() , [
+            'lat'=> 'required' ,
+            'lng'=> 'required' ,
+        ]);
+        if($validation->fails()){
+            return response()->json($validation->errors());
+        }
+        $place =$this->place();
+        $place->latitud  = $request->lat;
+        $place->longitude = $request->lng;
+
+        $result = $place->update();
+
+        if($result){
+            return redirect()->route('Profile.show')->with([
+                'message' => 'Location Added successfully',
+                'alert-type' => 'success'
+            ]);
+        }else{
+            return back()->with(['error' => 'something went error']);
+        }
+
     }
 
 
