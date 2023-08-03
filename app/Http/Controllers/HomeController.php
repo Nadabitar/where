@@ -48,7 +48,7 @@ class HomeController extends Controller
             'fullName' => 'required|string',
             'deviceId' => 'required|string|max:255',
             'userType' => 'required|in:admin,user,subscriber',
-            'gender' => 'required|in:male,fmale',
+            'gender' => 'required|in:male,famle',
             'regionId' => 'nullable|integer' ,
             'streetId' => 'nullable|integer',
         ]);
