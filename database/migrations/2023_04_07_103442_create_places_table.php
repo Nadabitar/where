@@ -22,7 +22,7 @@ class CreatePlacesTable extends Migration
             $table->json('links')->nullable();
             $table->double('latitud')->nullable();
             $table->double('longitude')->nullable();
-            $table->double('rate')->nullable();
+            $table->double('rate' , 5 ,2)->nullable();
             $table->boolean('isAccepted')->nullable();
             $table->foreign('regionId')->references('id')->on('regions')->onDelete('cascade');
             $table->foreign('streetId')->references('id')->on('regions')->onDelete('cascade');
