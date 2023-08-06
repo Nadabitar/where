@@ -74,7 +74,7 @@
                                 <td>{{$category->isParent == '0' ? 'No' : 'Yes'}}</td>
                                 <td>{{App\Models\Categoris::where('id' , $category->parentId)->value('name')}}</td>
                                 <td>
-                                    <input value="{{$category->id}}" name="toggle" type="checkbox" data-toggle="toggle" data-on="Active" data-off="unActive" data-onstyle="success" data-offstyle="danger" data-size='xs' {{$category->status == 'active'? 'checked' : ' '}} ></td>
+                                    <input value="{{$category->id}}" name="toggle" type="checkbox" data-toggle="toggle" data-on="Active" data-off="unActive" data-onstyle="success" data-offstyle="danger" data-size='xs' {{$category->status == 1 ? 'checked' : ' '}} ></td>
                                 <td class="d-flex">
                                     <a href="{{route('category.edit' , $category->id)}}" class='btn btn-sm btn-outline-warning  p-2 mx-1 ' data-toggle="tooltip" title="edit" data-placement = "bottom"><i class="ti-pencil "></i></a>
                                     <form action="{{route('category.delete' , $category->id)}}" method="get">

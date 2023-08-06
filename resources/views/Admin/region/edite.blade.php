@@ -1,4 +1,4 @@
-@extends('Admin.index')
+@extends('Admin.index' , ['notifications' => $notifications])
 @section('content')
 <div class="main-body">
     <div class="page-wrapper">
@@ -9,8 +9,8 @@
                     <div class="page-header-title">
                         <i class="ti-arrow-left bg-c-blue"></i>
                         <div class="d-inline">
-                            <h4>Edit  Banners</h4>
-                            <span>Here You Can Edite Banner </span>
+                            <h4>Edit  Regions</h4>
+                            <span>Here You Can Edite Region </span>
                         </div>
                     </div>
                 </div>
@@ -22,9 +22,9 @@
                                     <i class="icofont icofont-home"></i>
                                 </a>
                             </li>
-                            <li class="breadcrumb-item"><a href="#!">Banner</a>
+                            <li class="breadcrumb-item"><a href="#!">Regions</a>
                             </li>
-                            <li class="breadcrumb-item"><a href="#!">Edit Banner</a>
+                            <li class="breadcrumb-item"><a href="#!">Edit Region</a>
                             </li>
                         </ul>
                     </div>
@@ -45,51 +45,39 @@
                     <!-- Basic Form Inputs card start -->
                         <div class="card">
                             <div class="card-block">
-                                <h4 class="sub-title">Update  Information</h4>
-                                <form method="POST" action="{{route('banner.update' , $banner->id)}}">
+                                <h4 class="sub-title">Update  Region</h4>
+                                <form method="POST" action="{{route('region.update' , $region->id)}}">
                                     @csrf
                                     <div class="form-group row">
                                         <div class="col-sm-12">
-                                            <input type="text" class="form-control" name="title"
-                                                placeholder="Title" value="{{$banner->title}}">
+                                            <input type="text" class="form-control" name="name"
+                                                placeholder="Name" value="{{$region->name}}">
                                         </div>
                                     </div>
                                     <div class="form-group row">
+                                        <div class="col-sm-4">
+                                            <label for="isParent">Is_Parent</label>
+                                            <input  type="checkbox" name="isParent" id="isParent"  data-on="true"  data-off="fals" {{$region->isParent == 1 ? 'checked' : ' '}} >
+                                        </div>
+                                        <div class="col-sm-8" >
+                                            <select id="parent_cat_id"  class="form-control" name="parentId" {{$region->isParent == 1 ? 'disabled' : ' '}} >
+                                                <option value="">--Parent Id--</option>
+                                                @foreach (App\Models\Region::latest()->get()  as $item)
+                                                <option value="{{$item->id}}" >{{$item->name}}</option> 
+                                                @endforeach
+                                            </select>
+                                        </div>
+                                    </div>
+                                    {{-- <div class="form-group row">
                                                     <div class="col-sm-6">
                                                         <select  class="form-control" name="status" >
                                                             <option value="">--Status--</option>
-                                                            <option value="active" {{$banner->status == 'active' ? 'selected' : ' '}}>active</option>
-                                                            <option value="unactive" {{$banner->status== 'unactive' ? 'selected' : ' '}}>unActive</option>
+                                                            <option value="active" {{$region->status == true ? 'selected' : ' '}}>active</option>
+                                                            <option value="unactive" {{$region->status== false ? 'selected' : ' '}}>unActive</option>
                                                         </select>
                                                     </div>
-                                                    <div class="col-sm-6">
-                                                        <select  class="form-control" name="condition" >
-                                                            <option value="" >--Condition--</option>
-                                                            <option value="banner"  {{$banner->condition == 'banner' ? 'selected' : ' '}}>Banner</option>
-                                                            <option value="promo" {{$banner->condition == 'promo' ? 'selected' : ' '}}>Promote</option>
-                                                        </select>
-                                                    </div>
-                                    </div>
-                                    <div class="form-group row">
-                                        <div class="col-sm-12">
-                                        <div class="input-group">
-                                            <span class="input-group-btn">
-                                                <a id="lfm" data-input="thumbnail" data-preview="holder" class="btn btn-primary">
-                                                    <i class="fa fa-picture-o"></i> Choose
-                                                </a>
-                                            </span>
-                                            <input id="thumbnail" class="form-control" type="text" name="photo" value="{{$banner->photo}}">
-                                        </div>
-                                        <div id="holder" style="margin-top:15px;max-height:100px;">
+                                    </div> --}}
 
-                                        </div>
-                                        </div>
-                                    </div>
-                                    <div class="form-group row">
-                                        <div class="col-sm-12">
-                                            <textarea value="{{$banner->desription}}" id="summernote" name="description"  class="form-control" placeholder="Description"></textarea>
-                                        </div>
-                                    </div>
                                     <div class="form-group row text-right">
                                         <div class="col-sm-12">
                                             <input  style="width: 25%"  type="submit" class="btn btn-primary" value="update">
@@ -115,5 +103,20 @@
      $(document).ready(function() {
         $('#summernote').summernote();
 });
+</script>
+
+
+<script>
+    check = document.getElementById('isParent');
+
+    function loadedRegion() {
+        alert('d');
+        if (check.checked) {
+            console.log('check', 'y');
+        } else {
+            console.log('check', 'n');
+        }
+    }
+
 </script>
 @endsection

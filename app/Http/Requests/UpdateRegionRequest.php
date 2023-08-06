@@ -13,7 +13,7 @@ class UpdateRegionRequest extends FormRequest
      */
     public function authorize()
     {
-        return false;
+        return true;
     }
 
     /**
@@ -24,7 +24,9 @@ class UpdateRegionRequest extends FormRequest
     public function rules()
     {
         return [
-            //
+            'name' => 'string|required',
+            'isParent' => 'nullable',
+            'parentId' => 'nullable',
         ];
     }
 }

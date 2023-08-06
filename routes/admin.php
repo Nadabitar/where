@@ -5,7 +5,6 @@ use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\Admin\AdminController;
 use App\Http\Controllers\{
-    BannerController,
     BrandController,
     CategorisController,
     PlacesController,
@@ -33,7 +32,6 @@ Route::group(['middleware' => ['auth'] , 'prifex' => 'admin'] , function(){
         Route::Post('/region_update/{id}' , 'update')->name('region.update');
         Route::get('/region_delete/{id}' , 'destroy')->name('region.delete');
     });
-
 
     //Section category--------------------------------------
     Route::prefix('category')->controller(CategorisController::class)->group(function () {

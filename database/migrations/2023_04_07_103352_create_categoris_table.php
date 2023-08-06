@@ -19,7 +19,8 @@ class CreateCategorisTable extends Migration
             $table->boolean('isParent')->default(true);
             $table->string('name');
             $table->string('svg')->nullable();
-
+            $table->boolean('status')->default(true);
+            
             $table->foreign('parentId')->references('id')->on('categoris')->onDelete('set Null');
             $table->timestamps();
         });

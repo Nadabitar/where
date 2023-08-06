@@ -55,7 +55,7 @@ var nav = $('.fixed-button');
 
 
 <script>
-    const dropArea = document.querySelector(".drag-image"),
+const dropArea = document.querySelector(".drag-image"),
 dragText = dropArea.querySelector(".icon"),
 button = dropArea.querySelector("button"),
 input = document.getElementById("img-place"),
@@ -77,7 +77,8 @@ input.addEventListener("change", function(){
 
 function viewfile(){
   let fileType = file.type; 
-  let validExtensions = ["image/jpeg", "image/jpg", "image/png" , "svg"] ;
+  console.log(fileType);
+  let validExtensions = ["image/jpeg", "image/jpg", "image/png" , "image/svg+xml"] ;
   if(validExtensions.includes(fileType)){ 
     let fileReader = new FileReader(); 
     fileReader.onload = ()=>{
@@ -91,7 +92,7 @@ function viewfile(){
   }else{
     alert("This is not an Image File!");
     dropArea.classList.remove("active");
-    dragText.textContent = "Drag & Drop to Upload File";
+    // dragText.textContent = "Drag & Drop to Upload File";
   }
 }
 

@@ -7,7 +7,7 @@
             <div class="row align-items-end">
                 <div class="col-lg-8">
                     <div class="page-header-title">
-                       <a href="{{route('region.Add')}}"> <i class="ti-plus bg-c-blue"></i></a>
+                        <a href="{{route('region.Add')}}"> <i class="ti-plus bg-c-blue"></i></a>
                         <div class="d-inline">
                             <h4>Show All Region and Street</h4>
                             <span class="badge badge-primary text-white">Total Regions : {{App\Models\Region::all()->count()}} </span>
@@ -16,7 +16,7 @@
                 </div>
                 <div class="col-lg-4">
                     <div class="page-header-breadcrumb">
-                       <ul class="breadcrumb-title">
+                        <ul class="breadcrumb-title">
                         <li class="breadcrumb-item">
                             <a href="{{route('admin')}}">
                                 <i class="icofont icofont-home"></i>
@@ -68,10 +68,10 @@
                                 <td>{{$region->name}}</td>
                                 <td>{{$region->isParent}}</td>
                                 <td>
-                                    {{$region->getAllStreetByRegion($region->parentId)->name}}
+                                    {{$region->parentId ? App\Models\Region::where('id' , $region->parentId)->first()->name : 'null'}}
                                 </td>
                                 <td>
-                                        <input value="{{$region->id}}" name="toggle" type="checkbox" data-toggle="toggle" data-on="Active" data-off="unActive" data-onstyle="success" data-offstyle="danger" data-size='xs' {{$region->status == 'active'? 'checked' : ' '}} ></td>
+                                        <input value="{{$region->id}}" name="toggle" type="checkbox" data-toggle="toggle" data-on="Active" data-off="unActive" data-onstyle="success" data-offstyle="danger" data-size='xs' {{$region->status == true ? 'checked' : ' '}} ></td>
                                 <td class="d-flex">
                                     <a href="{{route('region.edit' , $region->id)}}" class='btn btn-sm btn-outline-warning  p-2 mx-1 ' data-toggle="tooltip" title="edit" data-placement = "bottom"><i class="ti-pencil "></i></a>
                                     <form action="{{route('region.delete' , $region->id)}}" method="get">
@@ -128,6 +128,7 @@
 
 <script>
         $('input[name=toggle]').change(function(){
+            // alert('kk');
             var mode = $(this).prop('checked');
             var id  = $(this).val();
             // alert(id);

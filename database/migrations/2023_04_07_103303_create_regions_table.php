@@ -19,6 +19,7 @@ class CreateRegionsTable extends Migration
             $table->unsignedBigInteger('parentId')->nullable();
             $table->boolean('isParent')->default(true);
             $table->foreign('parentId')->references('id')->on('regions')->onDelete('SET NULL');
+            $table->boolean('status')->default(true);
             $table->timestamps();
         });
     }
