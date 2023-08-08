@@ -242,18 +242,21 @@ class PlacesController extends Controller
         if($validation->fails()){
             return response()->json($validation->errors());
         }
+        
         if (count($request->region) != 0 ) {
-            $places = Places::whereHas('account' , function ($q) use ($request) {
+            $places = Places::with('account')->whereHas('account' , function ($q) use ($request) {
                 $q->whereIn('regionId' , $request->region);
-            })->orderBy('rate' , 'desc')->get();
+            })->orderBy('rate' , 'desc');
 
         } else {
-            $places = Places::orderBy('rate' , 'desc')->get();
+            $places = Places::orderBy('rate' , 'desc');
         }
         
         if (count($request->category) != 0 ) {
-            $places = $places->whereIn('subCategoryId' , $request->category);
-        } 
+            $places = $places->whereIn('subCategoryId' , $request->category)->get();
+        } else{
+            $places = $places->get();
+        }
 
         if ($places) {
             return $this->returnData('places' ,  $places  , 'success');

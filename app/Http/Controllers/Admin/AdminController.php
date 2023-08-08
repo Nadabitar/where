@@ -7,6 +7,7 @@ use App\Models\User;
 use Facade\FlareClient\View;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
 use Laravel\Ui\Presets\Vue;
 
@@ -20,7 +21,11 @@ class AdminController extends Controller
     public function index()
     {
         $notifications = auth()->user()->unreadNotifications;
-        return View('Admin.layouts.index' , compact('notifications'));
+        return View('Admin.layouts.index' , compact('notifications'))->with(
+            [
+                'popularCat' => $this->getMostPopularCat(),
+            ]
+        );
     }
 
     /**
@@ -28,9 +33,15 @@ class AdminController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function getMostPopularCat()
     {
-        //
+        $cat = DB::select(' select c.name, count(p.categoryId) as count
+        FROM  categoris c, places p
+        WHERE c.id = p.categoryId
+        GROUP BY c.name 
+        ORDER BY count(p.categoryId) DESC limit 5 ');
+
+        return $cat;
     }
 
     /**

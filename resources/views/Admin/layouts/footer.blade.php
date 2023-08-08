@@ -17,10 +17,7 @@
 <!-- am chart -->
 <script src="{{asset("backend/assets/pages/widget/amchart/amcharts.min.js")}}"></script>
 <script src="{{asset("backend/assets/pages/widget/amchart/serial.min.js")}}"></script>
-<!-- Todo js -->
-<script type="text/javascript " src="{{asset("backend/assets/pages/todo/todo.js")}} "></script>
-<!-- Custom js -->
-<script type="text/javascript" src="{{asset("backend/assets/pages/dashboard/custom-dashboard.js")}}"></script>
+
 <script type="text/javascript" src="{{asset("backend/assets/js/script.js")}}"></script>
 <script type="text/javascript " src="{{asset("backend/assets/js/SmoothScroll.js")}}"></script>
 <script src="{{asset("backend/assets/js/pcoded.min.js")}}"></script>

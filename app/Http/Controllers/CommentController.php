@@ -178,7 +178,8 @@ class CommentController extends Controller
 
         $place = Places::find($id);
         
-        $rating = DB::select("select SUM(comments.rate) / COUNT(comments.userId) as rate FROM comments where comments.placeId = ?" , [$id]);
+        $rating = DB::select("select SUM(comments.rate) / COUNT(comments.userId) as rate 
+        FROM comments where comments.placeId = ? " , [$id]);
         $place->rate = doubleval($rating[0]->rate);
         $place->update();
 

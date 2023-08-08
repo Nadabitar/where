@@ -30,7 +30,8 @@ class PlacesSeeder extends Seeder
             'phone' =>  $faker->phoneNumber(),
             'Details' =>  $faker->sentence(),
             'workTime' => $time ,
-            'rate' => $faker->randomFloat(3 , 1,6)
+            'rate' => $faker->randomFloat(3 , 1,6),
+            'isAccepted'=> 1,
             ]);
         }
     }
