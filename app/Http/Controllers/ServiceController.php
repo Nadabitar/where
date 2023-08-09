@@ -27,7 +27,7 @@ class ServiceController extends Controller
     public function index()
     {
         $place = Places::where('accountId' , Auth::user()->id)->first();
-        $services = Service::where('placeId' , $place->id)->has('gallery')->latest()->get();
+        $services = Service::where('placeId' , $place->id)->with('gallery')->latest()->get();
         $promo =Service::where(['placeId'=> $place->id , 'isPromo' => true ])->latest()->get();
         return View('subscriber.pages.Service.service' ,  compact('place' , 'services' , 'promo'));
     }
