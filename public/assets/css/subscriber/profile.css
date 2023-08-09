@@ -70,7 +70,7 @@
 }
 
 .background-page{
-    height: 220vh;
+    height: 700vh;
     width: 100%;
     background-color: var(--primary);
     color: var(--light);
@@ -106,7 +106,7 @@
     color: #FF6922;
     font-size: 14px;
 }
-.checkout-form-list input , select{
+.checkout-form-list input , select , textarea{
     width: 90%;
     margin-right: 5px;
     border: none;

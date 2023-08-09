@@ -118,11 +118,10 @@ class RegionController extends Controller
         //
     }
 
-    public function get_street_by_region(Request $request)
+    public function get_street_by_region($id)
     {
-        
         $region = new Region();
-        return response()->json(['data' =>   $region->getAllStreetByRegion($request->id) , 'success' => true] , 200);
+        return response()->json(['data' =>   $region->getAllStreetByRegion($id) , 'success' => true] , 200);
     }
 
     public function get_streets_by_region(Request $request)

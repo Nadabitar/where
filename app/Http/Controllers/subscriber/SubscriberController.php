@@ -33,9 +33,7 @@ class SubscriberController extends Controller
                 'users' => $users,
                 'popularService' => $popularService,
             ]);
-        } else if ($place->isAccepted == 0) {
-            return  View('welcome');
-        }
+        } 
         return  View('errors.503');
     }
     
