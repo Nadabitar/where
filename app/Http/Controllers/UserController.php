@@ -126,12 +126,12 @@ class UserController extends Controller
 
     public function update(UpdateAccountsRequest $request )
     {
-        $request->validate();
         $user = User::find(Auth::user()->id);
 
         $user->fullName = $request->fullName;
         $user->regionId = $request->regionId ;
         $user->streetId = $request->streetId;
+        $user->gender = $request->gender;
 
         $result = $user->update();
 

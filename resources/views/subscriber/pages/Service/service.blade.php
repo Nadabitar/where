@@ -54,7 +54,7 @@
                           <tr class="alert" role="alert">
                             <td>
                               <span class="s-photo">
-                                <img src="{{ count($service->gallery) != 0 ? $service->gallery[0]->url : asset('assets/img/subscriber/hat.jpg') }}" alt="">
+                                <img src="{{ count($service->gallery) != 0 ? $service->gallery[0]->url : asset('assets/img/subscriber/noImage.jpg') }}" alt="">
                               </span>
                             </td>
                             <td>

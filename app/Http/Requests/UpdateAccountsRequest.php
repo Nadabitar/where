@@ -25,6 +25,7 @@ class UpdateAccountsRequest extends FormRequest
     {
         return [
             'fullName' => 'required|string',
+            'gender' => 'required|in:male,famle',
             'regionId' => 'nullable|integer' ,
             'streetId' => 'nullable|integer',
         ];
