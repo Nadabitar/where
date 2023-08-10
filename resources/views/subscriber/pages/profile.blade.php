@@ -138,31 +138,13 @@
                                                     <form action="{{ route('Profile.update.workTime')}}" method="GET"  >
                                                         <div class="row">
                                                             <div class="col-10">
-                                                                <div class="row">
-                                                                    <div class="col-6">
                                                                         <label>وقت العمل <span class="required">*</span></label> 
-                                                                        {{-- <span style="display: none" class="from-massege text-danger">وقت الافتتاح يجب أن يكون قبل وقت الإغلاق </span> --}}
-                                                                        <span style="display: none"  class="time-massege text-info">أدخل الوقت بنظام الإثنى عشر ساعة </span>
-                                                                        <input  id="from" type="text" placeholder="من" name="from"  value="{{ $place->workTime }}"/>
-                                                                        <span style="display: none"  class="num-from-massege text-danger">فقط أرقام لا يسمح بالأحرف</span>
+                                                                        <textarea  id="from" type="text"  name="worktime"  value="{{ $place->workTime }}"></textarea>
                                                                         @error('from')
                                                                         <span class="invalid-feedback" role="alert">
                                                                             <strong>{{ $message }}</strong>
                                                                         </span>
                                                                         @enderror
-                                                                    </div>
-                                                                    <div class="col-6">
-                                                                        <label>وقت العمل <span class="required">*</span></label>								
-                                                                        <input id="to" type="text" placeholder="إلى" name="to" value="{{ $place->workTime }}" />
-                                                                        <span style="display: none" class="to-massege text-danger"> وقت الإغلاق يجب أن يكون بعد وقت الافتتاح</span>
-                                                                        <span style="display: none"  class="num-to-massege text-danger">فقط أرقام لا يسمح بالأحرف</span>
-                                                                        @error('to')
-                                                                        <span class="invalid-feedback" role="alert">
-                                                                            <strong>{{ $message }}</strong>
-                                                                        </span>
-                                                                        @enderror
-                                                                    </div>
-                                                                </div>
                                                             </div>
                                                             <div class="col-2">
                                                                 <div class="Edit-button">

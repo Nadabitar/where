@@ -78,7 +78,7 @@
                                             <input type="checkbox" name="isParent" id="isParent" {{$category->isParent == 'true' ? 'checked' : " "}}>
                                         </div>
                                         <div class="col-sm-8" >
-                                            <select id="parent_cat_id"  class="form-control" name="parentId" disabled>
+                                            <select id="parent_cat_id"  class="form-control" name="parentId" >
                                                 <option >--Parent Id--</option>
                                                 <option selected>{{App\Models\Categoris::where('id' , $category->parentId)->value('name')}}</option>
                                                 @foreach (App\Models\Categoris::all() as $item)
@@ -91,8 +91,8 @@
                                                     <div class="col-sm-12">
                                                         <select  class="form-control" name="status" >
                                                             <option value="">--Status--</option>
-                                                            <option value="active" {{$category->status == 'active' ? 'selected' : ' '}}>active</option>
-                                                            <option value="unactive" {{$category->status== 'unactive' ? 'selected' : ' '}}>unActive</option>
+                                                            <option value="active" {{$category->status == 1 ? 'selected' : ' '}}>active</option>
+                                                            <option value="unactive" {{$category->status== 0 ? 'selected' : ' '}}>unActive</option>
                                                         </select>
                                                     </div>
                                     </div>
@@ -127,9 +127,9 @@
         var is_active = $(this).prop('checked');
         // alert(is_active);
         if (is_active) {
-            $('#parent_cat_id').prop('disabled' , false);
-        }else{
             $('#parent_cat_id').prop('disabled' , true);
+        }else{
+            $('#parent_cat_id').prop('disabled' , false);
         }
 
     })

@@ -5,7 +5,6 @@ use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\Admin\AdminController;
 use App\Http\Controllers\{
-    BannerController,
     BrandController,
     CategorisController,
     PlacesController,
@@ -34,7 +33,6 @@ Route::group(['middleware' => ['auth'] , 'prifex' => 'admin'] , function(){
         Route::get('/region_delete/{id}' , 'destroy')->name('region.delete');
     });
 
-
     //Section category--------------------------------------
     Route::prefix('category')->controller(CategorisController::class)->group(function () {
         Route::get('/' , [CategorisController::class ,  'show'])->name('category.All');
@@ -47,17 +45,6 @@ Route::group(['middleware' => ['auth'] , 'prifex' => 'admin'] , function(){
 
         Route::post('/{id}/child', 'getChildByParentId')->name('category.child.By.Parent');
     });
-     //Section Brand--------------------------------------
-    Route::prefix('brand')->controller(BrandController::class)->group(function () {
-        Route::get('/' ,  'index')->name('brand.All');
-        Route::get('/show_craete_page' ,  'show')->name('brand.Add');
-        Route::post('/store' ,  'store')->name('brand.store');
-        Route::post('/status' , 'brandStatus')->name('brand.status');
-        Route::get('/brand_edit/{id}' , 'edit')->name('brand.edit');
-        Route::Post('/brand_update/{id}' , 'update')->name('brand.update');
-        Route::get('/brand_delete/{id}' , 'destroy')->name('brand.delete');
-    });
-
      //Section Product--------------------------------------
     Route::prefix('Place')->group(function () {
         Route::get('/' ,  [PlacesController::class,'show'])->name('Place.All');
@@ -85,10 +72,3 @@ Route::group(['middleware' => ['auth'] , 'prifex' => 'admin'] , function(){
         Route::get('/view/users/{id}' ,  'view')->name('users.view');
     });
 });
-
-
-// Route::get('/notFound' , function ()
-// {
-//     return view('errors.404');
-// })->name('404');
-

@@ -221,7 +221,7 @@
         });
         var html_option = `<option value=""> شارع </option>`;
         var rg_id = $(this).val();
-        //   alert(cat_id);
+        //   alert(rg_id);
         if( rg_id != null){
         $.ajax({
             url : '/subscriber/region/'+ rg_id,
@@ -243,6 +243,7 @@
             success: function(response) {
                 if (response.success) {
                     $('#street').prop('disabled' , false);
+                    // alert(response.data);
                     $.each(response.data , function(name , id){
                         html_option += `<option value='`+id+`'> `+name+`</option>`
                     }); 

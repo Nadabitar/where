@@ -66,30 +66,10 @@
                         <img src="{{asset('backend/assets/images/Default_User.jpg')}}" class="img-radius" alt="User-Profile-Image">
                         @endif --}}
                      
-                        <span>John Doe</span>
+                        <span>ADMIN</span>
                         <i class="ti-angle-down"></i>
                     </a>
                     <ul class="show-notification profile-notification">
-                        <li>
-                            <a href="#!">
-                                <i class="ti-settings"></i> Settings
-                            </a>
-                        </li>
-                        <li>
-                            <a href="#">
-                                <i class="ti-user"></i> Profile
-                            </a>
-                        </li>
-                        <li>
-                            <a href="#">
-                                <i class="ti-email"></i> My Messages
-                            </a>
-                        </li>
-                        <li>
-                            <a href="#">
-                                <i class="ti-lock"></i> Lock Screen
-                            </a>
-                        </li>
                         <li>
                                 <a class="dropdown-item" href="{{ route('logout') }}"
                                 onclick="event.preventDefault();

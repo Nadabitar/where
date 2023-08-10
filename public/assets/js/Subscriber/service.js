@@ -130,21 +130,15 @@ document.getElementById('service-imag').addEventListener("change" , (e) => {
     // alert('kk');
     if (window.File && window.FileReader && window.FileList && window.Blob) {
         const files = e.target.files;
-        const output = document.getElementById('file-result');
-        for (let i = 0; i <  files.length; i++) {
+        const output = document.querySelectorAll('#img-output');
+        console.log(files.length);
+        for (let i = 0 ; i < files.length; i++) {
             if (!files[i].type.match('image')) {continue}
             const picReader = new FileReader();
-            // output.empty();
             picReader.addEventListener('load' , function(event){
                 const picFile = event.target;
-                const dive1 = document.createElement('div');
-                dive1.className = 'owl-carousel';
-                dive1.className += 'header-carousel';
-                const dive2 = document.createElement('div');
-                dive1.className = 'owl-carousel-item';
-                dive1.appendChild(dive2);
-                dive2.innerHTML =  `<img class="img-fluid" src="${picFile.result}">`
-                output.appendChild(dive1);
+                console.log(output[i]);
+                output[i].src = `${picFile.result}`;
             });
             picReader.readAsDataURL(files[i]);
             

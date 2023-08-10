@@ -71,27 +71,11 @@
                                                     </div>
                                                 </div>
     	
-                                                <div class="col-md-6 checkbox-line" >
+                                                <div class="col-md-12 checkbox-line" >
                                                     <div class="checkout-form-list">
                                                         <label>وقت العمل <span class="required">*</span></label> 
-                                                        {{-- <span style="display: none" class="from-massege text-danger">وقت الافتتاح يجب أن يكون قبل وقت الإغلاق </span> --}}
-                                                        <span style="display: none"  class="time-massege text-info">أدخل الوقت بنظام الإثنى عشر ساعة </span>
-                                                        <input  id="from" type="text" placeholder="من" name="from" />
-                                                        <span style="display: none"  class="num-from-massege text-danger">فقط أرقام لا يسمح بالأحرف</span>
+                                                        <textarea  id="from" type="textarea" name="workTime" > </textarea>
                                                         @error('from')
-                                                        <span class="invalid-feedback" role="alert">
-                                                            <strong>{{ $message }}</strong>
-                                                        </span>
-                                                        @enderror
-                                                    </div>
-                                                </div>
-                                                <div class="col-md-6 checkbox-line" >
-                                                    <div class="checkout-form-list">	
-                                                        <label>وقت العمل <span class="required">*</span></label>								
-                                                        <input id="to" type="text" placeholder="إلى" name="to" />
-                                                        <span style="display: none" class="to-massege text-danger"> وقت الإغلاق يجب أن يكون بعد وقت الافتتاح</span>
-                                                        <span style="display: none"  class="num-to-massege text-danger">فقط أرقام لا يسمح بالأحرف</span>
-                                                        @error('to')
                                                         <span class="invalid-feedback" role="alert">
                                                             <strong>{{ $message }}</strong>
                                                         </span>

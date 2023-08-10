@@ -30,7 +30,8 @@ class CategorisController extends Controller
     public function show()
     {
       $categories =Categoris::latest()->get();
-      return view('Admin.category.index' , compact('categories'));
+      $notifications = auth()->user()->unreadNotifications;
+      return view('Admin.category.index' , compact('categories' , 'notifications'));
     }
     public function store(StoreCategorisRequest $request){
         $request->validated();
@@ -58,14 +59,15 @@ class CategorisController extends Controller
     public function create()
     {
       $categories =Categoris::all();
-        return view('Admin.category.create' , compact('categories'));
+      $notifications = auth()->user()->unreadNotifications;
+      return view('Admin.category.create' , compact('categories' , 'notifications' ));
     }
 
     public function categoyStatus(Request $request){
       if($request->mode == 'true'){
-        DB::table('categories')->where('id' , $request->id)->update(['status' => 'active']);
+        DB::table('categoris')->where('id' , $request->id)->update(['status' => 1]);
       }else{
-        DB::table('categories')->where('id' , $request->id)->update(['status' => 'unactive']);
+        DB::table('categoris')->where('id' , $request->id)->update(['status' => 0]);
       }
       return response()->json(['msg' => 'Status Updated Successful' , 'status' => true]);
     }
@@ -73,33 +75,34 @@ class CategorisController extends Controller
     public function edit($id)
     {
       $category = Categoris::find($id);
+      $notifications = auth()->user()->unreadNotifications;
       if($category){
-        return View('Admin.category.edite' , compact('category'));
+        return View('Admin.category.edite' , compact('category' , 'notifications'));
       }else{
         return back()->with('error' , 'Data not Found');
       }
     }
     public function update(UpdateCategorisRequest $request , $id)
     {
-      $request->validated();
-      $data = $request->all();
-      if($request->input('title')== null)
-      {
-        $data['isParent'] = false;
-      }else{
-        $data['isParent'] = true;
-      }
       $category = Categoris::find($id);
-      $category['svg'] = $request->hasFile('image')? $this->uploadImage($request->file('image')->getRealPath()): $this->returnError(201 , 'image is required') ;
-      $status =$category->fill($data)->save();
-      if($status){
-        return redirect()->route('category.All')->with([
-            'message' => 'Category updated successfully',
-            'alert-type' => 'success'
-        ]);
-      }else{
-        return back()->with(['error' => 'something went error']);
+      $category->name = $request->name; 
+      if ($request->isParent == 'on') {
+          $category->isParent = 1; 
       }
+      else{
+          $category->isParent = 0; 
+      }
+      $category->parentId = $request->parentId; 
+      $category->svg = $request->hasFile('image')? $this->uploadImage($request->file('image')->getRealPath()): $this->returnError(201 , 'image is required') ;
+      $status = $category->update();
+      if($status){
+          return redirect()->route('category.All')->with([
+              'message' => 'Category updated successfully',
+              'alert-type' => 'success'
+          ]);
+      }else{
+          return back()->with(['error' => 'something went error']);
+      }    
     }
 
     public function destroy($id)

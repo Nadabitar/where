@@ -1,5 +1,6 @@
 <?php
 
+use App\Events\placeCreated;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AccountsController;
@@ -80,3 +81,7 @@ Route::prefix('auth')->group(function(){
 
 Route::get('/get/all/region' , [RegionController::class , 'index']);
 Route::post('/get/street' , [RegionController::class , 'get_streets_by_region']);
+
+
+
+Route::get('/update' , [PlacesController::class , 'update']);

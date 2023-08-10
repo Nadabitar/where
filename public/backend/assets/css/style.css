@@ -6084,7 +6084,7 @@ body[themebg-pattern="pattern9"] {
   border-bottom: 1px solid #444c67;
   border-top: 1px solid #444c67; }
 .pcoded .pcoded-header .navbar-logo[logo-theme="theme1"] {
-  background-color: #303549; }
+  background-color: var(--primary); }
 .pcoded .pcoded-header .navbar-logo[logo-theme="theme2"] {
   background-color: #ef5350; }
 .pcoded .pcoded-header .navbar-logo[logo-theme="theme3"] {
@@ -8936,7 +8936,7 @@ table.footable-paging-center > tfoot > tr.footable-paging > td {
   color: #000; }
 
 .bg-c-blue {
-  background-color: #4680ff; }
+  background-color: var(--dark); }
 
 .text-c-blue {
   color: #4680ff; }
@@ -8948,13 +8948,13 @@ table.footable-paging-center > tfoot > tr.footable-paging > td {
   color: #FC6180; }
 
 .bg-c-green {
-  background-color: #93BE52; }
+  background-color: var(--primary); }
 
 .text-c-green {
   color: #93BE52; }
 
 .bg-c-yellow {
-  background-color: #FFB64D; }
+  background-color: var(--secondary); }
 
 .text-c-yellow {
   color: #FFB64D; }
@@ -10682,19 +10682,20 @@ table.footable-paging-center > tfoot > tr.footable-paging > td {
   margin-bottom: 0; }
 
 .dribble-card .card-header {
-  background-color: #f178a7; }
+  background-color: var(--secondary) }
   .dribble-card .card-header i {
-    background-color: #EC4A89; }
+    background-color: #e75814; }
 
 .fb-card .card-header {
-  background-color: #4c70b9; }
+  background-color: var(--primary); 
+}
   .fb-card .card-header i {
-    background-color: #3B5997; }
+    background-color: #17a584 }
 
 .twitter-card .card-header {
-  background-color: #74d1fc; }
+  background-color:var(--dark) }
   .twitter-card .card-header i {
-    background-color: #42C0FB; }
+    background-color: #103c6b; }
 
 .card-comment img {
   float: left; }

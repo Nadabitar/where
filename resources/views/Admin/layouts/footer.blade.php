@@ -17,10 +17,7 @@
 <!-- am chart -->
 <script src="{{asset("backend/assets/pages/widget/amchart/amcharts.min.js")}}"></script>
 <script src="{{asset("backend/assets/pages/widget/amchart/serial.min.js")}}"></script>
-<!-- Todo js -->
-<script type="text/javascript " src="{{asset("backend/assets/pages/todo/todo.js")}} "></script>
-<!-- Custom js -->
-<script type="text/javascript" src="{{asset("backend/assets/pages/dashboard/custom-dashboard.js")}}"></script>
+
 <script type="text/javascript" src="{{asset("backend/assets/js/script.js")}}"></script>
 <script type="text/javascript " src="{{asset("backend/assets/js/SmoothScroll.js")}}"></script>
 <script src="{{asset("backend/assets/js/pcoded.min.js")}}"></script>
@@ -55,7 +52,7 @@ var nav = $('.fixed-button');
 
 
 <script>
-    const dropArea = document.querySelector(".drag-image"),
+const dropArea = document.querySelector(".drag-image"),
 dragText = dropArea.querySelector(".icon"),
 button = dropArea.querySelector("button"),
 input = document.getElementById("img-place"),
@@ -77,7 +74,8 @@ input.addEventListener("change", function(){
 
 function viewfile(){
   let fileType = file.type; 
-  let validExtensions = ["image/jpeg", "image/jpg", "image/png" , "svg"] ;
+  console.log(fileType);
+  let validExtensions = ["image/jpeg", "image/jpg", "image/png" , "image/svg+xml"] ;
   if(validExtensions.includes(fileType)){ 
     let fileReader = new FileReader(); 
     fileReader.onload = ()=>{
@@ -91,7 +89,7 @@ function viewfile(){
   }else{
     alert("This is not an Image File!");
     dropArea.classList.remove("active");
-    dragText.textContent = "Drag & Drop to Upload File";
+    // dragText.textContent = "Drag & Drop to Upload File";
   }
 }
 

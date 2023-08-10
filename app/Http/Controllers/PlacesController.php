@@ -51,13 +51,12 @@ class PlacesController extends Controller
         $request->validated();
         $place = new Places();
         $place->accountId = Auth::user()->id;
-        $workTime = sprintf('Open From %s To %s' , $request->from , $request->to);
         $place->categoryId  = $request->categoryId;
         $place->subCategoryId  = $request->subCategoryId;
         $place->placeName = $request->placeName;
         $place->phone = $request->phoneNumber ;
         $place->details = $request->details;
-        $place->workTime = $workTime;
+        $place->workTime = $request->workTime;
         $place->links = $this->socialkMedia($request);
 
         $place->image = $request->hasFile('image')? $this->uploadImage($request->file('image')->getRealPath()): $this->returnError(201 , 'image is required') ;
@@ -92,6 +91,7 @@ class PlacesController extends Controller
         $places->password = Hash::make('11223344');
 
         return  $places->update();
+        
 
 
     }
@@ -242,18 +242,21 @@ class PlacesController extends Controller
         if($validation->fails()){
             return response()->json($validation->errors());
         }
+        
         if (count($request->region) != 0 ) {
-            $places = Places::whereHas('account' , function ($q) use ($request) {
+            $places = Places::with('account')->whereHas('account' , function ($q) use ($request) {
                 $q->whereIn('regionId' , $request->region);
-            })->orderBy('rate' , 'desc')->get();
+            })->orderBy('rate' , 'desc');
 
         } else {
-            $places = Places::orderBy('rate' , 'desc')->get();
+            $places = Places::orderBy('rate' , 'desc');
         }
         
         if (count($request->category) != 0 ) {
-            $places = $places->whereIn('subCategoryId' , $request->category);
-        } 
+            $places = $places->whereIn('subCategoryId' , $request->category)->get();
+        } else{
+            $places = $places->get();
+        }
 
         if ($places) {
             return $this->returnData('places' ,  $places  , 'success');
