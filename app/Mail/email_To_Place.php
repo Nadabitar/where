@@ -29,6 +29,6 @@ class email_To_Place extends Mailable
     public function build()
     {
         return $this->subject('Mail from ItSolutionStuff.com')
-        ->view('emails.sendCode');
+        ->view('emails.place');
     }
 }

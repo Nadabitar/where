@@ -25,6 +25,7 @@ class AdsStoreRequest extends FormRequest
     {
         return [
             'content' => 'required|string', 
+            'deleted_at' => 'required', 
             'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:10000',
         ];
     }

@@ -27,20 +27,21 @@ class PromoController extends Controller
     {
         $place = $this->get_Place();
         $services = Service::has('gallery')->where('placeId' , $place->id)->get();
-        // $Gallery  = Places::with('Gallery')->where('accountId' , Auth::user()->id)->first()->Gallery;
+        $promo =Service::where(['placeId'=> $place->id , 'isPromo' => true ])->latest()->get();
         $Gallery = Gallery::WhereHas('service' , function ($query)
         {
             $query->where('placeId' , $this->get_Place()->id)->where('isAd' , 1);
         })->latest()->get();
-        return View('subscriber.pages.Service.addPromo' ,  compact('services' , 'place' , 'Gallery'));
+        return View('subscriber.pages.Service.addPromo' ,  compact('services' , 'place' , 'Gallery' , 'promo'));
     }
 
     public function store(AdsStoreRequest $request , $id)
     {
-        $request->validated();
+        // $request->validated();
         $service = new Service();
         $service->placeId = $id ;
         $service->content = $request->content;
+        $service->deleted_at = $request->deleted_at;
         $service->title =  "advertising";
         $service->isAd = true;
         $service->save();

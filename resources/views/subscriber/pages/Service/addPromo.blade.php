@@ -42,6 +42,7 @@
                         <div class="adv-box-content">
                             <input name="image" id="default-btn" type="file">
                             <input name="content" type="text" placeholder="أدخل تفصيلاً لهذا الإعلان">
+                            <input name="deleted_at" type="datetime-local" placeholder="أدخل تاريخ انتهاء هذا الإعلان">
                         </div>
                         <button type="submit" onclick="defaultBtnActive()" id="custom-btn">نشر الإعلان</button>
                     </form>
