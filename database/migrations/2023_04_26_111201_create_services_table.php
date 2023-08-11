@@ -19,6 +19,7 @@ class CreateServicesTable extends Migration
             $table->string('title');
             $table->boolean('isAd')->default(false);
             $table->boolean('isPromo')->default(false);
+            $table->timestamp('deleted_at')->nullable();
             $table->text('content');
             $table->boolean('status')->default(true);
             $table->integer('count')->nullable()->default(0); 

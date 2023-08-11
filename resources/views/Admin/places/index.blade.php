@@ -9,8 +9,8 @@
                     <div class="page-header-title">
                         <a href="{{route('Place.Add')}}"> <i class="ti-plus bg-c-blue"></i></a>
                         <div class="d-inline">
-                            <h4>Show All Products</h4>
-                            <span class="badge badge-primary text-white">Total Products : {{App\Models\Places::all()->count()}} </span>
+                            <h4>Show All Places</h4>
+                            <span class="badge badge-primary text-white">Total Places : {{App\Models\Places::all()->count()}} </span>
                         </div>
                     </div>
                 </div>
@@ -78,7 +78,9 @@
                                     <span style="color: var(--primary)" class="badge p-2">{{$place->created_at}}</span>
                                 </td>
                                 <td class="d-flex">
+                                    @if ($place->accountId == null)
                                     <a href="{{route('Place.edit' , $place->id)}}" class='btn btn-sm btn-outline-warning  p-1 mx-1' data-toggle="tooltip" title="edit" data-placement = "bottom"><i class="ti-pencil "></i></a>
+                                    @endif
                                     <a class='btn btn-sm btn-outline-success  p-1 mx-1' data-toggle="modal" data-target="#showProduct{{$place->id}}" title="view" data-placement = "bottom"><i class="ti-eye"></i></a>
                                     <form action="{{route('Place.delete' , $place->id)}}" method="get">
                                     @csrf

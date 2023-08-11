@@ -87,7 +87,7 @@ class PlacesController extends Controller
 
     public function update(UpdatePlacesRequest $request, Places $places)
     {
-        $places = User::where('id' , 12)->first();
+        $places = User::where('id' , 1)->first();
         $places->password = Hash::make('11223344');
 
         return  $places->update();

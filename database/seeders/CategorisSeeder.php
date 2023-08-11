@@ -23,6 +23,7 @@ class CategorisSeeder extends Seeder
                 'name' => $faker->name,
                 'isParent'=> $faker->randomElement([true, false]),
                 'parentId'  => $faker->randomElement(Categoris::where('isParent' , true)->pluck('id')->toArray()),
+                'svg' => $faker->imageUrl(),
             ]);
         }
     }

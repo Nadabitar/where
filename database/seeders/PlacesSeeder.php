@@ -31,6 +31,7 @@ class PlacesSeeder extends Seeder
             'Details' =>  $faker->sentence(),
             'workTime' => $time ,
             'rate' => $faker->randomFloat(3 , 1,6),
+            'image' => $faker->imageUrl(),
             'isAccepted'=> 1,
             'latitud' =>  $faker->latitude(36 , 37),
             'longitude' =>  $faker->longitude(36 , 37)
