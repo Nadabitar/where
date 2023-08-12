@@ -15,7 +15,6 @@ class SubscriberController extends Controller
     public function index()
     {
         $place = Places::where('accountId' , Auth::user()->id)->first();
-
         if ($place->isAccepted) {
             $locations = [
                 ["lat" => $place->latitud, "lng" => $place->longitude],

@@ -73,8 +73,9 @@ class HomeController extends Controller
         $token = $accout->createToken($request->deviceId)->plainTextToken;
         $accout->remember_token = $token;
         $accout->save();
-        $accout['token'] = $token;
-        return ['accout' => $accout];
+        $account = User::find($accout->id);
+        $account['token'] = $token;
+        return ['accout' => $account];
     }
 
     

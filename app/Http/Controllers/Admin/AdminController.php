@@ -55,13 +55,12 @@ class AdminController extends Controller
         $validator = Validator::make($request->all() , [
             'email' => 'required|string|exists:App\Models\User',
             'password' => 'required|string',
-            'code' => 'required',
         ]);
         if($validator->fails()){
             return response()->json($validator->errors(), 400);
         }
         if( $account = User::where('email' , $request->email)->first()){
-            if($account->userType == 'admin' &&  $request->code == "iamnewadmin2023"){
+            if($account->userType == 'admin'){
                 Auth::login($account);
                 return redirect()->route('admin')->with('success','You are Logged in sucessfully.');
             }

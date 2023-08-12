@@ -5,12 +5,12 @@
 @endsection
 @section('content')
 
-@include('subscriber.partial.flash')
     <section id="info-page">
         <div class="info">
             <div class="row p-0 m-0">
                 <div class="col-md-7">
                         <div class="container">
+                            @include('subscriber.partial.flash')
                             <div class="drag-image mt-5">
                                 <div class="icon"><i class="fas fa-cloud-upload-alt"></i></div>
                                 <h6>Drag & Drop File Here</h6>
@@ -26,7 +26,7 @@
                                                 <div class="col-md-12 checkbox-line ">
                                                     <div class="checkout-form-list">
                                                         <label>image</label>
-                                                        <input  type="file" name="image" id="img-place">
+                                                        <input  type="file" name="image" id="img-place" required>
                                                     </div>  
                                                 </div>
                                                 <div class="col-md-12 checkbox-line ">
@@ -50,7 +50,7 @@
                                                 <div class="col-md-12 checkbox-line ">
                                                     <div class="checkout-form-list">
                                                         <label>اسم المكان</label>
-                                                        <input name="placeName" type="text" placeholder="اسم المكان" />
+                                                        <input name="placeName" type="text" placeholder="اسم المكان"  required/>
                                                         @error('placeName')
                                                         <span class="invalid-feedback" role="alert">
                                                             <strong>{{ $message }}</strong>
@@ -61,7 +61,7 @@
                                                 <div class="col-md-12 checkbox-line ">
                                                     <div class="checkout-form-list">
                                                         <label>رقم الهاتف <span class="required">*</span></label>
-                                                        <input type="text" placeholder="رقم الهاتف" name="phoneNumber" />
+                                                        <input type="text" placeholder="رقم الهاتف" name="phoneNumber" required />
                                                         <input style="margin: 15px 8px" type="text" name="addtionalPhone" placeholder="هل هناك رقم تواصل أخر!!" />
                                                         @error('phoneNumber')
                                                         <span class="invalid-feedback" role="alert">
@@ -74,7 +74,7 @@
                                                 <div class="col-md-12 checkbox-line" >
                                                     <div class="checkout-form-list">
                                                         <label>وقت العمل <span class="required">*</span></label> 
-                                                        <textarea  id="from" type="textarea" name="workTime" > </textarea>
+                                                        <textarea  id="from" type="textarea" name="workTime" required > </textarea>
                                                         @error('from')
                                                         <span class="invalid-feedback" role="alert">
                                                             <strong>{{ $message }}</strong>
@@ -85,7 +85,7 @@
                                                 <div class="col-md-6 checkbox-line" >
                                                     <div class="checkout-form-list">
                                                         <label> الواتس آب</label>										
-                                                        <input name="whats" type="text" placeholder="  آب/رابط مجموعة" />
+                                                        <input name="whats" type="text" placeholder="  آب/رابط مجموعة"  />
                                                         @error('whats')
                                                         <span class="invalid-feedback" role="alert">
                                                             <strong>{{ $message }}</strong>
