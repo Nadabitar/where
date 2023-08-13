@@ -1,6 +1,5 @@
 'use strict';
 $(document).ready(function() {
-    donutChart();
     /*Area chart*/
 
         var chart = AmCharts.makeChart("statestics-chart", {

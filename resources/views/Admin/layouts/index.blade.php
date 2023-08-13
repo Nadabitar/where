@@ -88,7 +88,7 @@
                                     </div>
                                 </div>
                                 <div class="card-block">
-                                    <div id="statestics-chart" style="height:517px;"></div>
+                                    <div data-info="{{json_encode($popularRegion)}}" id="statestics-chart" style="height:517px;"></div>
                                 </div>
                             </div>
                         </div>
@@ -98,7 +98,7 @@
                                     <div class="card-header">
                                         <i class="icofont icofont-location-pin"></i>
                                         <div class="d-inline-block">
-                                            <h5>Registred Places</h5>
+                                            <h5>Most Popular Regions</h5>
                                             <span>now you have</span>
                                         </div>
                                     </div>
@@ -325,5 +325,53 @@
         }
 });
         
+</script>
+
+<script>
+    $(document).ready(function() {
+        let card = document.getElementById('statestics-chart');
+            let info = JSON.parse(card.dataset.info);
+            console.log(info)
+
+        var chart = AmCharts.makeChart("statestics-chart", {
+            "type": "serial",
+            "marginTop": 0,
+            "hideCredits": true,
+            "marginRight": 0,
+        "dataProvider": info,
+            "graphs": [{
+                "id": "g1",
+                "bullet": "round",
+                "bulletSize": 9,
+                "lineColor": "#4680ff",
+                "lineThickness": 2,
+                "negativeLineColor": "#4680ff",
+                "type": "smoothedLine",
+                "valueField": "value"
+            }],
+            "chartCursor": {
+                "cursorAlpha": 0,
+                "valueLineEnabled": false,
+                "valueLineBalloonEnabled": true,
+                "valueLineAlpha": false,
+                "color": '#fff',
+                "cursorColor": '#FC6180',
+                "fullWidth": true
+            },
+            "categoryField": "region",
+            "categoryAxis": {
+                "gridAlpha": 0,
+                "axisAlpha": 0,
+                "fillAlpha": 1,
+                "fillColor": "#FAFAFA",
+                "minorGridAlpha": 0,
+                "minorGridEnabled": true
+            },
+            "export": {
+                "enabled": true
+            }
+        });
+        /*donut chart*/
+});
 </script>
 @endsection

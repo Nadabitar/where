@@ -135,7 +135,7 @@
     
                                             <div class="col-md-12 checkbox-line" >
                                                 <div class="checkout-form-list">
-                                                    <form action="{{ route('Profile.update.workTime')}}" method="GET"  >
+                                                    <form action="{{ route('Profile.update.workTime')}}" method="GET" enctype="multipart/form-data"   >
                                                         <div class="row">
                                                             <div class="col-10">
                                                                         <label>وقت العمل <span class="required">*</span></label> 

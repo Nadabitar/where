@@ -24,6 +24,7 @@ class AdminController extends Controller
         return View('Admin.layouts.index' , compact('notifications'))->with(
             [
                 'popularCat' => $this->getMostPopularCat(),
+                'popularRegion' => $this->getMostPopularRegion(),
             ]
         );
     }
@@ -42,6 +43,16 @@ class AdminController extends Controller
         ORDER BY count(p.categoryId) DESC limit 5 ');
 
         return $cat;
+    }
+
+    public function getMostPopularRegion()
+    {
+        $region = DB::select(' select  r.name as region, count(u.regionId) as value
+        FROM  regions r , users u
+        WHERE r.id = u.regionId
+        GROUP BY r.name  limit 6');
+
+        return $region;
     }
 
     /**
