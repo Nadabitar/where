@@ -6,6 +6,7 @@ use App\Http\Requests\UpdateAccountsRequest;
 use App\Models\Places;
 use App\Models\User;
 use App\Traits\GenralTraits;
+use App\Traits\ImageTraits;
 use Facade\FlareClient\View;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -14,7 +15,7 @@ use Illuminate\Support\Facades\Validator;
 
 class UserController extends Controller  
 {   
-    use GenralTraits;
+    use GenralTraits , ImageTraits;
 
     public function place()
     {
@@ -43,12 +44,12 @@ class UserController extends Controller
         $place->image = $request->hasFile('image')? $this->uploadImage($request->file('image')->getRealPath()): $this->returnError(201 , 'image is required') ;
         $result = $place->update();
         if($result){
-            return redirect()->route('subscriber.pages.profile')->with([
+            return redirect()->route('Profile.show')->with([
                 'message' => 'Image Updated successfully',
                 'alert-type' => 'success'
             ]);
         }else{
-            return back()->with(['error' => 'something went error']);
+            return redirect()->back()->with(['errors' => 'something went error']);
         }
     }
 
@@ -64,7 +65,7 @@ class UserController extends Controller
         $place->placeName = $request->placeName ;
         $result = $place->update();
         if($result){
-            return redirect()->route('subscriber.pages.profile')->with([
+            return redirect()->route('Profile.show')->with([
                 'message' => 'Place Name updated successfully',
                 'alert-type' => 'success'
             ]);
@@ -94,7 +95,7 @@ class UserController extends Controller
         $place->phone = $request->phoneNumber ;
         $result = $place->update();
         if($result){
-            return redirect()->route('subscriber.pages.profile')->with([
+            return redirect()->route('Profile.show')->with([
                 'message' => 'Phone Number updated successfully',
                 'alert-type' => 'success'
             ]);
@@ -115,7 +116,7 @@ class UserController extends Controller
         $place->details = $request->details ;
         $result = $place->update();
         if($result){
-            return redirect()->route('subscriber.pages.profile')->with([
+            return redirect()->route('Profile.show')->with([
                 'message' => 'Details updated successfully',
                 'alert-type' => 'success'
             ]);
@@ -156,7 +157,7 @@ class UserController extends Controller
         $place->workTime =  sprintf('Open From %s To %s' , $request->from , $request->to) ;
         $result = $place->update();
         if($result){
-            return redirect()->route('subscriber.pages.profile')->with([
+            return redirect()->route('Profile.show')->with([
                 'message' => 'Work Time updated successfully',
                 'alert-type' => 'success'
             ]);
@@ -181,7 +182,7 @@ class UserController extends Controller
         $place->links = $this->socialkMedia($request);
         $result = $place->update();
         if($result){
-            return redirect()->route('subscriber.pages.profile')->with([
+            return redirect()->route('Profile.show')->with([
                 'message' => 'Social Media Links updated successfully',
                 'alert-type' => 'success'
             ]);
@@ -212,7 +213,7 @@ class UserController extends Controller
         $place->categoryId = $request->categoryId;
         $result = $place->update();
         if($result){
-            return redirect()->route('subscriber.pages.profile')->with([
+            return redirect()->route('Profile.show')->with([
                 'message' => 'Category Id updated successfully',
                 'alert-type' => 'success'
             ]);
@@ -233,7 +234,7 @@ class UserController extends Controller
         $place->subCategoryId = $request->subCategoryId;
         $result = $place->update();
         if($result){
-            return redirect()->route('subscriber.pages.profile')->with([
+            return redirect()->route('Profile.show')->with([
                 'message' => 'sub Category Id updated successfully',
                 'alert-type' => 'success'
             ]);

@@ -62,7 +62,7 @@
                                                     <div class="checkout-form-list">
                                                         <label>رقم الهاتف <span class="required">*</span></label>
                                                         <input type="text" placeholder="رقم الهاتف" name="phoneNumber" required />
-                                                        <input style="margin: 15px 8px" type="text" name="addtionalPhone" placeholder="هل هناك رقم تواصل أخر!!" />
+                                                        {{-- <input style="margin: 15px 8px" type="text" name="addtionalPhone" placeholder="هل هناك رقم تواصل أخر!!" /> --}}
                                                         @error('phoneNumber')
                                                         <span class="invalid-feedback" role="alert">
                                                             <strong>{{ $message }}</strong>

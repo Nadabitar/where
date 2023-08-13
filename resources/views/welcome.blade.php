@@ -135,7 +135,7 @@
                                             <strong>{{ $message }}</strong>
                                         </span>
                                         @enderror
-                                    <input class="@error('password') is-invalid @enderror" type="password" name="password" placeholder="PASSWORD" required autocomplete="current-password">
+                                    <input id="subsPassword" class="@error('password') is-invalid @enderror" type="password" name="password" placeholder="PASSWORD" required autocomplete="current-password">
                                     <label  for="showPassword1"> <input type="checkbox" id="showPassword1"></label>
                                         
                                         @error('password')
@@ -185,7 +185,7 @@
                                                     <strong>{{ $message }}</strong>
                                                 </span>
                                                 @enderror
-                                            <input class="@error('password') is-invalid @enderror" type="password" name="password" placeholder="كلمة المرور" required autocomplete="current-password">
+                                            <input id="adminPassword" class="@error('password') is-invalid @enderror" type="password" name="password" placeholder="كلمة المرور" required autocomplete="current-password">
                                             <label  for="showPassword2"> <input type="checkbox" name="" id="showPassword2"></label>                                                
                                                 @error('password')
                                                 <span class="invalid-feedback" role="alert">

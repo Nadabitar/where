@@ -73,7 +73,7 @@ Route::prefix('subscriber')->group(function(){
     Route::prefix('profile')->controller(PromoController::class)->group(function ()
     {
         Route::get('/show' , [UserController::class , 'show'])->name('Profile.show');
-        Route::get('/update/Image' , [UserController::class , 'updateImage'])->name('Profile.update.Image');
+        Route::post('/update/Image' , [UserController::class , 'updateImage'])->name('Profile.update.Image');
         Route::get('/update/PlaceName' , [UserController::class , 'updatePlaceName'])->name('Profile.update.placeName');
         Route::get('/update/PhoneNumber' , [UserController::class , 'updatePhoneNumber'])->name('Profile.update.phoneNumber');
         Route::get('/update/Details' , [UserController::class , 'updateDetails'])->name('Profile.update.Details');
