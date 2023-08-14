@@ -70,7 +70,7 @@
 
 .left #showPassword {
    position: absolute;
-   bottom: 42%;
+   bottom: 46%;
    left: 14%;
    cursor: pointer;
 }
@@ -85,7 +85,7 @@
  #showPassword2{
     position: absolute;
     right: 10%;
-    bottom: 43%;
+    bottom: 34%;
     width: 20px;
     height: 20px;
     cursor: pointer;

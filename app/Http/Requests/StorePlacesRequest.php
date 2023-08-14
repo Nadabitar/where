@@ -26,8 +26,8 @@ class StorePlacesRequest extends FormRequest
         return [
             'categoryId' => 'required' ,
             'subCategoryId' =>'nullable' ,
-            'placeName' => 'required|string' ,
-            'phoneNumber' => 'required|string' ,
+            'placeName' => 'required|string|unique:App\Models\places,placeName' ,
+            'phoneNumber' => 'required|string|unique:App\Models\places,phone' ,
             'addtionalPhone' => 'Nullable|string',
             'details' => 'nullable' , 
             'workTime' => 'required|string',

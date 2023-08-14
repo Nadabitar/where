@@ -4,8 +4,7 @@
 <link href="{{asset('assets/css/subscriber/profile.css')}}" rel="stylesheet">
 @endsection
 @section('content')
-    
-          
+@include('subscriber.partial.flash')
 <section id="info-page">
     <div class="info">
         <div class="row p-0 m-0">
@@ -25,11 +24,12 @@
 
                                             <div class="col-md-12 checkbox-line ">
                                                 <div class="checkout-form-list">
-                                                    <form action="{{ route('Profile.update.Image')}}" method="GET">
+                                                    <form action="{{ route('Profile.update.Image')}}" method="Post" enctype="multipart/form-data">
+                                                        @csrf
                                                         <div class="row">
                                                             <div class="col-10">
                                                                 <label>image</label>
-                                                                <input  type="file" name="image" id="img-place">
+                                                                <input type="file" name="image" id="img-place">
                                                             </div>
                                                             <div class="col-2">
                                                                 <div class="Edit-button">
@@ -116,7 +116,7 @@
                                                             <div class="col-10">
                                                                 <label>رقم الهاتف <span class="required">*</span></label>
                                                                 <input type="text" placeholder="رقم الهاتف" name="phoneNumber"  value="{{ $place->phone}}"/>
-                                                                <input style="margin: 15px 8px" type="text" name="addtionalPhone" placeholder="هل هناك رقم تواصل أخر!!" />
+                                                                {{-- <input style="margin: 15px 8px" type="text" name="addtionalPhone" placeholder="هل هناك رقم تواصل أخر!!" /> --}}
                                                                 @error('phoneNumber')
                                                                 <span class="invalid-feedback" role="alert">
                                                                     <strong>{{ $message }}</strong>
@@ -135,7 +135,7 @@
     
                                             <div class="col-md-12 checkbox-line" >
                                                 <div class="checkout-form-list">
-                                                    <form action="{{ route('Profile.update.workTime')}}" method="GET"  >
+                                                    <form action="{{ route('Profile.update.workTime')}}" method="GET" enctype="multipart/form-data"   >
                                                         <div class="row">
                                                             <div class="col-10">
                                                                         <label>وقت العمل <span class="required">*</span></label> 
@@ -362,7 +362,7 @@ let map, infoWindow;
         window.initMap = initMap;
     </script>
     
-    <script type="text/javascript" src="https://maps.google.com/maps/api/js?key={{ env('GOOGLE_MAPS_API_KEY') }}&callback=initMap"></script>
+    <script type="text/javascript" src="https://maps.google.com/maps/api/js?key={{ env('GOOGLE_MAPS_API_KEY') }}&callback=initMap&language=ar&region=SY"></script>
     
     
   <script src="{{asset('assets/js/Subscriber/info.js')}}"></script>   

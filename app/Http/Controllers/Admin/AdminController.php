@@ -24,6 +24,7 @@ class AdminController extends Controller
         return View('Admin.layouts.index' , compact('notifications'))->with(
             [
                 'popularCat' => $this->getMostPopularCat(),
+                'popularRegion' => $this->getMostPopularRegion(),
             ]
         );
     }
@@ -44,6 +45,16 @@ class AdminController extends Controller
         return $cat;
     }
 
+    public function getMostPopularRegion()
+    {
+        $region = DB::select(' select  r.name as region, count(u.regionId) as value
+        FROM  regions r , users u
+        WHERE r.id = u.regionId
+        GROUP BY r.name  limit 6');
+
+        return $region;
+    }
+
     /**
      * Store a newly created resource in storage.
      *
@@ -55,13 +66,12 @@ class AdminController extends Controller
         $validator = Validator::make($request->all() , [
             'email' => 'required|string|exists:App\Models\User',
             'password' => 'required|string',
-            'code' => 'required',
         ]);
         if($validator->fails()){
             return response()->json($validator->errors(), 400);
         }
         if( $account = User::where('email' , $request->email)->first()){
-            if($account->userType == 'admin' &&  $request->code == "iamnewadmin2023"){
+            if($account->userType == 'admin'){
                 Auth::login($account);
                 return redirect()->route('admin')->with('success','You are Logged in sucessfully.');
             }
