@@ -80,9 +80,8 @@
                                         <div class="col-sm-8" >
                                             <select id="parent_cat_id"  class="form-control" name="parentId" >
                                                 <option >--Parent Id--</option>
-                                                <option selected>{{App\Models\Categoris::where('id' , $category->parentId)->value('name')}}</option>
-                                                @foreach (App\Models\Categoris::all() as $item)
-                                                <option value="{{$item->id}}" >{{$item->name}}</option>
+                                                @foreach (App\Models\Categoris::get() as $item)
+                                                <option value="{{$item->id}}" {{$item->id ==  $category->parentId ? 'selected' : ' '}}>{{$item->name}}</option>
                                                 @endforeach
                                             </select>
                                         </div>

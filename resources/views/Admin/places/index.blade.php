@@ -115,7 +115,7 @@
                                                     </span>
                                             
                                                     <span class="profile-card-loc__txt">
-                                                        {{$place->account->region->name}} - {{$place->account->streetId? $place->account->street->name : " " }}
+                                                        {{$place->accountId != null ? $place->account->region->name : $place->region->name}} 
                                                     </span>
                                                     </div>
                                             
@@ -140,10 +140,6 @@
                                                         <div class="profile-card-inf__txt">Phone Number</div>
                                                     </div>
                                             
-                                                    <div class="profile-card-inf__item">
-                                                        <div class="profile-card-inf__title">{{$place->phone}}</div>
-                                                        <div class="profile-card-inf__txt">Addtin Phone Number</div>
-                                                    </div>
 
                                                     <div class="profile-card-inf__item">
                                                         <div class="profile-card-inf__title">{{$place->workTime}}</div>

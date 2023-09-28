@@ -80,9 +80,11 @@ class PlacesController extends Controller
         return view('Admin.places.index' , compact('places' , 'notifications'));
     }
 
-    public function edit(Places $places)
+    public function edit($id)
     {
-        //
+        $places = Places::find($id);
+        $notifications = auth()->user()->unreadNotifications;
+        return view('Admin.places.edite' , compact('places' , 'notifications'));
     }
 
     public function update(UpdatePlacesRequest $request, Places $places)

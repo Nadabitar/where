@@ -128,7 +128,7 @@
                             <div class="login-form">
                                 <form method="POST" action="{{ route('login') }}">
                                     @csrf
-                                    <input type="text" name="email" placeholder="Email" class="@error('email') is-invalid @enderror" value="{{ old('email') }}" required autocomplete="email" autofocus>
+                                    <input type="text" name="email" placeholder="Email" class="@error('email') is-invalid @enderror" value="{{ old('email') }}" required  autofocus>
                                     
                                         @error('email')
                                         <span class="invalid-feedback" role="alert">
