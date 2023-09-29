@@ -115,7 +115,7 @@
                                         </li>
                                         <li>
                                             <a href="#">
-                                                <i class="fa fa-gmail"></i>
+                                                <i class="fa fa-google-plus"></i>
                                             </a>
                                         </li>
                                     </ul>
